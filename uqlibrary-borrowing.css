@@ -1,0 +1,17 @@
+:host,
+:host *,
+::content * {
+  box-sizing: border-box;
+  outline: none; }
+
+paper-tabs {
+  height: 64px !important;
+  background-color: #009688;
+  color: rgba(255, 255, 255, 0.87); }
+  paper-tabs::shadow #selectionBar {
+    background-color: #49075e; }
+  paper-tabs paper-tab .tabTitleNumber {
+    font-size: 2em;
+    margin-bottom: 5px; }
+  paper-tabs paper-tab .tabTitle {
+    font-size: 1em; }

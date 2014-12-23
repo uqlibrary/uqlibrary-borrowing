@@ -1,0 +1,209 @@
+<link rel="import" href="../uqlibrary-elements/0.5.2/lib/vulcanized.html">
+
+<link rel="import" href="uqlibrary-holds.html">
+<!--<link rel="import" href="uql-fines.html"> -->
+<link rel="import" href="uqlibrary-loans.html">
+
+
+<polymer-element name="uqlibrary-borrowing" layout center attributes="data">
+  <template>
+    <link rel="stylesheet" href="uqlibrary-borrowing.css">
+    <paper-tabs id="tabs" selected="{{ selectedTab }}" on-core-select="{{ tabSelected }}">
+      <paper-tab name="loans" id="loans">
+          <div layout vertical center>
+            <span class="tabTitleNumber">{{ data.checkedOut.length }}</span>
+            <span class="tabTitle">Loans</span>
+          </div>
+      </paper-tab>
+
+
+      <paper-tab name="holds" id="holds">
+        <div layout vertical center>
+          <span class="tabTitleNumber">{{ data.holds.length }}</span>
+          <span class="tabTitle">Holds</span>
+        </div>
+
+      </paper-tab>
+      <paper-tab name="fines" id="fines">
+        <div layout vertical center>
+          <span class="tabTitleNumber">{{ sumFines }}</span>
+          <span class="tabTitle">Overdue Charges</span>
+        </div>
+
+      </paper-tab>
+    </paper-tabs>
+
+    <div class="infoWrapper">
+      <core-animated-pages id="animatedPages" transitions="slide-from-right" block selected="{{selectedTab}}"
+                           on-core-animated-pages-transition-prepare="{{transitionPrepareHandler}}"
+                           on-core-animated-pages-transition-end="{{transitionEndHandler}}"
+        >
+
+        <section id="loans" name="loans" class="loans" hidden?="{{ selectedTab != 'loans' }}">
+          <uqlibrary-loans loans="{{ data.checkedOut }}"></uqlibrary-loans>
+        </section>
+
+        <section id="holds" name="holds" class="holds" hidden?="{{ selectedTab != 'holds' }}">
+          <uqlibrary-holds holds="{{ data.holds }}"></uqlibrary-holds>
+        </section>
+
+        <!--<section id="fines" name="fines" class="fines" hidden?="{{ selectedTab != 'fines' }}">
+          <uql-fines id="finesFull" view="full" fines="{{ data.fines }}"></uql-fines>
+        </section> -->
+
+     </core-animated-pages>
+     </div>
+    </core-header-panel>
+  </template>
+
+  <script>
+    Polymer('uqlibrary-borrowing', {
+
+      publish: {
+        data : {
+          holds: [],
+          loans: [],
+          fines: [],
+          loansOverdue: 0,
+          dueSoon: 0
+        }
+      },
+      sumFines : 0,
+      selectedTab : 'overview',
+
+      infoLoaded : function() {
+        var response = this.$.ajax.response;
+        this.data.holds = (response.holds ? response.holds : []);
+        this.data.checkedOut = (response.checkedOut ? response.checkedOut : []);
+        this.data.fines = (response.fines ? response.fines : []);
+        this.processData();
+      },
+
+      ready: function() {
+        //tabs = this.$.tabs;
+        /*this.data = {
+          "checkedOut": [
+            {
+              "title": "Pharmaceutics : the science of dosage form design",
+              "dueDate": "2014-12-06T04:00:00+10:00",
+              "url": "http:\/\/library.uq.edu.au\/record=i3349004"
+            },
+            {
+              "title": "Physicochemical principles of pharmacy",
+              "dueDate": "2014-12-22T04:00:00+10:00",
+              "url": "http:\/\/library.uq.edu.au\/record=i3715828"
+            },
+            {
+              "title": "Pharmaceutics : the science of dosage form design",
+              "dueDate": "2014-10-06T04:00:00+10:00",
+              "url": "http:\/\/library.uq.edu.au\/record=i3349004"
+            },
+            {
+              "title": "Physicochemical principles of pharmacy",
+              "dueDate": "2014-12-24T04:00:00+10:00",
+              "url": "http:\/\/library.uq.edu.au\/record=i3715828"
+            },
+            {
+              "title": "Physicochemical principles of pharmacy",
+              "dueDate": "2014-12-26T04:00:00+10:00",
+              "url": "http:\/\/library.uq.edu.au\/record=i3715828"
+            },
+            {
+              "title": "Physicochemical principles of pharmacy",
+              "dueDate": "2014-11-22T04:00:00+10:00",
+              "url": "http:\/\/library.uq.edu.au\/record=i3715828"
+            },
+            {
+              "title": "Physicochemical principles of pharmacy",
+              "dueDate": "2014-10-28T04:00:00+10:00",
+              "url": "http:\/\/library.uq.edu.au\/record=i3715828"
+            }
+          ],
+          "holds": [
+            {
+              "title": "Regression analysis of count data",
+              "datePlaced": "2014-11-22T14:00:00+10:00",
+              "url": "http:\/\/library.uq.edu.au\/record=i2673780",
+              "status": ''
+            },
+            {
+              "title": "Regression analysis of count data. Part 2",
+              "datePlaced": "2014-02-12T14:00:00+10:00",
+              "url": "http:\/\/library.uq.edu.au\/record=i2673780",
+              "status": 'ready'
+            },
+            {
+              "title": "Image processing",
+              "datePlaced": "2013-12-30T14:00:00+10:00",
+              "url": "http:\/\/library.uq.edu.au\/record=i2673780",
+              "status": 'ready'
+            },
+            {
+              "title": "Regression analysis of count data",
+              "datePlaced": "2014-04-30T14:00:00+10:00",
+              "url": "http:\/\/library.uq.edu.au\/record=i2673780",
+              "status": ''
+            }
+          ],
+          "fines": [
+            {
+              "title": "1. Human physiology : from cells to systems \/ Lauralee Sherwood.",
+              "fineAmount": 840,
+              "dueDate": "2014-04-08T04:00:00+10:00",
+              "dateReturned": "2014-04-14T14:02:05+10:00",
+              "url": "http:\/\/library.uq.edu.au\/record=i3698283"
+            },
+            {
+              "title": "2. Human physiology : from cells to systems \/ Lauralee Sherwood.",
+              "fineAmount": 160,
+              "dueDate": "2014-04-22T04:00:00+10:00",
+              "dateReturned": "2014-04-24T14:44:15+10:00",
+              "url": "http:\/\/library.uq.edu.au\/record=i3704585"
+            },
+            {
+              "title": "3. Human physiology : from cells to systems \/ Lauralee Sherwood.",
+              "fineAmount": 340,
+              "dueDate": "2014-04-08T04:00:00+10:00",
+              "dateReturned": "2014-04-14T14:02:05+10:00",
+              "url": "http:\/\/library.uq.edu.au\/record=i3698283"
+            }
+
+          ],
+          "retrievedAt": "2014-05-02T09:11:52+10:00"
+        };*/
+        this.processData();
+        this.selectedTab = 'loans';
+      },
+
+      processData: function () {
+        this.sumFines = this.moneyFormat(this.calculateFines(this.data.fines));
+      },
+
+      calculateFines : function(fines) {
+        this.finesSum = 0;
+        if(fines.length > 0) {
+          for(var i=0; i < fines.length; i++){
+            if(fines[i].fineAmount) {
+              this.finesSum += parseInt(fines[i].fineAmount);
+            }
+          }
+        }
+        return this.finesSum;
+      },
+      moneyFormat: function(value) {
+        return '$' + (value > 0 ? (parseFloat(value) / 100).toFixed(2) : '0') ;
+      },
+
+      transitionPrepareHandler: function() {
+        this.transitioning = true;
+        this.fire('core-signal', {name: "transitioning-change", data: {transitioning: this.transitioning}});
+      },
+      transitionEndHandler: function() {
+        this.transitioning = false;
+        this.fire('core-signal', {name: "transitioning-change", data: {transitioning: this.transitioning}});
+      }
+
+    });
+  </script>
+
+</polymer-element>
