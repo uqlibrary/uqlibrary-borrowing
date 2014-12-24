@@ -50,23 +50,28 @@
         for (var i = 0; i < this.holds.length; i++) {
 
           var _hold = this.holds[i];
-          _hold.class = '';
+          _hold.class = 'hold-item';
           _hold.id = i;
           _hold.date = new Date(_hold.datePlaced);
           _hold.dateText = _hold.date.getDate() + '/' + (_hold.date.getMonth() + 1) + '/' + _hold.date.getFullYear();
           _hold.actions = [];
 
           if(_hold.status == 'bibReady' || _hold.status == 'itemReady') {
-            _hold.dayPrefixText = 'Ready for';
+            _hold.dayPrefixText = 'Ready';
+            _hold.day = 'for';
             _hold.daySuffixText = 'pickup';
-            _hold.day = '';
-            _hold.subtitle = 'Pickup location: ' + _hold.pickupLocation;
+            if(_hold.pickupLocation){
+              _hold.subtitle = 'Pickup location: ' + _hold.pickupLocation;
+            }
           } else if (_hold.status == 'itemTransit') {
 
-            _hold.dayPrefixText = 'In';
-            _hold.daySuffixText = 'transit';
-            _hold.day = '';
-            _hold.subtitle = 'In transit to pickup location: '+_hold.pickupLocation;
+            _hold.dayPrefixText = 'Transit';
+            _hold.day = 'for';
+            _hold.daySuffixText = 'pickup';
+            _hold.subtitle = '';
+            if(_hold.pickupLocation){
+              _hold.secondaryText = 'Pickup location: ' + _hold.pickupLocation;
+            }
           }
           else {
             _hold.dayPrefixText = 'On';
@@ -74,25 +79,6 @@
             _hold.day = '';
             _hold.subtitle = 'Date placed: '+ _hold.dateText;
           }
-          /*var today = new Date();
-          var overdue = Math.ceil((_hold.date - today) / (1000 * 60 * 60 * 24));
-
-          _hold.daysRemain = -1;
-          if(overdue < 0) {
-            //_hold.isOverdue = true;
-            //_hold.attentionIcon = {icon: "warning", text: "This item is ready for pick up", type: 'warning'};
-            _hold.dayPrefixText = 'Ready';
-            _hold.day = '';
-            _hold.daySuffixText = 'Now';
-            //_hold.class += ' warning';
-            //_loan.daysOverdue = Math.abs(overdue);
-            //this.data.loansOverdue ++;
-          }
-          else if(overdue >= 0 && overdue < 5 ) {
-            //_loan.daysRemain = overdue;
-            _hold.attentionIcon = {icon: "warning", text: "This item will be available in " + overdue + " day(s)", type: 'warning'};
-            //this.data.dueSoon ++;
-          }*/
         }
 
         // Sort by status

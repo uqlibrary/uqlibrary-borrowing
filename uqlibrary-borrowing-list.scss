@@ -53,6 +53,22 @@
   color: $secondary-text;
 }
 
+.fine-item {
+  .date {
+    .day {
+      font-size: 1.25em;
+    }
+  }
+}
+.hold-item {
+  .date {
+    .day-text, .day {
+      font-size: 1em;
+      color: $primary-700;
+    }
+  }
+}
+
 .first .day {
   color: $primary-500;
 }
@@ -64,35 +80,22 @@
   padding: 16px ;
   padding-bottom: 20px;
   margin-bottom: 8px;
-  height: 80px;
+  height: 88px;
   font-size: 0.875em;
   position: relative;
 
   .item-inner {
-    div.title {
+    div.title, div.subtitle, div.secondaryText {
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
     }
-    div.subtitle {
-      white-space: normal;
-      max-height: 36px;
-      overflow: hidden;
-    }
-
-
-
     .title {
       font-weight: 500;
-      font-size: 1em;
-      max-height: 36px;
+      font-size: 1.125em;
     }
   }
 
-}
-
-.item-item, .first, .last {
-  height: 88px;
 }
 
 .item-item {
@@ -120,8 +123,12 @@
 
 .attentionIcon {
   position: absolute;
-  bottom: 5px;
-  right: 5px;
+  bottom: 4px;
+  right: 4px;
+  padding-left: 16px;
+  height: 32px;
+  overflow: hidden;
+  width: 100%;
   paper-icon {
     width: 24px;
     height: 24px;
@@ -137,9 +144,10 @@
 }
 .tooltip {
   font-size: 0.875em;
-  //background: $text;
   color: $secondary-text;
-  //height: 44px;
-  //margin: 4px;
-  padding: 4px 4px 0px 4px;
+  margin-right: 4px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: right;
 }

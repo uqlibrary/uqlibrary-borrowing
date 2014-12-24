@@ -29,6 +29,7 @@
               <div flex class="item-inner">
                 <div class="title">{{item.title}}</div>
                 <div class="subtitle">{{item.subtitle}}</div>
+                <div class="secondaryText">{{item.secondaryText}}</div>
               </div>
               <div layout vertical>
                 <template repeat="{{action in item.actions}}">
@@ -36,8 +37,8 @@
                 </template>
               </div>
               <div class="attentionIcon {{item.attentionIcon.type}}" layout horizontal end hidden?={{!item.attentionIcon.icon}}>
-                <div class="tooltip">{{item.attentionIcon.text}}</div>
-                <core-icon icon={{item.attentionIcon.icon}}></core-icon>
+                <div class="tooltip" flex>{{item.attentionIcon.text}}</div>
+                <core-icon end-justified icon={{item.attentionIcon.icon}}></core-icon>
                </div>
             </div>
           </div>
