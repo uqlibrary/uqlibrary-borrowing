@@ -1,7 +1,7 @@
 uqlibrary-borrowing
 ================
 
-See the [component page](https://github.com/uqlibrary/uqlibrary-borrowing) for more information.
+See the [component page](http://uqlibrary.github.io/uqlibrary-borrowing) for more information.
 
 ## Getting Started
 
