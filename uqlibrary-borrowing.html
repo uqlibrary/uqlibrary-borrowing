@@ -130,15 +130,15 @@ Element providing an overview for loans, holds and fines.
                                  on-core-animated-pages-transition-end="{{transitionEndHandler}}"
               >
 
-              <section id="loans" name="loans" class="loans" hidden?="{{ selectedTab != 'loans' }}">
+              <section id="loansSection" name="loans" class="loans" hidden?="{{ selectedTab != 'loans' }}">
                 <uqlibrary-loans id="loans" loans="{{ data.checkedOut }}"></uqlibrary-loans>
               </section>
 
-              <section id="holds" name="holds" class="holds" hidden?="{{ selectedTab != 'holds' }}">
+              <section id="holdsSection" name="holds" class="holds" hidden?="{{ selectedTab != 'holds' }}">
                 <uqlibrary-holds id="holds" holds="{{ data.holds }}"></uqlibrary-holds>
               </section>
 
-              <section id="fines" name="fines" class="fines" hidden?="{{ selectedTab != 'fines' }}">
+              <section id="finesSection" name="fines" class="fines" hidden?="{{ selectedTab != 'fines' }}">
                 <uqlibrary-fines id="fines" fines="{{ data.fines }}"></uqlibrary-fines>
               </section>
 
@@ -176,8 +176,8 @@ Element providing an overview for loans, holds and fines.
       ready: function() {
         var that = this;
 
-        //this.$.loansApi.$.loans.useMockData = true;
-        //this.$.account.$.account.useMockData = true;
+        this.$.loansApi.$.loans.useMockData = true;
+        this.$.account.$.account.useMockData = true;
 
         this.$.account.addEventListener('uqlibrary-api-account-loaded', function(e) {
           if (e.detail.hasSession) {
@@ -198,6 +198,12 @@ Element providing an overview for loans, holds and fines.
           this.$.loansApi.get();
         }
 
+        // Listen to persistent footer buttons clicks
+        this.addEventListener('uqlibrary-persistent-footer-action-button-clicked', function(e) {
+          this.$.ga.addEvent('Action button clicked', e.detail.button.title);
+        });
+
+
       },
 
       dataChanged: function() {
@@ -209,15 +215,17 @@ Element providing an overview for loans, holds and fines.
         this.sumFines = this.$.fines.moneyFormat(this.$.fines.calculateFines(this.data.fines));
         var patronNumber = this.data.recordNumber;
 
-        if(this.data.checkedOut.length > 0){
+        if(this.data.checkedOut && this.data.checkedOut.length > 0){
           this.$.loans.actionButtons = [{title: 'Renew Loans', url: 'https://library.uq.edu.au/patroninfo~S7/' + patronNumber + '/items'}];
         }
-        if(this.data.holds.length > 0){
+        if(this.data.holds && this.data.holds.length > 0){
           this.$.holds.actionButtons = [{title: 'Cancel Holds', url: 'https://library.uq.edu.au/patroninfo~S7/' + patronNumber + '/holds'}];
         }
-        if(this.data.fines.length > 0){
+        if(this.data.fines && this.data.fines.length > 0){
           this.$.fines.actionButtons = [{title: 'Pay fines', url: 'https://library.uq.edu.au/patroninfo~S7/' + patronNumber + '/overdues'}];
         }
+
+        this.fire('uqlibrary-borrowing-data-loaded');
 
       },
 
@@ -228,6 +236,10 @@ Element providing an overview for loans, holds and fines.
       transitionEndHandler: function() {
         this.transitioning = false;
         this.fire('core-signal', {name: "transitioning-change", data: {transitioning: this.transitioning}});
+      },
+
+      selectedTabChanged: function() {
+        this.$.ga.addEvent('Tab changed', this.selectedTab);
       }
 
     });

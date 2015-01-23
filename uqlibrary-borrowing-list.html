@@ -4,32 +4,25 @@
 
   <template>
     <link rel="stylesheet" href="uqlibrary-borrowing-list.css">
-    <div id="timeline">
+      <div class="text-container" horizontal center-justified layout id="emptyItems" hidden?="{{processedItems.length > 0}}">
+        {{ noItemsMessage }}
+      </div>
+      <ul id="timeline" class="three-line-icon-list">
+        <li class="gap"></li>
+        <template repeat="{{item, idx in processedItems}}">
 
-      <div class="empty-items" hidden?="{{processedItems.length > 0}}"> {{ noItemsMessage }} </div>
+          <template if="{{!item.isDivider}}">
 
-      <template repeat="{{item, idx in processedItems}}">
-
-        <template if="{{!item.isDivider}}">
-
-        <div id="item-{{item.id}}" class="{{item.class}}">
-          <div horizontal layout class="timeline-item-inner">
-            <div class="date" vertical layout self-center>
-              <div class="caption">
-                {{item.dayPrefixText}}
+            <li class="list-item timeline {{item.class}}" id="item-{{item.id}}">
+              <div class="date">
+                <div class="caption">{{item.dayPrefixText}}</div>
+                <div class="title">{{item.day}}</div>
+                <div class="caption">{{item.daySuffixText}}</div>
               </div>
-              <div class="title">
-                {{item.day}}
-              </div>
-              <div class="caption">
-                {{item.daySuffixText}}
-              </div>
-            </div>
-            <div flex layout horizontal class="item" on-tap="{{itemSelected}}" data-item-id="{{item.id}}">
-              <div flex class="item-inner">
-                <div class="body1 inverse">{{item.title}}</div>
-                <div class="caption inverse">{{item.subtitle}}</div>
-                <div class="caption inverse">{{item.secondaryText}}</div>
+              <div class="content" on-tap="{{itemSelected}}" data-item-id="{{item.id}}">
+                <div class="line1">{{item.title}}</div>
+                <div class="line2">{{item.subtitle}}</div>
+                <div class="line3">{{item.secondaryText}}</div>
               </div>
               <div layout vertical>
                 <template repeat="{{action in item.actions}}">
@@ -39,19 +32,16 @@
               <div class="attentionIcon {{item.attentionIcon.type}}" layout horizontal end hidden?={{!item.attentionIcon.icon}}>
                 <div class="tooltip caption inverse" flex>{{item.attentionIcon.text}}</div>
                 <core-icon class="caption inverse" end-justified icon={{item.attentionIcon.icon}}></core-icon>
-               </div>
-            </div>
-          </div>
-        </div>
+              </div>
+            </li>
+          </template>
 
-      </template>
+          <template if="{{item.isDivider}}">
+            <p class="timeline-divider">&nbsp;</p>
+          </template>
 
-      <template if="{{item.isDivider}}">
-        <p class="timeline-divider">&nbsp;</p>
-      </template>
-
-    </template>
-    </div>
+        </template>
+      </ul>
 
   </template>
 

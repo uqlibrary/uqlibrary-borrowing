@@ -729,3 +729,17 @@ paper-fab {
 
 .with-persistent-footer {
   margin-bottom: 48px; }
+
+uqlibrary-loans::shadow uqlibrary-borrowing-list::shadow .line1 {
+  white-space: normal !important;
+  max-height: 48px; }
+
+uqlibrary-holds::shadow uqlibrary-borrowing-list::shadow .date {
+  padding-top: 20px; }
+
+uqlibrary-fines::shadow uqlibrary-borrowing-list::shadow .title {
+  padding-top: 20px;
+  font-family: "Roboto regular";
+  font-size: 1em;
+  line-height: 1.1em;
+  color: #7b0c9d; }

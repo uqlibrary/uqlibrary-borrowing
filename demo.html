@@ -14,7 +14,7 @@
 
   <p>An `uqlibrary-borrowing` looks like this:</p>
   <div class="wrapper">
-    <uqlibrary-borrowing></uqlibrary-borrowing>
+    <uqlibrary-borrowing autoload="false"></uqlibrary-borrowing>
   </div>
   <script>
     (function () {
@@ -23,7 +23,7 @@
 
         var borrowing = document.querySelector('uqlibrary-borrowing');
 
-        borrowing.data = {
+       var data = {
           "recordNumber": "1234567",
           "checkedOut": [
             {
@@ -126,6 +126,12 @@
           ],
           "retrievedAt": "2014-05-02T09:11:52+10:00"
         };
+
+        borrowing.$.loansApi.$.loans.useMockData = true;
+        borrowing.$.account.$.account.useMockData = true;
+
+        borrowing.$.loansApi.get();
+
 
       });
     }());

@@ -1,21 +1,40 @@
 <!doctype html>
 <html>
 
-  <head>
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-    <title>Core Elements Test Runner</title>
-    <meta charset="UTF-8">
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <title>Core Elements Test Runner</title>
+  <meta charset="UTF-8">
 
-    <script src="../../platform/platform.js"></script>
+  <script>
+    function isIE () {
+      var myNav = navigator.userAgent.toLowerCase();
+      return (myNav.indexOf('msie') != -1) ? parseInt(myNav.split('msie')[1]) : false;
+    }
 
-    <link rel="import" href="tests.html">
+    if (! ('registerElement' in document
+      && 'createShadowRoot' in HTMLElement.prototype
+      && 'import' in document.createElement('link')
+      && 'content' in document.createElement('template'))) {
+      // IE 8 and 9 throw errors if you try to include webcomponents.js, which prevents other user messages working
+      if (!isIE() || isIE () > 9) {
+        document.write('<script src="../../uqlibrary-elements/0.5.3/webcomponentsjs/webcomponents.js"><\/script>');
+      }
+    }
+  </script>
+  <script src="../../web-component-tester/browser.js"></script>
+</head>
 
-  </head>
+<body>
 
-  <body>
+<script>
+  document.cookie="UQLMockData=true";
+  WCT.loadSuites([
+    'uqlibrary-borrowing-test-unit.html',
+    'uqlibrary-borrowing-test-integration.html',
+  ]);
+</script>
 
-    <div id="mocha"></div>
-
-  </body>
+</body>
 
 </html>

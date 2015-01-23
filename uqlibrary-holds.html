@@ -10,8 +10,13 @@
     <section name="list" class="with-persistent-footer">
       <uqlibrary-borrowing-list id="holdsTimeline" items="{{holds}}" class="with-persistent-footer">
       </uqlibrary-borrowing-list>
+      <div layout horizontal>
+        <paper-button>
+          <a href="https://www.library.uq.edu.au/help/place-hold" target="_blank">About placing a hold</a>
+        </paper-button>
+      </div>
     </section>
-    <uqlibrary-persistent-footer actionButtons="{{actionButtons}}" hidden?="{{ actionButtons.length == 0 }}"></uqlibrary-persistent-footer>
+    <uqlibrary-persistent-footer id="persistentFooter" actionButtons="{{actionButtons}}" hidden?="{{ actionButtons.length == 0 }}"></uqlibrary-persistent-footer>
 
   </template>
 

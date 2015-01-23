@@ -3,3 +3,42 @@
 .with-persistent-footer{
   margin-bottom: $persistent-footer-height;
 }
+
+uqlibrary-loans {
+  &::shadow {
+    uqlibrary-borrowing-list {
+      &::shadow {
+        .line1 {
+          white-space: normal !important;
+          max-height: $three-line-list-item-height - $three-line-list-item-padding-top - $three-line-list-item-padding-bottom;
+        }
+      }
+    }
+
+  }
+}
+
+uqlibrary-holds {
+  &::shadow {
+    uqlibrary-borrowing-list {
+      &::shadow {
+        .date {
+          padding-top: $three-line-list-item-padding-top;
+        }
+      }
+    }
+  }
+}
+
+uqlibrary-fines {
+  &::shadow {
+    uqlibrary-borrowing-list {
+      &::shadow {
+        .title {
+          padding-top: $three-line-list-item-padding-top;
+          @include gmd-type-style(body1, $primary);
+        }
+      }
+    }
+  }
+}

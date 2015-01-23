@@ -9,8 +9,17 @@
     <section name="list" class="with-persistent-footer">
       <uqlibrary-borrowing-list id="loansTimeline" items="{{loans}}">
       </uqlibrary-borrowing-list>
+      <div layout horizontal>
+        <paper-button>
+          <a href="https://www.library.uq.edu.au/help/undergraduate" target="_blank">Undergraduate Borrowing guide</a>
+        </paper-button>
+      </div>
     </section>
-    <uqlibrary-persistent-footer actionButtons="{{actionButtons}}" hidden?="{{ actionButtons.length == 0 }}"></uqlibrary-persistent-footer>
+
+    <uqlibrary-persistent-footer id="persistentFooter" actionButtons="{{actionButtons}}" hidden?="{{ actionButtons.length == 0 }}">
+
+    </uqlibrary-persistent-footer>
+
 
   </template>
 
@@ -43,6 +52,7 @@
           _loan.id = i;
           _loan.date = new Date(_loan.dueDate);
           _loan.dateText = _loan.date.getDate() + '/' + (_loan.date.getMonth() + 1) + '/' + _loan.date.getFullYear();
+
           _loan.actions = [];
           var today = new Date();
           var overdue = Math.ceil((_loan.date - today) / (1000 * 60 * 60 * 24));
