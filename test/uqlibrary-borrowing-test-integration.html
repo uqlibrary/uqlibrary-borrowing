@@ -33,6 +33,8 @@ window.addEventListener('polymer-ready', function() {
 
      describe('data loaded', function () {
      it('should display tabs with data', function(done) {
+       borrowingEl.$.account.$.account.useMockData = true;
+       borrowingEl.$.loansApi.$.loans.useMockData = true;
 
        var dataLoadedListener = function() {
          // check block visibility asynchronously

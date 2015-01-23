@@ -100,7 +100,7 @@ Element providing an overview for loans, holds and fines.
 
 
           <paper-tabs id="tabs" selected="{{ selectedTab }}" on-core-select="{{ tabSelected }}">
-            <paper-tab name="loans" id="loans">
+            <paper-tab name="loans" id="loansTab">
                 <div layout vertical center class="menu">
                   <span class="tabTitleNumber">{{ data.checkedOut.length }}</span>
                   <span class="tabTitle">Loans</span>
@@ -108,14 +108,14 @@ Element providing an overview for loans, holds and fines.
             </paper-tab>
 
 
-            <paper-tab name="holds" id="holds">
+            <paper-tab name="holds" id="holdsTab">
               <div layout vertical center class="menu">
                 <span class="tabTitleNumber">{{ data.holds.length }}</span>
                 <span class="tabTitle">Holds</span>
               </div>
 
             </paper-tab>
-            <paper-tab name="fines" id="fines">
+            <paper-tab name="fines" id="finesTab">
               <div layout vertical center class="menu">
                 <span class="tabTitleNumber">{{ sumFines }}</span>
                 <span class="tabTitle">Overdue Charges</span>
@@ -214,6 +214,7 @@ Element providing an overview for loans, holds and fines.
       },
 
       processData: function () {
+
         this.sumFines = this.$.fines.moneyFormat(this.$.fines.calculateFines(this.data.fines));
         var patronNumber = this.data.recordNumber;
 
