@@ -176,15 +176,12 @@ Element providing an overview for loans, holds and fines.
       ready: function() {
         var that = this;
 
-        this.$.loansApi.$.loans.useMockData = true;
-        this.$.account.$.account.useMockData = true;
-
         this.$.account.addEventListener('uqlibrary-api-account-loaded', function(e) {
           if (e.detail.hasSession) {
               that.user = e.detail;
           } else {
             // Not logged in
-            //that.$.account.login('https://app.library.uq.edu.au/v1/borrowing');
+            that.$.account.login('https://app.library.uq.edu.au/v1/borrowing');
           }
         });
         if(this.autoload){
