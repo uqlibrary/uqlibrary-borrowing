@@ -200,6 +200,11 @@ Element providing an overview for loans, holds and fines.
           this.$.ga.addEvent('Action button clicked', e.detail.button.title);
         });
 
+        // Listen to persistent footer buttons clicks
+        this.addEventListener('uqlibrary-borrowing-contextual-button-clicked', function(e) {
+          this.$.ga.addEvent('Contextual button clicked', e.detail.button.id);
+        });
+
 
       },
 

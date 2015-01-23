@@ -151,7 +151,15 @@
           }
 
           this.processedItems = processed;
+        },
+
+        contextualButtonClicked: function(e, data, sender) {
+          var _id = sender.getAttribute('id');
+          if(_id) {
+            this.fire('uqlibrary-borrowing-contextual-button-clicked', {button: {id: _id}});
+          }
         }
+
       });
     })();
   </script>

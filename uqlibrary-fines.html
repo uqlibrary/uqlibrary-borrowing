@@ -10,10 +10,10 @@
       <uqlibrary-borrowing-list id="finesList" items="{{fines}}">
       </uqlibrary-borrowing-list>
       <div>
-        <paper-button><a href="https://www.library.uq.edu.au/help/borrowing#overdues" target="_blank">About overdue charges</a></paper-button>
+        <paper-button><a href="https://www.library.uq.edu.au/help/borrowing#overdues" target="_blank" id="aboutOverdueCharges" on-click="{{contextualButtonClicked}}">About overdue charges</a></paper-button>
       </div>
       <div>
-        <paper-button><a href="https://www.library.uq.edu.au/help/payment-options" target="_blank">Other payment options</a></paper-button>
+        <paper-button><a href="https://www.library.uq.edu.au/help/payment-options" target="_blank" id="otherPaymentOptions" on-click="{{contextualButtonClicked}}">Other payment options</a></paper-button>
       </div>
     </section>
     <uqlibrary-persistent-footer id="persistentFooter" actionButtons="{{actionButtons}}" hidden?="{{finesSum == 0}}">
