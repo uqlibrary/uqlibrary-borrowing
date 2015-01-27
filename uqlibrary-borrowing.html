@@ -127,8 +127,7 @@ Element providing an overview for loans, holds and fines.
           <div class="infoWrapper">
             <core-animated-pages id="animatedPages" transitions="slide-from-right" block selected="{{selectedTab}}"
                                  on-core-animated-pages-transition-prepare="{{transitionPrepareHandler}}"
-                                 on-core-animated-pages-transition-end="{{transitionEndHandler}}"
-              >
+                                 on-core-animated-pages-transition-end="{{transitionEndHandler}}">
 
               <section id="loansSection" name="loans" class="loans" hidden?="{{ selectedTab != 'loans' }}">
                 <uqlibrary-loans id="loans" loans="{{ data.checkedOut }}"></uqlibrary-loans>
