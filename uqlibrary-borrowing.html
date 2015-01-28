@@ -217,15 +217,43 @@ Element providing an overview for loans, holds and fines.
         this.sumFines = this.$.fines.moneyFormat(this.$.fines.calculateFines(this.data.fines));
         var patronNumber = this.data.recordNumber;
 
+        //Contextual and footer links
+        this.$.holds.actionButtons = {};
         if(this.data.checkedOut && this.data.checkedOut.length > 0){
-          this.$.loans.actionButtons = [{title: 'Renew Loans', url: 'https://library.uq.edu.au/patroninfo~S7/' + patronNumber + '/items'}];
+          this.$.loans.actionButtons = {
+            footer: [{title: 'Renew Loans', url: 'https://library.uq.edu.au/patroninfo~S7/' + patronNumber + '/items'}]
+          };
         }
+        // Support different contextual links
+        switch(this.user.type) {
+          case 31, 21: // both undergraduate and postgraduate
+            this.$.loans.actionButtons.contextual = [{title: 'Borrowing guide - external/remote students', url: 'https://www.library.uq.edu.au/services-for/borrowing-external-and-remote', id: 'borrowingGuide'}];
+            break;
+          case 1: // undergraduate
+            this.$.loans.actionButtons.contextual = [{title: 'Borrowing guide - undergraduates', url: 'https://www.library.uq.edu.au/help/undergraduate', id: 'borrowingGuide'}];
+            break;
+          case 11: // both undergraduate and postgraduate
+            this.$.loans.actionButtons.contextual = [{title: 'Borrowing guide - coursework postgraduates', url: 'https://www.library.uq.edu.au/help/coursework-postgraduate', id: 'borrowingGuide'}];
+            break;
+          default: // both undergraduate and postgraduate
+            this.$.loans.actionButtons.contextual = [{title: 'Borrowing guides', url: 'https://www.library.uq.edu.au/help/borrowing', id: 'borrowingGuide'}];
+            break;
+        }
+        this.$.holds.actionButtons = {};
         if(this.data.holds && this.data.holds.length > 0){
-          this.$.holds.actionButtons = [{title: 'Cancel Holds', url: 'https://library.uq.edu.au/patroninfo~S7/' + patronNumber + '/holds'}];
+          this.$.holds.actionButtons.footer = [ {title: 'Cancel Holds', url: 'https://library.uq.edu.au/patroninfo~S7/' + patronNumber + '/holds'}];
         }
+        this.$.holds.actionButtons.contextual = [{title: 'About placing a hold', url: 'https://www.library.uq.edu.au/help/place-hold', id: 'aboutPlacingHold'}];
+
+        this.$.fines.actionButtons = {};
         if(this.data.fines && this.data.fines.length > 0){
-          this.$.fines.actionButtons = [{title: 'Pay now', url: 'https://library.uq.edu.au/patroninfo~S7/' + patronNumber + '/overdues'}];
+          this.$.fines.actionButtons.footer = [{title: 'Pay now', url: 'https://library.uq.edu.au/patroninfo~S7/' + patronNumber + '/overdues'}];
         }
+        this.$.fines.actionButtons.contextual = [
+            {title: 'About overdue charges', url: 'https://www.library.uq.edu.au/help/borrowing#overdues', id: 'aboutOverdueCharges'},
+            {title: 'Payment options', url: 'https://www.library.uq.edu.au/help/payment-options', id: 'paymentOptions'}
+
+        ];
 
         this.fire('uqlibrary-borrowing-data-loaded');
 

@@ -9,14 +9,15 @@
     <section name="list" class="with-persistent-footer">
       <uqlibrary-borrowing-list id="finesList" items="{{fines}}">
       </uqlibrary-borrowing-list>
-      <div>
-        <paper-button><a href="https://www.library.uq.edu.au/help/borrowing#overdues" target="_blank" id="aboutOverdueCharges" on-click="{{contextualButtonClicked}}">About overdue charges</a></paper-button>
-      </div>
-      <div>
-        <paper-button><a href="https://www.library.uq.edu.au/help/payment-options" target="_blank" id="paymentOptions" on-click="{{contextualButtonClicked}}">Payment options</a></paper-button>
-      </div>
+      <template repeat="{{button in actionButtons.contextual}}">
+        <div>
+          <paper-button>
+            <a href="{{button.url}}" target="_blank" id="{{button.id}}" on-click="{{contextualButtonClicked}}">{{button.title}}</a>
+          </paper-button>
+        </div>
+      </template>
     </section>
-    <uqlibrary-persistent-footer id="persistentFooter" actionButtons="{{actionButtons}}" hidden?="{{finesSum == 0}}">
+    <uqlibrary-persistent-footer id="persistentFooter" actionButtons="{{actionButtons.footer}}" hidden?="{{finesSum == 0}}">
       <div layout horizontal>
         <div flex> <b>Total</b>: {{finesSum | moneyFormat}} </div>
         <div class="footer-info" end-justified hidden?="{{ finesSum > fineMinimumPayableAmount }}">
@@ -37,10 +38,10 @@
         fines: {
           value : [],
           reflect : true
-        }
+        },
+        actionButtons: {footer: [], contextual: []}
       },
       transitioning: false,
-      actionButtons: [],
       finesSum: 0,
       fineMinimumPayableAmount: 20 * 100, // in cents
 
@@ -52,7 +53,7 @@
       finesChanged: function(){
         this.processData();
         if(this.finesSum < this.fineMinimumPayableAmount) {
-          this.actionButtons = [];
+          this.actionButtons.footer = [];
         }
 
       },

@@ -291,6 +291,11 @@ core-tooltip.fancy:focus::shadow .core-tooltip {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0); }
 
+uqlibrary-home #account core-icon {
+  height: 26px;
+  width: 26px;
+  color: #fafafa; }
+
 .single-line-list {
   list-style-type: none;
   margin: 0;
@@ -723,6 +728,9 @@ paper-fab {
   paper-fab core-icon {
     color: white; }
 
+paper-action-dialog paper-button.colored {
+  color: #007e9e; }
+
 .card {
   display: block;
   border-radius: 2px;
@@ -799,28 +807,6 @@ paper-fab {
     background-color: #eeeeee; }
   .hint-box.unavailable {
     background-color: #bdbdbd; }
-
-paper-input-decorator::shadow .focused-underline {
-  background-color: #8cb800; }
-
-paper-button.colored {
-  color: #007e9e; }
-
-paper-checkbox::shadow #ink[checked] {
-  color: #007e9e; }
-
-paper-checkbox::shadow #checkbox.checked {
-  border-color: #007e9e;
-  background-color: #007e9e; }
-
-paper-checkbox::shadow #ink {
-  color: #cccccc; }
-
-paper-checkbox::shadow #checkbox {
-  border-color: #cccccc; }
-
-paper-button [colored] {
-  background-color: #007e9e; }
 
 :host,
 :host *,
