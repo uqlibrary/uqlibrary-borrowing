@@ -36,6 +36,14 @@
         this.$.holdsTimeline.noItemsMessage = "No current holds";
         this.$.holdsTimeline.showEachDate = true;
         this.$.holdsTimeline.sortByDate = false; // we don't care about placed date, so disable sorting by date
+
+        this.addEventListener('uqlibrary-borrowing-list-item-selected', function(e) {
+          var _item = e.detail;
+          if(_item.hasOwnProperty('url')) {
+            window.location.href = _item.url;
+          }
+        });
+
       },
 
       holdsChanged: function(){

@@ -72,14 +72,14 @@
         },
 
         /**
-         * The 'item-selected' item is fired when a user taps on an item in timeline,
+         * The 'uqlibrary-borrowing-list-item-selected' item is fired when a user taps on an item in timeline,
          * object containing item details is returned
          * @item item-selected
          */
         itemSelected: function(item, data, source) {
           var itemId = source.getAttribute('data-item-id');
           var selectedItem = this.items.filter(function(item){ return item.id == itemId; });
-          this.fire('item-selected', selectedItem.length ? selectedItem[0] : undefined);
+          this.fire('uqlibrary-borrowing-list-item-selected', selectedItem.length ? selectedItem[0] : undefined);
         },
 
 

@@ -224,7 +224,7 @@ Element providing an overview for loans, holds and fines.
           this.$.holds.actionButtons = [{title: 'Cancel Holds', url: 'https://library.uq.edu.au/patroninfo~S7/' + patronNumber + '/holds'}];
         }
         if(this.data.fines && this.data.fines.length > 0){
-          this.$.fines.actionButtons = [{title: 'Pay fines', url: 'https://library.uq.edu.au/patroninfo~S7/' + patronNumber + '/overdues'}];
+          this.$.fines.actionButtons = [{title: 'Pay now', url: 'https://library.uq.edu.au/patroninfo~S7/' + patronNumber + '/overdues'}];
         }
 
         this.fire('uqlibrary-borrowing-data-loaded');

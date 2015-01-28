@@ -37,7 +37,14 @@
 
       ready: function(){
         this.$.loansTimeline.noItemsMessage = "No loans";
-      },
+
+        this.addEventListener('uqlibrary-borrowing-list-item-selected', function(e) {
+          var _item = e.detail;
+          if(_item.hasOwnProperty('url')) {
+            window.location.href = _item.url;
+          }
+        });
+       },
 
       loansChanged: function(){
         this.processData();
@@ -52,6 +59,13 @@
           _loan.id = i;
           _loan.date = new Date(_loan.dueDate);
           _loan.dateText = _loan.date.getDate() + '/' + (_loan.date.getMonth() + 1) + '/' + _loan.date.getFullYear();
+
+          if(_loan.barcodes) {
+            _loan.subtitle = "Barcode: "+_loan.barcodes;
+          }
+          if(_loan.callNumber) {
+            _loan.secondaryText = "Call Number: "+  _loan.callNumber
+          }
 
           _loan.actions = [];
           var today = new Date();

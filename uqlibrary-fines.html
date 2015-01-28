@@ -13,7 +13,7 @@
         <paper-button><a href="https://www.library.uq.edu.au/help/borrowing#overdues" target="_blank" id="aboutOverdueCharges" on-click="{{contextualButtonClicked}}">About overdue charges</a></paper-button>
       </div>
       <div>
-        <paper-button><a href="https://www.library.uq.edu.au/help/payment-options" target="_blank" id="otherPaymentOptions" on-click="{{contextualButtonClicked}}">Other payment options</a></paper-button>
+        <paper-button><a href="https://www.library.uq.edu.au/help/payment-options" target="_blank" id="paymentOptions" on-click="{{contextualButtonClicked}}">Payment options</a></paper-button>
       </div>
     </section>
     <uqlibrary-persistent-footer id="persistentFooter" actionButtons="{{actionButtons}}" hidden?="{{finesSum == 0}}">
@@ -46,6 +46,7 @@
 
       ready: function(){
         this.$.finesList.noItemsMessage = "No overdue charges";
+        this.$.finesList.showEachDate = true;
       },
 
       finesChanged: function(){
@@ -76,7 +77,6 @@
             _fine.dateReturned = new Date(_fine.dateReturned);
             _fine.dateReturnedText = _fine.dateReturned.getDate() + '/' + (_fine.dateReturned.getMonth() + 1) + '/' + _fine.dateReturned.getFullYear();
           }
-
           _fine.actions = [];
 
           if(_fine.dueDateText && _fine.dateReturnedText) {
@@ -85,6 +85,13 @@
             //if(_fine.description) {
               //_fine.attentionIcon = {icon: "warning", text: _fine.description, type: 'warning'};
             //}
+          }
+          else {
+            if(_fine.description) {
+              _fine.subtitle = _fine.description;
+            }
+
+
           }
 
           this.finesSum = this.calculateFines(this.fines);
