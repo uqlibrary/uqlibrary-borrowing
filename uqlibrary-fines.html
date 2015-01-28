@@ -20,7 +20,7 @@
       <div layout horizontal>
         <div flex> <b>Total</b>: {{finesSum | moneyFormat}} </div>
         <div class="footer-info" end-justified hidden?="{{ finesSum > fineMinimumPayableAmount }}">
-          <core-tooltip id="tooltip" label="No need to pay unless you reach {{fineMinimumPayableAmount | moneyFormat}}" position="top" class="fancy">
+          <core-tooltip id="tooltip" label="No need to pay unless you reach {{fineMinimumPayableAmount | moneyFormat}}" position="left" class="fancy">
             <core-icon icon="info-outline"></core-icon>
           </core-tooltip>
         </div>
