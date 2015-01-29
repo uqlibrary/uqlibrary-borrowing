@@ -12,9 +12,7 @@
       <div layout horizontal>
         <template repeat="{{button in actionButtons.contextual}}">
           <div>
-            <paper-button>
               <a href="{{button.url}}" target="_blank" id="{{button.id}}" on-click="{{contextualButtonClicked}}">{{button.title}}</a>
-            </paper-button>
           </div>
         </template>
       </div>
