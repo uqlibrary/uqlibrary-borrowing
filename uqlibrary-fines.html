@@ -16,7 +16,7 @@
               <a href="{{button.url}}" target="_blank" id="{{button.id}}" on-click="{{contextualButtonClicked}}">{{button.title}}</a>
           </div>
         </template>
-        <p>You don't need to pay your overdue charges unless you reach {{fineMinimumPayableAmount | moneyFormat}}. You currently have {{finesSum | moneyFormat}}, so you do | don't need to pay your overdue charges.</p>
+        <p>You don't need to pay your overdue charges unless you reach {{fineMinimumPayableAmount | moneyFormat}}. You currently have {{finesSum | moneyFormat}}, so you {{needToPay}} need to pay your overdue charges.</p>
         <paper-button affirmative class="colored" on-tap="{{toggleLogout}}">Okay, I got it</paper-button>
       </paper-action-dialog>
 
@@ -26,7 +26,7 @@
         <div flex> <b>Total</b>: {{finesSum | moneyFormat}} </div>
         <div class="footer-info" end-justified>
           <paper-button raised on-tap="{{toggleInfo}}">Info</paper-button>
-          <core-tooltip id="tooltip" disabled?="{{ finesSum < fineMinimumPayableAmount }}" label="No need to pay unless you reach {{fineMinimumPayableAmount | moneyFormat}}" position="left" class="fancy">
+          <core-tooltip id="tooltip" disabled?="{{ finesSum >= fineMinimumPayableAmount }}" label="No need to pay unless you reach {{fineMinimumPayableAmount | moneyFormat}}" position="left" class="fancy">
             <paper-button raised class="colored" disabled?="{{ finesSum < fineMinimumPayableAmount }}">Pay now</paper-button>
           </core-tooltip>
         </div>
@@ -48,10 +48,14 @@
       transitioning: false,
       finesSum: 0,
       fineMinimumPayableAmount: 20 * 100, // in cents
+      needToPay: "don't",
 
       ready: function(){
         this.$.finesList.noItemsMessage = "No overdue charges";
         this.$.finesList.showEachDate = true;
+        if (this.$.finesSum >= this.$.fineMinimumPayableAmount) {
+          needToPay = "do";
+        }
       },
 
       finesChanged: function(){
