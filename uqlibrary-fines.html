@@ -9,23 +9,28 @@
     <section name="list" class="with-persistent-footer">
       <uqlibrary-borrowing-list id="finesList" items="{{fines}}">
       </uqlibrary-borrowing-list>
-      <div>
-        <paper-button><a href="https://www.library.uq.edu.au/help/borrowing#overdues" target="_blank" id="aboutOverdueCharges" on-click="{{contextualButtonClicked}}">About overdue charges</a></paper-button>
-      </div>
-      <div>
-        <paper-button><a href="https://www.library.uq.edu.au/help/payment-options" target="_blank" id="paymentOptions" on-click="{{contextualButtonClicked}}">Payment options</a></paper-button>
-      </div>
+
+      <paper-action-dialog id="finesInfoDialog" transition="core-transition-bottom" backdrop>
+        <template repeat="{{button in actionButtons.contextual}}">
+          <div>
+              <a href="{{button.url}}" target="_blank" id="{{button.id}}" on-click="{{contextualButtonClicked}}">{{button.title}}</a>
+          </div>
+        </template>
+        <p>You don't need to pay your overdue charges unless you reach {{fineMinimumPayableAmount | moneyFormat}}. You currently have {{finesSum | moneyFormat}}, so you {{needToPay}} need to pay your overdue charges.</p>
+        <paper-button affirmative class="colored" on-tap="{{toggleLogout}}">Okay, I got it</paper-button>
+      </paper-action-dialog>
+
     </section>
-    <uqlibrary-persistent-footer id="persistentFooter" actionButtons="{{actionButtons}}" hidden?="{{finesSum == 0}}">
+    <uqlibrary-persistent-footer id="persistentFooter" actionButtons="{{actionButtons.footer}}" hidden?="{{finesSum == 0}}">
       <div layout horizontal>
         <div flex> <b>Total</b>: {{finesSum | moneyFormat}} </div>
-        <div class="footer-info" end-justified hidden?="{{ finesSum > fineMinimumPayableAmount }}">
-          <core-tooltip id="tooltip" label="No need to pay unless you reach {{fineMinimumPayableAmount | moneyFormat}}" position="left" class="fancy">
-            <core-icon icon="info-outline"></core-icon>
+        <div class="footer-info" end-justified>
+          <paper-button raised on-tap="{{toggleInfo}}">Info</paper-button>
+          <core-tooltip id="tooltip" disabled?="{{ finesSum >= fineMinimumPayableAmount }}" label="No need to pay unless you reach {{fineMinimumPayableAmount | moneyFormat}}" position="left" class="fancy">
+            <paper-button raised class="colored" disabled?="{{ finesSum < fineMinimumPayableAmount }}">Pay now</paper-button>
           </core-tooltip>
         </div>
       </div>
-
     </uqlibrary-persistent-footer>
 
   </template>
@@ -37,22 +42,26 @@
         fines: {
           value : [],
           reflect : true
-        }
+        },
+        actionButtons: {footer: [], contextual: []}
       },
       transitioning: false,
-      actionButtons: [],
       finesSum: 0,
       fineMinimumPayableAmount: 20 * 100, // in cents
+      needToPay: "don't",
 
       ready: function(){
         this.$.finesList.noItemsMessage = "No overdue charges";
         this.$.finesList.showEachDate = true;
+        if (this.$.finesSum >= this.$.fineMinimumPayableAmount) {
+          needToPay = "do";
+        }
       },
 
       finesChanged: function(){
         this.processData();
         if(this.finesSum < this.fineMinimumPayableAmount) {
-          this.actionButtons = [];
+          this.actionButtons.footer = [];
         }
 
       },
@@ -113,6 +122,10 @@
           }
         }
         return this.finesSum;
+      },
+
+      toggleInfo: function() {
+        this.$.finesInfoDialog.toggle();
       },
 
       moneyFormat: function(value) {

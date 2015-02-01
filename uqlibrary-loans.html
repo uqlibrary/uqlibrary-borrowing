@@ -10,13 +10,15 @@
       <uqlibrary-borrowing-list id="loansTimeline" items="{{loans}}">
       </uqlibrary-borrowing-list>
       <div layout horizontal>
-        <paper-button>
-          <a href="https://www.library.uq.edu.au/help/undergraduate" target="_blank" id="undergraduateBorrowingGuide" on-click="{{contextualButtonClicked}}">Undergraduate Borrowing guide</a>
-        </paper-button>
+        <template repeat="{{button in actionButtons.contextual}}">
+          <div>
+              <a href="{{button.url}}" target="_blank" id="{{button.id}}" on-click="{{contextualButtonClicked}}">{{button.title}}</a>
+          </div>
+        </template>
       </div>
     </section>
 
-    <uqlibrary-persistent-footer id="persistentFooter" actionButtons="{{actionButtons}}" hidden?="{{ actionButtons.length == 0 }}">
+    <uqlibrary-persistent-footer id="persistentFooter" actionButtons="{{actionButtons.footer}}" hidden?="{{ actionButtons.length == 0 }}">
 
     </uqlibrary-persistent-footer>
 
@@ -31,7 +33,7 @@
           value : [],
           reflect : true
         },
-        actionButtons: []
+        actionButtons: {footer: [], contextual: []}
       },
       transitioning: false,
 

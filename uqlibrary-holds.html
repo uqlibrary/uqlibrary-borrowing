@@ -11,12 +11,14 @@
       <uqlibrary-borrowing-list id="holdsTimeline" items="{{holds}}" class="with-persistent-footer">
       </uqlibrary-borrowing-list>
       <div layout horizontal>
-        <paper-button>
-          <a href="https://www.library.uq.edu.au/help/place-hold" target="_blank" id="aboutPlacingHold" on-click="{{contextualButtonClicked}}">About placing a hold</a>
-        </paper-button>
+        <template repeat="{{button in actionButtons.contextual}}">
+          <div>
+              <a href="{{button.url}}" target="_blank" id="{{button.id}}" on-click="{{contextualButtonClicked}}">{{button.title}}</a>
+          </div>
+        </template>
       </div>
     </section>
-    <uqlibrary-persistent-footer id="persistentFooter" actionButtons="{{actionButtons}}" hidden?="{{ actionButtons.length == 0 }}"></uqlibrary-persistent-footer>
+    <uqlibrary-persistent-footer id="persistentFooter" actionButtons="{{actionButtons.footer}}" hidden?="{{ actionButtons.length == 0 }}"></uqlibrary-persistent-footer>
 
   </template>
 
@@ -27,10 +29,10 @@
         holds: {
           value : [],
           reflect : true
-        }
+        },
+        actionButtons: {footer: [], contextual: []}
       },
       transitioning: false,
-      actionButtons: [],
 
       ready: function(){
         this.$.holdsTimeline.noItemsMessage = "No current holds";
