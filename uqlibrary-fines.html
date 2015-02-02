@@ -53,8 +53,8 @@
       ready: function(){
         this.$.finesList.noItemsMessage = "No overdue charges";
         this.$.finesList.showEachDate = true;
-        if (this.$.finesSum >= this.$.fineMinimumPayableAmount) {
-          needToPay = "do";
+        if (this.finesSum >= this.fineMinimumPayableAmount) {
+          this.needToPay = "do";
         }
       },
 
