@@ -1,7 +1,7 @@
 @import "../uqlibrary-elements/resources/theme/element";
 
 .with-persistent-footer{
-  margin-bottom: $persistent-footer-height;
+  margin-bottom: ($persistent-footer-height*2);
 }
 
 uqlibrary-holds {
