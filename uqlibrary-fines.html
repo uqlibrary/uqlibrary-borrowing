@@ -16,7 +16,7 @@
               <a href="{{button.url}}" target="_blank" id="{{button.id}}" on-click="{{contextualButtonClicked}}">{{button.title}}</a>
           </div>
         </template>
-        <p>You don't need to pay your overdue charges unless you reach {{fineMinimumPayableAmount | moneyFormat}}. You currently have {{finesSum | moneyFormat}}, so you {{needToPay}} need to pay your overdue charges.</p>
+        <p>You don't need to pay your overdue charges unless you reach {{fineMinimumPayableAmount | moneyFormat}}. You currently have {{finesSum | moneyFormat}}, so you {{needToPay}} to pay your overdue charges.</p>
         <paper-button affirmative class="colored" on-tap="{{toggleLogout}}">Okay, I got it</paper-button>
       </paper-action-dialog>
 
@@ -48,13 +48,13 @@
       transitioning: false,
       finesSum: 0,
       fineMinimumPayableAmount: 20 * 100, // in cents
-      needToPay: "don't",
+      needToPay: "don't need",
 
       ready: function(){
         this.$.finesList.noItemsMessage = "No overdue charges";
         this.$.finesList.showEachDate = true;
         if (this.finesSum >= this.fineMinimumPayableAmount) {
-          this.needToPay = "do";
+          this.needToPay = "need";
         }
       },
 
