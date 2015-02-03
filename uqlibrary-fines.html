@@ -26,9 +26,14 @@
         <div flex class="footer-info"> <b>Total</b>: {{finesSum | moneyFormat}} </div>
         <div class="footer-buttons" end-justified>
           <paper-button raised on-tap="{{toggleInfo}}">Info</paper-button>
-          <core-tooltip id="tooltip" disabled?="{{ finesSum >= fineMinimumPayableAmount }}" label="No need to pay unless you reach {{fineMinimumPayableAmount | moneyFormat}}" position="left" class="fancy">
-            <paper-button raised class="colored" disabled?="{{ finesSum < fineMinimumPayableAmount }}">Pay now</paper-button>
+
+          <core-tooltip id="tooltip" hidden?="{{ finesSum >= fineMinimumPayableAmount }}" label="No need to pay unless you reach {{fineMinimumPayableAmount | moneyFormat}}" position="left" class="fancy">
+                <paper-button class="colored" disabled?="{{ finesSum < fineMinimumPayableAmount }}">Pay now</paper-button>
           </core-tooltip>
+
+          <a target="_blank" hidden?="{{ finesSum < fineMinimumPayableAmount }}" href="https://library.uq.edu.au/patroninfo~S7/{{patronNumber}}/overdues">
+            <paper-button class="colored">Pay now</paper-button>
+          </a>
         </div>
       </div>
     </uqlibrary-persistent-footer>
@@ -49,6 +54,7 @@
       finesSum: 0,
       fineMinimumPayableAmount: 20 * 100, // in cents
       needToPay: "don't need",
+      patronNumber: '',
 
       ready: function(){
         this.$.finesList.noItemsMessage = "No overdue charges";
