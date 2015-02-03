@@ -11,12 +11,12 @@
       </uqlibrary-borrowing-list>
 
       <paper-action-dialog id="finesInfoDialog" transition="core-transition-bottom" backdrop>
+        <p>You don't need to pay your overdue charges unless you reach {{fineMinimumPayableAmount | moneyFormat}}. You currently have {{finesSum | moneyFormat}}, so you {{needToPay}} to pay your overdue charges.</p>
         <template repeat="{{button in actionButtons.contextual}}">
           <div>
-              <a href="{{button.url}}" target="_blank" id="{{button.id}}" on-click="{{contextualButtonClicked}}">{{button.title}}</a>
+            <a href="{{button.url}}" target="_blank" id="{{button.id}}" on-click="{{contextualButtonClicked}}">{{button.title}}</a>
           </div>
         </template>
-        <p>You don't need to pay your overdue charges unless you reach {{fineMinimumPayableAmount | moneyFormat}}. You currently have {{finesSum | moneyFormat}}, so you {{needToPay}} to pay your overdue charges.</p>
         <paper-button affirmative class="colored" on-tap="{{toggleLogout}}">Okay, I got it</paper-button>
       </paper-action-dialog>
 
@@ -53,15 +53,16 @@
       ready: function(){
         this.$.finesList.noItemsMessage = "No overdue charges";
         this.$.finesList.showEachDate = true;
-        if (this.finesSum >= this.fineMinimumPayableAmount) {
-          this.needToPay = "need";
-        }
+
       },
 
       finesChanged: function(){
         this.processData();
         if(this.finesSum < this.fineMinimumPayableAmount) {
           this.actionButtons.footer = [];
+        }
+        if (this.finesSum >= this.fineMinimumPayableAmount) {
+          this.needToPay = "need";
         }
 
       },
