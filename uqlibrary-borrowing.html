@@ -226,7 +226,8 @@ Element providing an overview for loans, holds and fines.
         }
         // Support different contextual links
         switch(this.user.type) {
-          case 31, 21: // both undergraduate and postgraduate
+          case 21: // both undergraduate and postgraduate
+          case 31:
             this.$.loans.actionButtons.contextual = [{title: 'Borrowing guide - external/remote students', url: 'https://www.library.uq.edu.au/services-for/borrowing-external-and-remote', id: 'borrowingGuide'}];
             break;
           case 1: // undergraduate
