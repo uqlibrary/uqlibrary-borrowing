@@ -5,7 +5,7 @@
 <polymer-element name="uqlibrary-holds" attributes="holds actionButtons" extends="uqlibrary-borrowing-list">
 
   <template>
-    <link rel="stylesheet" href="uqlibrary-borrowing.css">
+    <link rel="stylesheet" href="../uqlibrary-elements/resources/theme/element.css">
     <core-signals on-core-signal-transitioning-change="{{transitioningChangeHandler}}"></core-signals>
     <section name="list" class="with-persistent-footer">
       <uqlibrary-borrowing-list id="holdsTimeline" items="{{holds}}" class="with-persistent-footer">
