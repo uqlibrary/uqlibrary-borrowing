@@ -22,12 +22,12 @@
 
     </section>
     <uqlibrary-persistent-footer id="persistentFooter" actionButtons="{{actionButtons.footer}}" hidden?="{{finesSum == 0}}">
-      <div layout horizontal>
-        <div flex class="footer-info"> <b>Total</b>: {{finesSum | moneyFormat}} </div>
+      <div layout horizontal id="finesFooter">
+        <div flex class="footerInfo"> <b>Total</b>: {{finesSum | moneyFormat}} </div>
         <div class="footer-buttons" end-justified>
           <paper-button raised on-tap="{{toggleInfo}}">Info</paper-button>
 
-          <core-tooltip id="tooltip" hidden?="{{ finesSum >= fineMinimumPayableAmount }}" label="No need to pay unless you reach {{fineMinimumPayableAmount | moneyFormat}}" position="left" class="fancy">
+          <core-tooltip id="tooltip" noarrow hidden?="{{ finesSum >= fineMinimumPayableAmount }}" label="No need to pay unless you reach {{fineMinimumPayableAmount | moneyFormat}}" position="left" class="fancyLeft">
                 <paper-button class="colored" disabled?="{{ finesSum < fineMinimumPayableAmount }}">Pay now</paper-button>
           </core-tooltip>
 
