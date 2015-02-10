@@ -6,19 +6,19 @@
   <template>
     <link rel="stylesheet" href="../uqlibrary-elements/resources/theme/element.css">
     <core-signals on-core-signal-transitioning-change="{{transitioningChangeHandler}}"></core-signals>
-    <section name="list" class="with-persistent-footer">
+    <section name="list" class="body-footer-container">
       <uqlibrary-borrowing-list id="loansTimeline" items="{{loans}}">
       </uqlibrary-borrowing-list>
       <div layout horizontal>
         <template repeat="{{button in actionButtons.contextual}}">
-          <div>
-              <a href="{{button.url}}" target="_blank" id="{{button.id}}" on-click="{{contextualButtonClicked}}">{{button.title}}</a>
+          <div class="text-container">
+              <core-icon class="link" icon="info-outline"></core-icon> <a href="{{button.url}}" target="_blank" id="{{button.id}}" on-click="{{contextualButtonClicked}}">{{button.title}}</a>
           </div>
         </template>
       </div>
     </section>
 
-    <uqlibrary-persistent-footer id="persistentFooter" actionButtons="{{actionButtons.footer}}" hidden?="{{ actionButtons.length == 0 }}">
+    <uqlibrary-persistent-footer id="persistentFooter" actionButtons="{{actionButtons.footer}}" hidden?="{{ actionButtons.footer.length == 0 }}">
 
     </uqlibrary-persistent-footer>
 

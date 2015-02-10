@@ -6,17 +6,19 @@
   <template>
     <link rel="stylesheet" href="../uqlibrary-elements/resources/theme/element.css">
     <core-signals on-core-signal-transitioning-change="{{transitioningChangeHandler}}"></core-signals>
-    <section name="list" class="with-persistent-footer">
+    <section name="list" class="body-footer-container">
       <uqlibrary-borrowing-list id="finesList" items="{{fines}}">
       </uqlibrary-borrowing-list>
 
       <paper-action-dialog id="finesInfoDialog" transition="core-transition-bottom" backdrop>
         <p>You don't need to pay your overdue charges unless you reach {{fineMinimumPayableAmount | moneyFormat}}. You currently have {{finesSum | moneyFormat}}, so you {{needToPay}} to pay your overdue charges.</p>
-        <template repeat="{{button in actionButtons.contextual}}">
-          <div>
-            <a href="{{button.url}}" target="_blank" id="{{button.id}}" on-click="{{contextualButtonClicked}}">{{button.title}}</a>
-          </div>
-        </template>
+        <p>
+          <template repeat="{{button in actionButtons.contextual}}">
+            <div>
+              <a href="{{button.url}}" target="_blank" id="{{button.id}}" on-click="{{contextualButtonClicked}}">{{button.title}}</a>
+            </div>
+          </template>
+        </p>
         <paper-button affirmative class="colored" on-tap="{{toggleLogout}}">Okay, I got it</paper-button>
       </paper-action-dialog>
 
@@ -24,7 +26,7 @@
     <uqlibrary-persistent-footer id="persistentFooter" actionButtons="{{actionButtons.footer}}" hidden?="{{finesSum == 0}}">
       <div layout horizontal id="finesFooter">
         <div flex class="footerInfo"> <b>Total</b>: {{finesSum | moneyFormat}} </div>
-        <div class="footer-buttons" end-justified>
+        <div class="footerButtons" end-justified>
           <paper-button raised on-tap="{{toggleInfo}}">Info</paper-button>
 
           <core-tooltip id="tooltip" noarrow hidden?="{{ finesSum >= fineMinimumPayableAmount }}" label="No need to pay unless you reach {{fineMinimumPayableAmount | moneyFormat}}" position="left" class="fancyLeft">

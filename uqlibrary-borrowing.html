@@ -218,7 +218,7 @@ Element providing an overview for loans, holds and fines.
         var patronNumber = this.data.recordNumber;
 
         //Contextual and footer links
-        this.$.holds.actionButtons = {};
+        this.$.holds.actionButtons = {footer: [], contextual: []};
         if(this.data.checkedOut && this.data.checkedOut.length > 0){
           this.$.loans.actionButtons = {
             footer: [{title: 'Renew Loans', url: 'https://library.uq.edu.au/patroninfo~S7/' + patronNumber + '/items'}]
@@ -240,13 +240,13 @@ Element providing an overview for loans, holds and fines.
             this.$.loans.actionButtons.contextual = [{title: 'Borrowing guides', url: 'https://www.library.uq.edu.au/help/borrowing', id: 'borrowingGuide'}];
             break;
         }
-        this.$.holds.actionButtons = {};
+        this.$.holds.actionButtons = {footer: [], contextual: []};
         if(this.data.holds && this.data.holds.length > 0){
           this.$.holds.actionButtons.footer = [ {title: 'Cancel Holds', url: 'https://library.uq.edu.au/patroninfo~S7/' + patronNumber + '/holds'}];
         }
         this.$.holds.actionButtons.contextual = [{title: 'About placing a hold', url: 'https://www.library.uq.edu.au/help/place-hold', id: 'aboutPlacingHold'}];
 
-        this.$.fines.actionButtons = {};
+        this.$.fines.actionButtons = {footer: [], contextual: []};
         this.$.fines.patronNumber = patronNumber;
         if(this.data.fines && this.data.fines.length > 0){
 //          this.$.fines.actionButtons.footer = [{title: 'Pay now', url: 'https://library.uq.edu.au/patroninfo~S7/' + patronNumber + '/overdues'}];
