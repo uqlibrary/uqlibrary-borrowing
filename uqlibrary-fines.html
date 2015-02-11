@@ -62,6 +62,13 @@
         this.$.finesList.noItemsMessage = "No overdue charges";
         this.$.finesList.showEachDate = true;
 
+        this.addEventListener('uqlibrary-borrowing-list-item-selected', function(e) {
+          var _item = e.detail;
+          if(_item.hasOwnProperty('url')) {
+            window.location.href = _item.url;
+          }
+        });
+
       },
 
       finesChanged: function(){
