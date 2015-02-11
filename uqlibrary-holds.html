@@ -13,7 +13,7 @@
       <div layout horizontal>
         <template repeat="{{button in actionButtons.contextual}}">
           <div class="text-container">
-            <core-icon class="link" icon="info-outline"></core-icon> <a href="{{button.url}}" target="_blank" id="{{button.id}}" on-click="{{contextualButtonClicked}}">{{button.title}}</a>
+            <a href="{{button.url}}" target="_blank" id="{{button.id}}" on-click="{{contextualButtonClicked}}"><core-icon class="link" icon="info-outline"></core-icon> {{button.title}}</a>
           </div>
         </template>
       </div>
