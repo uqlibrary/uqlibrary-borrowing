@@ -24,7 +24,7 @@
 
     </section>
     <uqlibrary-persistent-footer id="persistentFooter" actionButtons="{{actionButtons.footer}}" hidden?="{{finesSum == 0}}">
-      <div layout horizontal id="finesFooter">
+      <div layout horizontal class="persistentFooter">
         <div flex class="footerInfo"> <b>Total</b>: {{finesSum | moneyFormat}} </div>
         <div class="footerButtons" end-justified>
           <paper-button raised on-tap="{{toggleInfo}}">Info</paper-button>
