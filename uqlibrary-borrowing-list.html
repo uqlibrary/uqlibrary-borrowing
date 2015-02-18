@@ -19,8 +19,8 @@
                 <div class="title">{{item.day}}</div>
                 <div class="caption">{{item.daySuffixText}}</div>
               </div>
-              <div class="content" on-tap="{{itemSelected}}" data-item-id="{{item.id}}">
-                <div class="line1">{{item.title}}</div>
+              <div class="content" on-click="{{itemSelected}}" data-item-id="{{item.id}}">
+                <div class="line1"><a href="javascript:;">{{item.title}}</a></div>
                 <div class="line2">{{item.subtitle}}</div>
                 <div class="line3">{{item.secondaryText}}</div>
               </div>
