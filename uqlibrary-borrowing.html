@@ -92,8 +92,7 @@ Element providing an overview for loans, holds and fines.
       <core-header-panel main class="main">
         <core-toolbar>
           <paper-icon-button id="toolBarLeftButton" icon="menu" core-drawer-toggle></paper-icon-button>
-          <span flex id="toolbar-page-title">Borrowing</span>
-
+          <h1 flex id="toolbar-page-title">Borrowing</h1>
         </core-toolbar>
 
         <div id="content">
@@ -105,8 +104,8 @@ Element providing an overview for loans, holds and fines.
             <core-a11y-keys id="a11yHoldsTab" target="{{$.holdsTab}}" keys="{{keyboardNavigationKeys}}" on-keys-pressed="{{tabHoldsSelected}}"></core-a11y-keys>
             <core-a11y-keys id="a11yFinesTab" target="{{$.finesTab}}" keys="{{keyboardNavigationKeys}}" on-keys-pressed="{{tabFinesSelected}}"></core-a11y-keys>
 
-            <paper-tab name="loans" id="loansTab">
-                <div layout vertical center class="menu" role="tab">
+            <paper-tab name="loans" id="loansTab" aria-label="loans">
+                <div layout vertical center class="menu">
                   <a href="javascript:;" layout vertical center>
                     <span class="tabTitleNumber">{{ data.checkedOut.length }}</span>
                     <span class="tabTitle">Loans</span>
@@ -115,7 +114,7 @@ Element providing an overview for loans, holds and fines.
             </paper-tab>
 
 
-            <paper-tab name="holds" id="holdsTab">
+            <paper-tab name="holds" id="holdsTab" aria-label="holds">
               <div layout vertical center class="menu">
                 <a href="javascript:;" layout vertical center>
                   <span class="tabTitleNumber">{{ data.holds.length }}</span>
@@ -124,7 +123,7 @@ Element providing an overview for loans, holds and fines.
               </div>
 
             </paper-tab>
-            <paper-tab name="fines" id="finesTab">
+            <paper-tab name="fines" id="finesTab" aria-label="overdue charges">
               <div layout vertical center class="menu">
                 <a href="javascript:;" layout vertical center>
                   <span class="tabTitleNumber">{{ sumFines }}</span>
