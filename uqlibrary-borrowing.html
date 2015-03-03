@@ -214,9 +214,10 @@ Element providing an overview for loans, holds and fines.
               that.user = e.detail;
           } else {
             // Not logged in
-            that.$.account.login('https://app.library.uq.edu.au/v1/borrowing');
+            that.$.account.login(window.location.href);
           }
         });
+
         if(this.autoload){
           this.$.account.get();
         }
