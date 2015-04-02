@@ -86,7 +86,7 @@ Element providing an overview for loans, holds and fines.
     <core-drawer-panel id="drawerPanel" class="drawer" drawerWidth="256px" responsiveWidth="768px">
 
       <core-header-panel drawer>
-        <uqlibrary-menu account="{{user}}"></uqlibrary-menu>
+        <uqlibrary-menu id="uqlibraryMenu" account="{{user}}"></uqlibrary-menu>
       </core-header-panel>
 
       <core-header-panel main class="main">
@@ -106,7 +106,7 @@ Element providing an overview for loans, holds and fines.
             <core-a11y-keys id="a11yHoldsTab" target="{{$.holdsTab}}" keys="{{keyboardNavigationKeys}}" on-keys-pressed="{{tabHoldsSelected}}"></core-a11y-keys>
             <core-a11y-keys id="a11yFinesTab" target="{{$.finesTab}}" keys="{{keyboardNavigationKeys}}" on-keys-pressed="{{tabFinesSelected}}"></core-a11y-keys>
 
-            <paper-tab name="loans" id="loansTab" aria-label="loans">
+            <paper-tab name="loans" id="loansTab" aria-label="loans" hidden?="{{ hideLoans }}">
                 <div layout vertical center class="menu">
                   <a href="javascript:;" layout vertical center>
                     <span class="tabTitleNumber">{{ data.checkedOut.length }}</span>
@@ -116,7 +116,7 @@ Element providing an overview for loans, holds and fines.
             </paper-tab>
 
 
-            <paper-tab name="holds" id="holdsTab" aria-label="holds">
+            <paper-tab name="holds" id="holdsTab" aria-label="holds" hidden?="{{ hideHolds }}">
               <div layout vertical center class="menu">
                 <a href="javascript:;" layout vertical center>
                   <span class="tabTitleNumber">{{ data.holds.length }}</span>
@@ -125,7 +125,7 @@ Element providing an overview for loans, holds and fines.
               </div>
 
             </paper-tab>
-            <paper-tab name="fines" id="finesTab" aria-label="overdue charges">
+            <paper-tab name="fines" id="finesTab" aria-label="overdue charges" hidden?="{{ hideFines }}">
               <div layout vertical center class="menu">
                 <a href="javascript:;" layout vertical center>
                   <span class="tabTitleNumber">{{ sumFines }}</span>
@@ -137,19 +137,19 @@ Element providing an overview for loans, holds and fines.
           </paper-tabs>
 
           <div class="infoWrapper">
-            <core-animated-pages id="animatedPages" transitions="slide-from-right" block selected="{{selectedTab}}"
+            <core-animated-pages id="animatedPages" transitions="slide-from-right" block selected="{{selectedTab}}" valueattr="name"
                                  on-core-animated-pages-transition-prepare="{{transitionPrepareHandler}}"
                                  on-core-animated-pages-transition-end="{{transitionEndHandler}}">
 
-              <section id="loansSection" name="loans" class="loans" hidden?="{{ selectedTab != 'loans' }}">
+              <section id="loansSection" name="loans" class="loans" hidden?="{{ selectedTab != 'loans' || hideLoans }}">
                 <uqlibrary-loans id="loans" loans="{{ data.checkedOut }}"></uqlibrary-loans>
               </section>
 
-              <section id="holdsSection" name="holds" class="holds" hidden?="{{ selectedTab != 'holds' }}">
+              <section id="holdsSection" name="holds" class="holds" hidden?="{{ selectedTab != 'holds' || hideHolds }}">
                 <uqlibrary-holds id="holds" holds="{{ data.holds }}"></uqlibrary-holds>
               </section>
 
-              <section id="finesSection" name="fines" class="fines" hidden?="{{ selectedTab != 'fines' }}">
+              <section id="finesSection" name="fines" class="fines" hidden?="{{ selectedTab != 'fines' || hideFines }}">
                 <uqlibrary-fines id="fines" fines="{{ data.fines }}"></uqlibrary-fines>
               </section>
 
@@ -193,18 +193,9 @@ Element providing an overview for loans, holds and fines.
       selectedTab : 'loans',
       patronNumber: '',
       user: {},
-
-      tabLoanSelected : function() {
-        this.selectedTab = "loans";
-      },
-
-      tabFinesSelected : function() {
-        this.selectedTab = "fines";
-      },
-
-      tabHoldsSelected : function() {
-        this.selectedTab = 'holds';
-      },
+      hideLoans: false,
+      hideHolds: false,
+      hideFines: false,
 
       ready: function() {
         var that = this;
@@ -221,7 +212,28 @@ Element providing an overview for loans, holds and fines.
         if(this.autoload){
           this.$.account.get();
         }
+        this.$.uqlibraryMenu.addEventListener('uqlibrary-menu-loaded', function(e) {
+          var borrowingData = that.$.uqlibraryMenu.applications.filter(function (element) {
+            return element.app == 'uqlibrary-borrowing';
+          })[0];
+          that.hideLoans = borrowingData.subApplications.filter(function (element) {
+            return element.app == 'Loans';
+          })[0].ptypes.indexOf(Number(that.user.type)) == -1;
+          that.hideHolds = borrowingData.subApplications.filter(function (element) {
+            return element.app == 'Holds';
+          })[0].ptypes.indexOf(Number(that.user.type)) == -1;
+          that.hideFines = borrowingData.subApplications.filter(function (element) {
+            return element.app == 'Fines';
+          })[0].ptypes.indexOf(Number(that.user.type)) == -1;
+          if (!that.hideLoans) {
+            that.selectedTab = 'loans';
+          } else if (!that.hideHolds) {
+            that.selectedTab = 'holds';
+          } else if (!that.hideFines) {
+            that.selectedTab = 'fines';
+          }
 
+        });
         this.$.loansApi.addEventListener('uqlibrary-api-account-loans-loaded', function(e) {
           that.data = e.detail;
         });
@@ -260,21 +272,8 @@ Element providing an overview for loans, holds and fines.
           };
         }
         // Support different contextual links
-        switch(this.user.type) {
-          case 21: // both undergraduate and postgraduate
-          case 31:
-            this.$.loans.actionButtons.contextual = [{title: 'Borrowing guide - external/remote students', url: 'https://www.library.uq.edu.au/services-for/borrowing-external-and-remote', id: 'borrowingGuide'}];
-            break;
-          case 1: // undergraduate
-            this.$.loans.actionButtons.contextual = [{title: 'Borrowing guide - undergraduates', url: 'https://www.library.uq.edu.au/help/undergraduate', id: 'borrowingGuide'}];
-            break;
-          case 11: // both undergraduate and postgraduate
-            this.$.loans.actionButtons.contextual = [{title: 'Borrowing guide - coursework postgraduates', url: 'https://www.library.uq.edu.au/help/coursework-postgraduate', id: 'borrowingGuide'}];
-            break;
-          default: // both undergraduate and postgraduate
-            this.$.loans.actionButtons.contextual = [{title: 'Borrowing guides', url: 'https://www.library.uq.edu.au/help/borrowing', id: 'borrowingGuide'}];
-            break;
-        }
+        this.$.loans.actionButtons.contextual = [{title: 'Borrowing guides', url: 'https://www.library.uq.edu.au/borrowing-guide/' + this.user.type, id: 'borrowingGuide'}];
+
         this.$.holds.actionButtons = {footer: [], contextual: []};
         if(this.data.holds && this.data.holds.length > 0){
           this.$.holds.actionButtons.footer = [ {title: 'Manage Holds', url: 'https://library.uq.edu.au/patroninfo~S7/' + patronNumber + '/holds'}];

@@ -9,10 +9,15 @@
   <script src="../../web-component-tester/browser.js"></script>
 
   <link rel="import" href="../uqlibrary-borrowing.html">
-</head>
+  <script>
+    document.cookie="UQLMockData-PType=3";
+  </script>
+
+
+  </head>
 <body>
 
-<uqlibrary-borrowing autoload="false"></uqlibrary-borrowing>
+<uqlibrary-borrowing autoload="true"></uqlibrary-borrowing>
 
 <script>
 window.addEventListener('polymer-ready', function() {
@@ -43,7 +48,6 @@ window.addEventListener('polymer-ready', function() {
            assert.isNotNull(tabs, 'Tabs are not visible');
 
            // Check all tabs are shown
-           expect(tabs.length).to.be.equal(3);
            var _title = tabs[0].querySelector('.tabTitle');
            var _titleNumber = tabs[0].querySelector('.tabTitleNumber');
            expect(_title.innerHTML).to.be.equal('Loans');
@@ -54,17 +58,15 @@ window.addEventListener('polymer-ready', function() {
            expect(_title.innerHTML).to.be.equal('Holds');
            expect(_titleNumber.innerHTML).to.be.equal(borrowingEl.data.holds.length+'');
 
-           var _title = tabs[2].querySelector('.tabTitle');
-           var _titleNumber = tabs[2].querySelector('.tabTitleNumber');
-           expect(_title.innerHTML).to.be.equal('Overdue Charges');
-           expect(_titleNumber.innerHTML).to.be.equal(borrowingEl.$.fines.moneyFormat(borrowingEl.$.fines.finesSum)+'');
-
            expect(borrowingEl.selectedTab).to.be.equal('loans');
 
-           var isHoldsHidden = borrowingEl.$.holdsSection.getAttribute('hidden');
-           assert.isNotNull(isHoldsHidden, 'Holds tab is not hidden');
+           var isLoansHidden = borrowingEl.$.loansTab.getAttribute('hidden');
+           assert.isNull(isLoansHidden, 'Loans tab is hidden');
 
-           var isFinesHidden = borrowingEl.$.finesSection.getAttribute('hidden');
+           var isHoldsHidden = borrowingEl.$.holdsTab.getAttribute('hidden');
+           assert.isNull(isHoldsHidden, 'Holds tab is hidden');
+
+           var isFinesHidden = borrowingEl.$.finesTab.getAttribute('hidden');
            assert.isNotNull(isFinesHidden, 'Fines tab is not hidden');
 
 
@@ -92,10 +94,13 @@ window.addEventListener('polymer-ready', function() {
            borrowingEl.selectedTab = 'holds';
            setTimeout(function() {
              var _list = borrowingEl.$.holds.$.holdsTimeline;
-             var isHoldsHidden = borrowingEl.$.loansSection.getAttribute('hidden');
-             assert.isNotNull(isHoldsHidden, 'Holds tab is not hidden');
+             var isLoansHidden = borrowingEl.$.loansTab.getAttribute('hidden');
+             assert.isNull(isLoansHidden, 'Loans tab is hidden');
 
-             var isFinesHidden = borrowingEl.$.finesSection.getAttribute('hidden');
+             var isHoldsHidden = borrowingEl.$.loansTab.getAttribute('hidden');
+             assert.isNull(isHoldsHidden, 'Holds tab is hidden');
+
+             var isFinesHidden = borrowingEl.$.finesTab.getAttribute('hidden');
              assert.isNotNull(isFinesHidden, 'Fines tab is not hidden');
 
              expect(_list.processedItems.length).to.be.equal(borrowingEl.data.holds.length);
@@ -113,43 +118,7 @@ window.addEventListener('polymer-ready', function() {
              var isFooterHidden = borrowingEl.$.holds.$.persistentFooter.getAttribute('hidden');;
              assert.isNull(isFooterHidden, 'Persistent footer is not visible');
 
-             // Switch to fines tab
-             borrowingEl.selectedTab = 'fines';
-             setTimeout(function() {
-               var _list = borrowingEl.$.fines.$.finesList;
-
-               var isLoansHidden = borrowingEl.$.loansSection.getAttribute('hidden');
-               assert.isNotNull(isLoansHidden, 'Loans tab is not hidden');
-
-               var isHoldsHidden = borrowingEl.$.holdsSection.getAttribute('hidden');
-               assert.isNotNull(isHoldsHidden, 'Holds tab is not hidden');
-
-               expect(_list.processedItems.length).to.be.equal(borrowingEl.data.fines.length);
-
-               var firstItem = _list.$.timeline.querySelector('li.first');
-               assert.isNotNull(firstItem, 'No first item shown');
-
-               var _amount = firstItem.querySelector('div.title');
-               expect(_amount.innerHTML).to.contain(borrowingEl.$.fines.moneyFormat(_list.processedItems[0].fineAmount));
-
-               var _text = firstItem.querySelector('div.line1');
-               expect(_text.innerHTML).to.contain(_list.processedItems[0].title);
-
-               _text = firstItem.querySelector('div.line2');
-               expect(_text.innerHTML).to.contain('Due date');
-
-               _text = firstItem.querySelector('div.line3');
-               expect(_text.innerHTML).to.contain('Date returned');
-
-               var isFooterHidden = borrowingEl.$.fines.$.persistentFooter.getAttribute('hidden');
-               assert.isNull(isFooterHidden, 'Persistent footer is not visible');
-
-               expect(borrowingEl.$.fines.$.persistentFooter.innerHTML).to.contain(borrowingEl.$.fines.moneyFormat(borrowingEl.$.fines.finesSum))
-               done();
-             }, 2000);
-
-
-             //done();
+             done();
            }, 2000);
 
 
