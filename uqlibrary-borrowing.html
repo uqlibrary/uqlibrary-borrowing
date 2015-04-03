@@ -272,7 +272,7 @@ Element providing an overview for loans, holds and fines.
           };
         }
         // Support different contextual links
-        this.$.loans.actionButtons.contextual = [{title: 'Borrowing guides', url: 'https://www.library.uq.edu.au/borrowing-guide/' + this.user.type, id: 'borrowingGuide'}];
+        this.$.loans.actionButtons.contextual = [{title: 'Borrowing guides', url: 'https://www.library.uq.edu.au/_/borrowing-guide/' + this.user.type, id: 'borrowingGuide'}];
 
         this.$.holds.actionButtons = {footer: [], contextual: []};
         if(this.data.holds && this.data.holds.length > 0){
