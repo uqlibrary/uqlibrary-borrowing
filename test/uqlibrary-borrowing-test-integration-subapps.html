@@ -10,6 +10,7 @@
 
   <link rel="import" href="../uqlibrary-borrowing.html">
   <script>
+    //set user's type to academic to hide fines tab
     document.cookie="UQLMockData-PType=3";
   </script>
 
@@ -38,13 +39,11 @@ window.addEventListener('polymer-ready', function() {
 
      describe('data loaded', function () {
      it('should display tabs with data', function(done) {
-       borrowingEl.$.account.$.account.useMockData = true;
-       borrowingEl.$.loansApi.$.loans.useMockData = true;
 
-       var dataLoadedListener = function() {
-         // check block visibility asynchronously
          setTimeout(function() {
+
            var tabs = borrowingEl.$.tabs.querySelectorAll('paper-tab');
+
            assert.isNotNull(tabs, 'Tabs are not visible');
 
            // Check all tabs are shown
@@ -58,7 +57,10 @@ window.addEventListener('polymer-ready', function() {
            expect(_title.innerHTML).to.be.equal('Holds');
            expect(_titleNumber.innerHTML).to.be.equal(borrowingEl.data.holds.length+'');
 
+
+           console.log(borrowingEl.selectedTab);
            expect(borrowingEl.selectedTab).to.be.equal('loans');
+           console.log("after loans comp");
 
            var isLoansHidden = borrowingEl.$.loansTab.getAttribute('hidden');
            assert.isNull(isLoansHidden, 'Loans tab is hidden');
@@ -120,15 +122,7 @@ window.addEventListener('polymer-ready', function() {
 
              done();
            }, 2000);
-
-
-         }, 2000);
-       };
-       borrowingEl.addEventListener('uqlibrary-borrowing-data-loaded', dataLoadedListener);
-       dataLoadedEventListeners.push(dataLoadedListener);
-
-       borrowingEl.$.loansApi.get();
-
+         }, 5000);
      });
   });
   });
