@@ -255,8 +255,9 @@ Element providing an overview for loans, holds and fines.
       },
 
       dataChanged: function() {
-        this.processData();
-
+          if (this.user) {
+              this.processData();
+          }
       },
 
       processData: function () {
