@@ -203,6 +203,7 @@ Element providing an overview for loans, holds and fines.
         this.$.account.addEventListener('uqlibrary-api-account-loaded', function(e) {
           if (e.detail.hasSession) {
               that.user = e.detail;
+              that.$.loansApi.get();
           } else {
             // Not logged in
             that.$.account.login(window.location.href);
@@ -237,9 +238,6 @@ Element providing an overview for loans, holds and fines.
         this.$.loansApi.addEventListener('uqlibrary-api-account-loans-loaded', function(e) {
           that.data = e.detail;
         });
-        if(this.autoload) {
-          this.$.loansApi.get();
-        }
 
         // Listen to persistent footer buttons clicks
         this.addEventListener('uqlibrary-persistent-footer-action-button-clicked', function(e) {
