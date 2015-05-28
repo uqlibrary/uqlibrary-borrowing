@@ -5,6 +5,8 @@
 
   <template>
     <link rel="stylesheet" href="../uqlibrary-elements/resources/theme/element.css">
+    <link rel="stylesheet" href="uqlibrary-borrowing.css">
+
     <core-signals on-core-signal-transitioning-change="{{transitioningChangeHandler}}"></core-signals>
     <section name="list" class="body-footer-container">
       <uqlibrary-borrowing-list id="finesList" items="{{fines}}">
