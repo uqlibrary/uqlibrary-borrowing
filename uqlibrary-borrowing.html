@@ -214,19 +214,24 @@ Element providing an overview for loans, holds and fines.
         if(this.autoload){
           this.$.account.get();
         }
+
         this.$.uqlibraryMenu.addEventListener('uqlibrary-menu-loaded', function(e) {
           var borrowingData = that.$.uqlibraryMenu.applications.filter(function (element) {
             return element.app == 'uqlibrary-borrowing';
           })[0];
-          that.hideLoans = borrowingData.subApplications.filter(function (element) {
-            return element.app == 'Loans';
-          })[0].ptypes.indexOf(Number(that.user.type)) == -1;
-          that.hideHolds = borrowingData.subApplications.filter(function (element) {
-            return element.app == 'Holds';
-          })[0].ptypes.indexOf(Number(that.user.type)) == -1;
-          that.hideFines = borrowingData.subApplications.filter(function (element) {
-            return element.app == 'Fines';
-          })[0].ptypes.indexOf(Number(that.user.type)) == -1;
+
+          if (borrowingData && borrowingData.subApplications) {
+            that.hideLoans = borrowingData.subApplications.filter(function (element) {
+              return element.app == 'Loans';
+            })[0].ptypes.indexOf(Number(that.user.type)) == -1;
+            that.hideHolds = borrowingData.subApplications.filter(function (element) {
+              return element.app == 'Holds';
+            })[0].ptypes.indexOf(Number(that.user.type)) == -1;
+            that.hideFines = borrowingData.subApplications.filter(function (element) {
+              return element.app == 'Fines';
+            })[0].ptypes.indexOf(Number(that.user.type)) == -1;
+          }
+
           if (!that.hideLoans) {
             that.selectedTab = 'loans';
           } else if (!that.hideHolds) {
