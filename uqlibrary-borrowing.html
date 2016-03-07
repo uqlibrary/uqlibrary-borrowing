@@ -86,19 +86,19 @@ Element providing an overview for loans, holds and fines.
 
     <core-drawer-panel id="drawerPanel" class="drawer" drawerWidth="256px" responsiveWidth="768px">
 
-      <core-header-panel drawer>
-        <uqlibrary-menu id="uqlibraryMenu" account="{{user}}"></uqlibrary-menu>
-      </core-header-panel>
+      <div drawer class="left-drawer" fit style="overflow: scroll;">
+      <uqlibrary-menu id="uqlibraryMenu" account="{{user}}"></uqlibrary-menu>
+      </div>
 
-      <core-header-panel main class="main">
-        <core-toolbar>
+      <div main layout vertical class="main">
+      <core-toolbar>
           <core-a11y-keys id="a11yToolBarLeftButton" target="{{$.toolBarLeftButton}}" keys="{{keyboardNavigationKeys}}"
                           on-keys-pressed="{{ a11yKeyPressed }}"></core-a11y-keys>
           <paper-icon-button id="toolBarLeftButton" icon="menu" core-drawer-toggle></paper-icon-button>
           <h1 flex id="toolbar-page-title">Borrowing</h1>
         </core-toolbar>
-
-        <div id="content">
+        <div main layout vertical fit relative style="margin-top: 64px;">
+        <div id="content" fit style="overflow: scroll;">
 
 
           <paper-tabs id="tabs" selected="{{ selectedTab }}" on-core-select="{{ tabSelected }}">
@@ -158,7 +158,8 @@ Element providing an overview for loans, holds and fines.
            </div>
 
         </div>
-      </core-header-panel>
+        </div>
+      </div>
     </core-drawer-panel>
   </template>
 
