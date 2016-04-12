@@ -1,0 +1,47 @@
+<link rel="import" href="elements.html">
+<link rel="import" href="uqlibrary-borrowing-list.html">
+
+<dom-module id="uqlibrary-fines">
+  <link rel="import" type="css" href="uqlibrary-borrowing.css">
+  <template>
+
+    <iron-signals on-core-signal-transitioning-change="transitioningChangeHandler"></iron-signals>
+    <section name="list" class="body-footer-container">
+      <uqlibrary-borrowing-list id="finesList" items="{{fines}}"></uqlibrary-borrowing-list>
+
+      <paper-action-dialog id="finesInfoDialog" transition="core-transition-bottom" backdrop="">
+        <p>You don't need to pay your overdue charges unless you reach <span>{{moneyFormat(fineMinimumPayableAmount)}}</span>. You currently have <span>{{moneyFormat(finesSum)}}</span>, so you <span>{{needToPay}}</span> to pay your overdue charges.</p>
+        <p>
+          <template is="dom-repeat" items="{{actionButtons.contextual}}" as="button">
+            <div>
+              <a target="_blank" id="{{button.id}}" on-click="contextualButtonClicked" href$="{{button.url}}">{{button.title}}</a>
+            </div>
+          </template>
+        </p>
+        <paper-button affirmative="" class="colored" on-tap="toggleLogout">Okay, I got it</paper-button>
+      </paper-action-dialog>
+
+    </section>
+    <uqlibrary-persistent-footer id="persistentFooter" actionbuttons="{{actionButtons.footer}}" hidden$="{{_computeHidden(finesSum)}}">
+      <div layout="" horizontal="" class="persistentFooter">
+        <div flex="" class="footerInfo"> <b>Total</b>: <span>{{moneyFormat(finesSum)}}</span> </div>
+        <div class="footerButtons" end-justified="">
+          <paper-button raised="" on-tap="toggleInfo">Info</paper-button>
+
+          <paper-tooltip id="tooltip" noarrow="" label="{{_computeLabel(fineMinimumPayableAmount)}}" position="left" class="{{_computeHidden2(fineMinimumPayableAmount, finesSum)}}" hidden$="{{_computeHidden(fineMinimumPayableAmount, finesSum)}}">
+                <paper-button class="colored" disabled$="{{_computeHidden3(fineMinimumPayableAmount, finesSum)}}">Pay now</paper-button>
+          </paper-tooltip>
+
+          <a target="_blank" hidden$="{{_computeHidden(fineMinimumPayableAmount, finesSum)}}" href$="{{_computeHidden3(fineMinimumPayableAmount, finesSum)}}">
+            <paper-button raised="" class="colored">Pay now</paper-button>
+          </a>
+        </div>
+      </div>
+    </uqlibrary-persistent-footer>
+
+  </template>
+
+  <!-- Location of the script -->
+  <script src="../scripts/uqlibrary-fines.js"></script>
+
+</dom-module>

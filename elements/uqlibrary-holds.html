@@ -1,0 +1,30 @@
+<link rel="import" href="elements.html">
+<link rel="import" href="uqlibrary-borrowing-list.html">
+
+<dom-module id="uqlibrary-holds">
+  <link rel="import" type="css" href="uqlibrary-borrowing.css">
+  <template>
+
+    <iron-signals on-core-signal-transitioning-change="transitioningChangeHandler"></iron-signals>
+    <section name="list" class="body-footer-container">
+      <uqlibrary-borrowing-list id="holdsTimeline" items="{{holds}}" class="with-persistent-footer">
+      </uqlibrary-borrowing-list>
+      <div class="layout horizontal">1
+        <template is="dom-repeat" items="{{actionButtons.contextual}}" as="button">
+          <div class="text-container">
+            <a target="_blank" id="{{button.id}}" on-click="contextualButtonClicked" href$="{{button.url}}">
+              <iron-icon class="link" icon="info-outline"></iron-icon>{{button.title}}
+            </a>
+          </div>
+        </template>
+      </div>
+    </section>
+    <uqlibrary-persistent-footer id="persistentFooter" actionbuttons="{{actionButtons.footer}}"
+                                 hidden$="{{_computeHidden(actionButtons)}}"></uqlibrary-persistent-footer>
+
+  </template>
+
+  <!-- Location of the script -->
+  <script src="../scripts/uqlibrary-holds.js"></script>
+
+</dom-module>

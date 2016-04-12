@@ -1,270 +1,55 @@
 <!doctype html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
-  <title>uqlibrary-borrowing</title>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <title>uqlibrary-element</title>
 
-  <script src="../../webcomponentsjs/webcomponents.min.js"></script>
-  <script src="../../web-component-tester/browser.js"></script>
+  <script src="../bower_components/webcomponentsjs/webcomponents.min.js"></script>
+  <script src="../bower_components/web-component-tester/browser.js"></script>
+  <script src="../bower_components/test-fixture/test-fixture-mocha.js"></script>
+  <link rel="import" href="../bower_components/test-fixture/test-fixture.html">
 
-  <link rel="import" href="../uqlibrary-borrowing.html">
+  <!-- Import the element to test -->
+  <link rel="import" href="../elements/uqlibrary-borrowing.html">
+
 </head>
 <body>
 
-<uqlibrary-borrowing autoload="false"></uqlibrary-borrowing>
+<test-fixture id="element">
+  <template>
+    <uqlibrary-papercut stand-alone="true" auto-load="false"></uqlibrary-papercut>
+  </template>
+</test-fixture>
 
 <script>
-window.addEventListener('polymer-ready', function() {
-  var borrowingEl = document.querySelector('uqlibrary-borrowing');
+  suite('<uqlibrary-papercut> tests', function () {
+    var element;
+    var papercut = {
+      "balance": "12.25",
+      "cardNumber": "123456789010111213",
+      "email": "s1234567@student.uq.edu.au",
+      "retrievedAt": "2015-03-10T11:22:00+10:00"
+    };
 
-  var data = {
-    "checkedOut": [
-      {
-        "title": "Pharmaceutics : the science of dosage form design",
-        "dueDate": "2014-12-06T04:00:00+10:00",
-        "url": "http:\/\/library.uq.edu.au\/record=i3349004"
-      },
-      {
-        "title": "Physicochemical principles of pharmacy",
-        "dueDate": "2014-11-24T04:00:00+10:00",
-        "url": "http:\/\/library.uq.edu.au\/record=i3715828"
-      }
-    ],
-    "holds": [
-      {
-        "title": "Regression analysis of count data",
-        "datePlaced": "2014-04-30T14:00:00+10:00",
-        "url": "http:\/\/library.uq.edu.au\/record=i2673780"
-      }
-
-    ],
-    "fines": [
-      {
-        "title": "1. Human physiology : from cells to systems \/ Lauralee Sherwood.",
-        "fineAmount": 840,
-        "dueDate": "2014-04-08T04:00:00+10:00",
-        "dateReturned": "2014-04-14T14:02:05+10:00",
-        "dateAssessed": "2014-04-15T14:02:05+10:00",
-        "description": "Book loan overdue",
-        "fineType": "overdue",
-        "url": "http:\/\/library.uq.edu.au\/record=i3698283"
-      },
-      {
-        "title": "2. Human physiology : from cells to systems \/ Lauralee Sherwood.",
-        "fineAmount": 160,
-        "dueDate": "2013-04-22T04:00:00+10:00",
-        "dateReturned": "2013-04-24T14:44:15+10:00",
-        "dateAssessed": "2013-04-25T14:02:05+10:00",
-        "description": "Book loan overdue and slight damage",
-        "fineType": "overdue",
-        "url": "http:\/\/library.uq.edu.au\/record=i3704585"
-      }
-
-    ],
-    "retrievedAt": "2014-05-02T09:11:52+10:00"
-  }
-
-
-  var dataLoadedEventListeners = [];
-
-  describe('uqlibrary-borrowing', function () {
-    before(function () {
+    setup(function () {
+      element = fixture('element');
     });
 
-    afterEach(function () {
+    test('It should show the proper papercut balance', function(done) {
+      element.addEventListener('uqlibrary-papercut-loaded', function(){
+        var _papercut = element._paperCut;
+        expect(_papercut.balance).to.be.equal(papercut.balance);
+        expect(_papercut.cardNumber).to.be.equal(papercut.cardNumber);
+        expect(_papercut.email).to.be.equal(papercut.email);
+        expect(_papercut.retrievedAt).to.be.equal(papercut.retrievedAt);
+        expect(element._retrievedAt).to.be.equal(moment(papercut.retrievedAt).fromNow());
 
-      //remove all previous listeners
-      for(var i=0; i< dataLoadedEventListeners.length; i++) {
-        borrowingEl.removeEventListener('uqlibrary-borrowing-data-loaded', dataLoadedEventListeners[i]);
-      }
-    });
-
-    describe('no data loaded', function () {
-      it('should show tabs with no data message if no data loaded', function(done) {
-        borrowingEl.data = {
-          "checkedOut": [],
-          "holds": [],
-          "fines": []
-        };
-        var noDataListener = function() {
-          // check block visibility asynchronously
-          setTimeout(function() {
-            var tabs = borrowingEl.$.tabs.querySelectorAll('paper-tab');
-            assert.isNotNull(tabs, 'Tabs are not visible');
-
-            // Check all tabs are shown
-            expect(tabs.length).to.be.equal(3);
-
-            var _title = tabs[0].querySelector('.tabTitle');
-            var _titleNumber = tabs[0].querySelector('.tabTitleNumber');
-            expect(_title.innerHTML).to.be.equal('Loans');
-            expect(_titleNumber.innerHTML).to.be.equal('0');
-
-            var _title = tabs[1].querySelector('.tabTitle');
-            var _titleNumber = tabs[1].querySelector('.tabTitleNumber');
-            expect(_title.innerHTML).to.be.equal('Holds');
-            expect(_titleNumber.innerHTML).to.be.equal('0');
-
-            var _title = tabs[2].querySelector('.tabTitle');
-            var _titleNumber = tabs[2].querySelector('.tabTitleNumber');
-            expect(_title.innerHTML).to.be.equal('Overdue Charges');
-            expect(_titleNumber.innerHTML).to.be.equal('$0');
-
-
-            expect(borrowingEl.selectedTab).to.be.equal('loans');
-
-            var _list = borrowingEl.$.loans.$.loansTimeline;
-
-            expect(_list.processedItems).to.be.empty;
-
-            var isHidden = _list.$.emptyItems.getAttribute('hidden');
-            assert.isNull(isHidden, 'No Loans message is hidden');
-
-            expect(_list.$.emptyItems.innerHTML).to.contain(_list.noItemsMessage);
-
-            done();
-          }, 2000);
-        };
-        borrowingEl.addEventListener('uqlibrary-borrowing-data-loaded', noDataListener);
-        dataLoadedEventListeners.push(noDataListener);
+        done();
       });
 
+      element._paperCut = papercut;
     });
-
-
-     describe('data loaded', function () {
-     it('should display tabs with data', function(done) {
-
-       borrowingEl.data = data;
-       var dataLoadedListener = function() {
-         // check block visibility asynchronously
-         setTimeout(function() {
-           var tabs = borrowingEl.$.tabs.querySelectorAll('paper-tab');
-           assert.isNotNull(tabs, 'Tabs are not visible');
-
-           // Check all tabs are shown
-           expect(tabs.length).to.be.equal(3);
-
-           var _title = tabs[0].querySelector('.tabTitle');
-           var _titleNumber = tabs[0].querySelector('.tabTitleNumber');
-           expect(_title.innerHTML).to.be.equal('Loans');
-           expect(_titleNumber.innerHTML).to.be.equal(data.checkedOut.length+'');
-
-           var _title = tabs[1].querySelector('.tabTitle');
-           var _titleNumber = tabs[1].querySelector('.tabTitleNumber');
-           expect(_title.innerHTML).to.be.equal('Holds');
-           expect(_titleNumber.innerHTML).to.be.equal(data.holds.length+'');
-
-           var _title = tabs[2].querySelector('.tabTitle');
-           var _titleNumber = tabs[2].querySelector('.tabTitleNumber');
-           expect(_title.innerHTML).to.be.equal('Overdue Charges');
-           expect(_titleNumber.innerHTML).to.be.equal(borrowingEl.$.fines.moneyFormat(borrowingEl.$.fines.finesSum)+'');
-
-
-           expect(borrowingEl.selectedTab).to.be.equal('loans');
-
-           var isHoldsHidden = borrowingEl.$.holdsSection.getAttribute('hidden');
-           assert.isNotNull(isHoldsHidden, 'Holds tab is not hidden');
-
-           var isFinesHidden = borrowingEl.$.finesSection.getAttribute('hidden');
-           assert.isNotNull(isFinesHidden, 'Fines tab is not hidden');
-
-
-           var _list = borrowingEl.$.loans.$.loansTimeline;
-
-           expect(_list.processedItems.length).to.be.equal(data.checkedOut.length);
-
-           var isHidden = _list.$.emptyItems.getAttribute('hidden');
-           assert.isNotNull(isHidden, 'No Loans message is hidden');
-
-
-           var firstItem = _list.$.timeline.querySelector('li.first');
-           assert.isNotNull(firstItem, 'No first item shown');
-
-           var _date = firstItem.querySelector('div.title');
-           expect(_date.innerHTML).to.contain(_list.processedItems[0].day);
-
-           var _title = firstItem.querySelector('div.line1');
-           expect(_title.innerHTML).to.contain(_list.processedItems[0].title);
-
-           var isFooterHidden = borrowingEl.$.holds.$.persistentFooter.getAttribute('hidden');;
-           assert.isNull(isFooterHidden, 'Persistent footer is not visible');
-
-           // Switch to holds tab
-           borrowingEl.selectedTab = 'holds';
-           setTimeout(function() {
-             var _list = borrowingEl.$.holds.$.holdsTimeline;
-             var isHoldsHidden = borrowingEl.$.loansSection.getAttribute('hidden');
-             assert.isNotNull(isHoldsHidden, 'Holds tab is not hidden');
-
-             var isFinesHidden = borrowingEl.$.finesSection.getAttribute('hidden');
-             assert.isNotNull(isFinesHidden, 'Fines tab is not hidden');
-
-             expect(_list.processedItems.length).to.be.equal(data.holds.length);
-
-             var firstItem = _list.$.timeline.querySelector('li.first');
-             assert.isNotNull(firstItem, 'No first item shown');
-
-             var _texts = firstItem.querySelectorAll('div.caption');
-             expect(_texts[0].innerHTML).to.contain('On');
-             expect(_texts[1].innerHTML).to.contain('Hold');
-
-             var _title = firstItem.querySelector('div.line1');
-             expect(_title.innerHTML).to.contain(_list.processedItems[0].title);
-
-             var isFooterHidden = borrowingEl.$.holds.$.persistentFooter.getAttribute('hidden');;
-             assert.isNull(isFooterHidden, 'Persistent footer is not visible');
-
-             // Switch to fines tab
-             borrowingEl.selectedTab = 'fines';
-             setTimeout(function() {
-               var _list = borrowingEl.$.fines.$.finesList;
-
-               var isLoansHidden = borrowingEl.$.loansSection.getAttribute('hidden');
-               assert.isNotNull(isLoansHidden, 'Loans tab is not hidden');
-
-               var isHoldsHidden = borrowingEl.$.holdsSection.getAttribute('hidden');
-               assert.isNotNull(isHoldsHidden, 'Holds tab is not hidden');
-
-               expect(_list.processedItems.length).to.be.equal(data.fines.length);
-
-               var firstItem = _list.$.timeline.querySelector('li.first');
-               assert.isNotNull(firstItem, 'No first item shown');
-
-               var _amount = firstItem.querySelector('div.title');
-               expect(_amount.innerHTML).to.contain(borrowingEl.$.fines.moneyFormat(_list.processedItems[0].fineAmount));
-
-               var _text = firstItem.querySelector('div.line1');
-               expect(_text.innerHTML).to.contain(_list.processedItems[0].title);
-
-               _text = firstItem.querySelector('div.line2');
-               expect(_text.innerHTML).to.contain('Due date');
-
-               _text = firstItem.querySelector('div.line3');
-               expect(_text.innerHTML).to.contain('Date returned');
-
-               var isFooterHidden = borrowingEl.$.fines.$.persistentFooter.getAttribute('hidden');
-               assert.isNull(isFooterHidden, 'Persistent footer is not visible');
-
-               expect(borrowingEl.$.fines.$.persistentFooter.innerHTML).to.contain(borrowingEl.$.fines.moneyFormat(borrowingEl.$.fines.finesSum))
-
-               done();
-             }, 2000);
-
-
-           }, 2000);
-
-
-         }, 2000);
-       };
-       borrowingEl.addEventListener('uqlibrary-borrowing-data-loaded', dataLoadedListener);
-       dataLoadedEventListeners.push(dataLoadedListener);
-     });
   });
-  });
-
-});
 </script>
 
 </body>
