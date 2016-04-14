@@ -2,7 +2,15 @@
   Polymer({
     is: 'uqlibrary-loans',
     properties: {
-      actionButtons: { notify: true },
+      patron: {
+        type: String
+      },
+      contextual: {
+        type: Array
+      },
+      footer: {
+        type: Array
+      },
       loans: {
         type: Array,
         value: function () {
@@ -36,6 +44,7 @@
       });
     },
     loansChanged: function () {
+      this.processedItems = [];
       var loans = [];
       for (var i = 0; i < this.loans.length; i++) {
         var _loan = this.loans[i];
@@ -65,12 +74,30 @@
         loans.push(_loan);
       }
       this.processedItems = loans;
+      this.contextual = [{
+        title: 'Your borrowing rights and limits',
+        url: 'https://www.library.uq.edu.au/borrowing-requesting/borrowing-rules',
+        id: 'borrowingGuide'
+      }];
+      if (this._patronNumber()) {
+        this.footer = [{
+          title: 'Renew Loans',
+          url: 'https://library.uq.edu.au/patroninfo~S7/' + this._patronNumber() + '/items'
+        }];
+      } else {
+        this.footer = [];
+      }
     },
     //_loan.attentionIcon = {icon: "warning", text: (overdue == 0 ? 'Last day of the loan' : "This item is due in "+ overdue + " day(s)"), type: 'warning'};
     //this.data.dueSoon ++;
     transitioningChangeHandler: function (e) {
       if (e.detail.hasOwnProperty('transitioning'))
         this.transitioning = e.detail.transitioning;
+    },
+    _patronNumber: function() {
+      return this.patron;
+    },
+    _footer: function() {
     }
   });
 }());

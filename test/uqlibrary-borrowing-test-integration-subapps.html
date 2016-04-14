@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
+  <title>uqlibrary-borrowing</title>
+
+  <script src="../bower_components/webcomponentsjs/webcomponents.min.js"></script>
+  <script src="../bower_components/web-component-tester/browser.js"></script>
+
+  <link rel="import" href="../elements/uqlibrary-borrowing.html">
+  <script>
+    //set user's type to academic to hide fines tab
+    document.cookie="UQLMockData-PType=3";
+  </script>
+
+
+</head>
+<body>
+
+<uqlibrary-borrowing autoload="true"></uqlibrary-borrowing>
+
+<script>
+  window.addEventListener('polymer-ready', function() {
+    var borrowingEl = document.querySelector('uqlibrary-borrowing');
+    var dataLoadedEventListeners = [];
+
+    describe('uqlibrary-borrowing', function () {
+      before(function () {
+      });
+
+      afterEach(function () {
+
+        //remove all previous listeners
+        for(var i=0; i< dataLoadedEventListeners.length; i++) {
+          borrowingEl.removeEventListener('uqlibrary-borrowing-data-loaded', dataLoadedEventListeners[i]);
+        }
+      });
+
+      describe('data loaded', function () {
+        it('should display tabs with data', function(done) {
+
+          setTimeout(function() {
+
+            var tabs = borrowingEl.$.tabs.querySelectorAll('paper-tab');
+
+            assert.isNotNull(tabs, 'Tabs are not visible');
+
+            // Check all tabs are shown
+            var _title = tabs[0].querySelector('.tabTitle');
+            var _titleNumber = tabs[0].querySelector('.tabTitleNumber');
+            expect(_title.innerHTML).to.be.equal('Loans');
+            expect(_titleNumber.innerHTML).to.be.equal(borrowingEl.data.checkedOut.length+'');
+
+            var _title = tabs[1].querySelector('.tabTitle');
+            var _titleNumber = tabs[1].querySelector('.tabTitleNumber');
+            expect(_title.innerHTML).to.be.equal('Holds');
+            expect(_titleNumber.innerHTML).to.be.equal(borrowingEl.data.holds.length+'');
+
+
+            console.log(borrowingEl.selectedTab);
+            expect(borrowingEl.selectedTab).to.be.equal('loans');
+            console.log("after loans comp");
+
+            var isLoansHidden = borrowingEl.$.loansTab.getAttribute('hidden');
+            assert.isNull(isLoansHidden, 'Loans tab is hidden');
+
+            var isHoldsHidden = borrowingEl.$.holdsTab.getAttribute('hidden');
+            assert.isNull(isHoldsHidden, 'Holds tab is hidden');
+
+            var isFinesHidden = borrowingEl.$.finesTab.getAttribute('hidden');
+            assert.isNotNull(isFinesHidden, 'Fines tab is not hidden');
+
+
+            var _list = borrowingEl.$.loans.$.loansTimeline;
+
+            expect(_list.processedItems.length).to.be.equal(borrowingEl.data.checkedOut.length);
+
+            var isHidden = _list.$.emptyItems.getAttribute('hidden');
+            assert.isNotNull(isHidden, 'No Loans message is hidden');
+
+
+            var firstItem = _list.$.timeline.querySelector('li.first');
+            assert.isNotNull(firstItem, 'No first item shown');
+
+            var _date = firstItem.querySelector('div.title');
+            expect(_date.innerHTML).to.contain(_list.processedItems[0].day);
+
+            var _title = firstItem.querySelector('div.line1');
+            expect(_title.innerHTML).to.contain(_list.processedItems[0].title);
+
+            var isFooterHidden = borrowingEl.$.holds.$.persistentFooter.getAttribute('hidden');
+            assert.isNull(isFooterHidden, 'Persistent footer is not visible');
+
+            // Switch to holds tab
+            borrowingEl.selectedTab = 'holds';
+            setTimeout(function() {
+              var _list = borrowingEl.$.holds.$.holdsTimeline;
+              var isLoansHidden = borrowingEl.$.loansTab.getAttribute('hidden');
+              assert.isNull(isLoansHidden, 'Loans tab is hidden');
+
+              var isHoldsHidden = borrowingEl.$.loansTab.getAttribute('hidden');
+              assert.isNull(isHoldsHidden, 'Holds tab is hidden');
+
+              var isFinesHidden = borrowingEl.$.finesTab.getAttribute('hidden');
+              assert.isNotNull(isFinesHidden, 'Fines tab is not hidden');
+
+              expect(_list.processedItems.length).to.be.equal(borrowingEl.data.holds.length);
+
+              var firstItem = _list.$.timeline.querySelector('li.first');
+              assert.isNotNull(firstItem, 'No first item shown');
+
+              var _texts = firstItem.querySelectorAll('div.caption');
+              expect(_texts[0].innerHTML).to.contain('Ready');
+              expect(_texts[1].innerHTML).to.contain('for pickup');
+
+              var _title = firstItem.querySelector('div.line1');
+              expect(_title.innerHTML).to.contain(_list.processedItems[0].title);
+
+              var isFooterHidden = borrowingEl.$.holds.$.persistentFooter.getAttribute('hidden');
+              assert.isNull(isFooterHidden, 'Persistent footer is not visible');
+
+              done();
+            }, 2000);
+          }, 5000);
+        });
+      });
+    });
+
+  });
+</script>
+
+</body>
+</html>

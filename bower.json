@@ -16,7 +16,8 @@
     "paper-elements": "PolymerElements/paper-elements#^1.0.7",
     "uqlibrary-api": "uqlibrary/uqlibrary-api#polymer1.0",
     "uqlibrary-ga": "uqlibrary/uqlibrary-ga#^1.0.0",
-    "uqlibrary-styles": "uqlibrary/uqlibrary-styles"
+    "uqlibrary-styles": "uqlibrary/uqlibrary-styles",
+    "uqlibrary-toolbar": "uqlibrary/uqlibrary-toolbar#polymer1.0"
   },
   "devDependencies": {
     "test-fixture": "PolymerElements/test-fixture#^1.1.0",

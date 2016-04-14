@@ -8,7 +8,7 @@
     <section name="list" class="body-footer-container">
       <uqlibrary-borrowing-list id="loansTimeline" items="{{processedItems}}"></uqlibrary-borrowing-list>
       <div class="layout horizontal">
-        <template repeat="{{button in actionButtons.contextual}}">
+        <template is="dom-repeat" items="{{contextual}}" as="button">
           <div class="text-container">
             <a href="{{button.url}}" target="_blank" id="{{button.id}}" on-click="{{contextualButtonClicked}}">
               <iron-icon class="link" icon="info-outline"></iron-icon>{{button.title}}
@@ -17,9 +17,7 @@
         </template>
       </div>
     </section>
-
-    <uqlibrary-persistent-footer id="persistentFooter" actionbuttons="{{actionButtons.footer}}"
-                                 hidden?="{{ actionButtons.footer.length == 0 }}">
+    <uqlibrary-persistent-footer id="persistentFooter" actionbuttons="{{footer}}">
     </uqlibrary-persistent-footer>
   </template>
 

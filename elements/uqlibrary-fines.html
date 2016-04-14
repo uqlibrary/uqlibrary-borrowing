@@ -7,38 +7,38 @@
 
     <iron-signals on-core-signal-transitioning-change="transitioningChangeHandler"></iron-signals>
     <section name="list" class="body-footer-container">
-      <uqlibrary-borrowing-list id="finesList" items="{{fines}}"></uqlibrary-borrowing-list>
-
-      <paper-action-dialog id="finesInfoDialog" transition="core-transition-bottom" backdrop="">
-        <p>You don't need to pay your overdue charges unless you reach <span>{{moneyFormat(fineMinimumPayableAmount)}}</span>. You currently have <span>{{moneyFormat(finesSum)}}</span>, so you <span>{{needToPay}}</span> to pay your overdue charges.</p>
-        <p>
-          <template is="dom-repeat" items="{{actionButtons.contextual}}" as="button">
-            <div>
-              <a target="_blank" id="{{button.id}}" on-click="contextualButtonClicked" href$="{{button.url}}">{{button.title}}</a>
-            </div>
-          </template>
-        </p>
-        <paper-button affirmative="" class="colored" on-tap="toggleLogout">Okay, I got it</paper-button>
-      </paper-action-dialog>
-
+      <uqlibrary-borrowing-list id="finesList" items="{{processedItems}}"></uqlibrary-borrowing-list>
     </section>
-    <uqlibrary-persistent-footer id="persistentFooter" actionbuttons="{{actionButtons.footer}}" hidden$="{{_computeHidden(finesSum)}}">
+
+    <uqlibrary-persistent-footer id="persistentFooter" actionbuttons="{{footer}}">
       <div layout="" horizontal="" class="persistentFooter">
-        <div flex="" class="footerInfo"> <b>Total</b>: <span>{{moneyFormat(finesSum)}}</span> </div>
-        <div class="footerButtons" end-justified="">
-          <paper-button raised="" on-tap="toggleInfo">Info</paper-button>
-
-          <paper-tooltip id="tooltip" noarrow="" label="{{_computeLabel(fineMinimumPayableAmount)}}" position="left" class="{{_computeHidden2(fineMinimumPayableAmount, finesSum)}}" hidden$="{{_computeHidden(fineMinimumPayableAmount, finesSum)}}">
-                <paper-button class="colored" disabled$="{{_computeHidden3(fineMinimumPayableAmount, finesSum)}}">Pay now</paper-button>
-          </paper-tooltip>
-
-          <a target="_blank" hidden$="{{_computeHidden(fineMinimumPayableAmount, finesSum)}}" href$="{{_computeHidden3(fineMinimumPayableAmount, finesSum)}}">
-            <paper-button raised="" class="colored">Pay now</paper-button>
+        <div class="footerInfo flex"> <b>Total</b>: <span>{{moneyFormat(finesSum)}}</span> </div>
+        <div class="footerButtons">
+          <paper-button data-dialog="finesInfoDialog">Info</paper-button>
+          <a target="_blank" href="{{_getHref()}}" tabindex="-1">
+            <paper-button raised class="colored" disabled$="{{_lessThenMin()}}">Pay now</paper-button>
           </a>
         </div>
       </div>
     </uqlibrary-persistent-footer>
 
+    <paper-dialog id="finesInfoDialog">
+      <p>
+        You don't need to pay your overdue charges unless you reach <span>{{moneyFormat(fineMinimumPayableAmount)}}</span>.
+        You currently have <span>{{moneyFormat(finesSum)}}</span>, so you <span>{{needToPay}}</span> to pay your overdue charges.
+      </p>
+      <template is="dom-repeat" items="{{contextual}}" as="button">
+        <div class="text-container">
+          <a target="_blank" id="{{button.id}}" on-click="contextualButtonClicked"
+             href$="{{button.url}}" on-click="{{contextualButtonClicked}}">
+            <iron-icon class="link" icon="info-outline"></iron-icon>{{button.title}}
+          </a>
+        </div>
+      </template>
+      <div class="buttons">
+        <paper-button class="colored" raised="" dialog-dismiss>Okay, I got it</paper-button>
+      </div>
+    </paper-dialog>
   </template>
 
   <!-- Location of the script -->

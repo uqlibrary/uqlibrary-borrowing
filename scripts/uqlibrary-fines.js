@@ -2,7 +2,16 @@
   Polymer({
     is: 'uqlibrary-fines',
     properties: {
-      actionButtons: { notify: true },
+      patron: {
+        type: String,
+        value: ''
+      },
+      contextual: {
+        type: Array
+      },
+      footer: {
+        type: Array
+      },
       fineMinimumPayableAmount: {
         value: function () {
           return 20 * 100;
@@ -14,8 +23,14 @@
           return [];
         },
         notify: true,
-        observer: 'finesChanged',
-        reflectToAttribute: true
+        observer: 'finesChanged'
+      },
+      processedItems: {
+        type: Array,
+        value: function () {
+          return [];
+        },
+        notify: true
       },
       finesSum: {
         type: Number,
@@ -25,10 +40,6 @@
       needToPay: {
         type: String,
         value: 'don\'t need'
-      },
-      patronNumber: {
-        type: String,
-        value: ''
       },
       transitioning: {
         type: Boolean,
@@ -46,16 +57,8 @@
       });
     },
     finesChanged: function () {
-      this.processData();
-      if (this.finesSum < this.fineMinimumPayableAmount) {
-        this.set('actionButtons.footer', []);
-      }
-      if (this.finesSum >= this.fineMinimumPayableAmount) {
-        this.needToPay = 'need';
-      }
-    },
-    processData: function () {
-      var _fines = [];
+      this.processedItems = [];
+      var fines = [];
       for (var i = 0; i < this.fines.length; i++) {
         var _fine = this.fines[i];
         _fine.class = 'fine-item';
@@ -85,12 +88,40 @@
             _fine.subtitle = _fine.description;
           }
         }
-        this.finesSum = this.calculateFines(this.fines);
+        fines.push(_fine);
+      }
+      this.processedItems = fines;
+      this.finesSum = this.calculateFines(fines);
+      this.contextual = [
+        {
+          title: 'About overdue charges',
+          url: 'https://www.library.uq.edu.au/help/borrowing#overdues',
+          id: 'aboutOverdueCharges'
+        },
+        {
+          title: 'Payment options',
+          url: 'https://www.library.uq.edu.au/help/payment-options',
+          id: 'paymentOptions'
+        }
+      ];
+      if (this._patronNumber()) {
+        this.footer = [{
+          title: 'Pay now',
+          url: 'https://library.uq.edu.au/patroninfo~S7/' + this._patronNumber() + '/overdues'
+        }];
+      } else {
+        this.footer = [];
+      }
+      if (this.finesSum >= this.fineMinimumPayableAmount) {
+        this.needToPay = 'need';
       }
     },
     transitioningChangeHandler: function (e) {
       if (e.detail.hasOwnProperty('transitioning'))
         this.transitioning = e.detail.transitioning;
+    },
+    _patronNumber: function() {
+      return this.patron;
     },
     calculateFines: function (fines) {
       this.finesSum = 0;
@@ -103,26 +134,17 @@
       }
       return this.finesSum;
     },
-    toggleInfo: function () {
-      this.$.finesInfoDialog.toggle();
-    },
     moneyFormat: function (value) {
       return '$' + (value > 0 ? (parseFloat(value) / 100).toFixed(2) : '0');
     },
-    _computeHidden: function (finesSum) {
-      return finesSum == 0;
+    _msgNoPay: function () {
+      return 'No need to pay unless you reach ' + this.moneyFormat(this.fineMinimumPayableAmount);
     },
-    _computeHidden2: function (fineMinimumPayableAmount, finesSum) {
-      return finesSum >= fineMinimumPayableAmount;
+    _lessThenMin: function () {
+      return (this.finesSum < this.fineMinimumPayableAmount);
     },
-    _computeLabel: function (fineMinimumPayableAmount) {
-      return 'No need to pay unless you reach ' + this.moneyFormat(fineMinimumPayableAmount);
-    },
-    _computeHidden3: function (fineMinimumPayableAmount, finesSum) {
-      return finesSum < fineMinimumPayableAmount;
-    },
-    _computeHref: function (patronNumber) {
-      return 'https://library.uq.edu.au/patroninfo~S7/' + patronNumber + '/overdues';
+    _getHref: function () {
+      return 'https://library.uq.edu.au/patroninfo~S7/' + this._patronNumber() + '/overdues';
     }
   });
 }());

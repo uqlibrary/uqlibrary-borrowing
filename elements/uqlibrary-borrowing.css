@@ -217,8 +217,7 @@ uqlibrary-fines::shadow uqlibrary-borrowing-list::shadow .content {
   margin-left: 64px; }
 
 .container {
-  padding: 40px;
-  @apply (--layout-horizontal); }
+  padding: 40px; }
 
 .main {
   background-color: #FAFAFA;
@@ -238,6 +237,9 @@ uqlibrary-fines::shadow uqlibrary-borrowing-list::shadow .content {
 
 .flex {
   @apply (--layout-flex); }
+
+.persistentFooter {
+  @apply (--layout-horizontal); }
 
 paper-toolbar {
   --paper-toolbar-background: #4a075f;
@@ -270,7 +272,7 @@ paper-progress::shadow #activeProgress {
 paper-tabs {
   color: rgba(0, 0, 0, 0.87);
   background-color: #fff;
-  box-shadow: 0px 3px 2px rgba(0, 0, 0, 0.2); }
+  box-shadow: 0 3px 2px rgba(0, 0, 0, 0.2); }
 
 paper-tabs::shadow #selectionBar {
   background-color: #8db800; }

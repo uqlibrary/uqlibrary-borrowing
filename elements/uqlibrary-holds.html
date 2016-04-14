@@ -9,8 +9,8 @@
     <section name="list" class="body-footer-container">
       <uqlibrary-borrowing-list id="holdsTimeline" items="{{holds}}" class="with-persistent-footer">
       </uqlibrary-borrowing-list>
-      <div class="layout horizontal">1
-        <template is="dom-repeat" items="{{actionButtons.contextual}}" as="button">
+      <div class="layout horizontal">
+        <template is="dom-repeat" items="{{contextual}}" as="button">
           <div class="text-container">
             <a target="_blank" id="{{button.id}}" on-click="contextualButtonClicked" href$="{{button.url}}">
               <iron-icon class="link" icon="info-outline"></iron-icon>{{button.title}}
@@ -19,8 +19,10 @@
         </template>
       </div>
     </section>
-    <uqlibrary-persistent-footer id="persistentFooter" actionbuttons="{{actionButtons.footer}}"
-                                 hidden$="{{_computeHidden(actionButtons)}}"></uqlibrary-persistent-footer>
+    <template is="dom-if" if="{{!_computeHidden()}}">
+      <uqlibrary-persistent-footer id="persistentFooter" actionbuttons="{{footer}}">
+      </uqlibrary-persistent-footer>
+    </template>
 
   </template>
 

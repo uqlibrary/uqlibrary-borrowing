@@ -73,32 +73,23 @@ Element providing an overview for loans, holds and fines.
 
     <uqlibrary-api-account id="account"></uqlibrary-api-account>
     <uqlibrary-api-account-loans id="loansApi"></uqlibrary-api-account-loans>
-
     <uqlibrary-ga id="ga" appName="Borrowing"></uqlibrary-ga>
 
     <paper-drawer-panel id="drawerPanel" class="flex drawer">
 
-      <div drawer="" class="left-drawer" style="overflow: scroll;">
+      <div drawer="" class="left-drawer">
         <uqlibrary-menu id="uqlibraryMenu" account="{{user}}"></uqlibrary-menu>
       </div>
 
       <div class="main">
-        <paper-toolbar>
-          <iron-a11y-keys id="a11yToolBarLeftButton" target="{{_polywrapper('toolBarLeftButton')}}"
-                          keys="{{keyboardNavigationKeys}}" on-keys-pressed=" a11yKeyPressed "></iron-a11y-keys>
-          <paper-icon-button id="toolBarLeftButton" icon="menu" core-drawer-toggle=""></paper-icon-button>
-          <h1 flex="" id="toolbar-page-title">Borrowing</h1>
-        </paper-toolbar>
+        <uqlibrary-toolbar on-uqlibrary-toolbar-menu-clicked="toggleMenuDrawer"
+                           app-title="Borrowing"
+                           id="toolbar">
+        </uqlibrary-toolbar>
+
         <div id="content" class="flex">
 
-          <paper-tabs id="tabs" selected="0" selectedIndex="0">
-
-            <iron-a11y-keys id="a11yLoansTab" target="{{_polywrapper('loansTab')}}" keys="{{keyboardNavigationKeys}}"
-                            on-keys-pressed="{{tabLoanSelected}}"></iron-a11y-keys>
-            <iron-a11y-keys id="a11yHoldsTab" target="{{_polywrapper('holdsTab')}}" keys="{{keyboardNavigationKeys}}"
-                            on-keys-pressed="{{tabHoldsSelected}}"></iron-a11y-keys>
-            <iron-a11y-keys id="a11yFinesTab" target="{{_polywrapper('finesTab')}}" keys="{{keyboardNavigationKeys}}"
-                            on-keys-pressed="{{tabFinesSelected}}"></iron-a11y-keys>
+          <paper-tabs id="tabs" selected="{{selectedTab}}" selectedIndex="0">
 
             <paper-tab name="loans" id="loansTab" aria-label="loans">
               <div class="menu layout horizontal center">
@@ -128,17 +119,19 @@ Element providing an overview for loans, holds and fines.
             </paper-tab>
           </paper-tabs>
 
-          <iron-pages selected="0" class="container">
-            <div class="flex">
-              <uqlibrary-loans id="loans" loans="{{ data.checkedOut }}"></uqlibrary-loans>
+          <neon-animated-pages id="animatedPages" transitions="slide-from-right" block="" selected="{{selectedTab}}"
+                               entry-animation="slide-from-right-animation"
+                               exit-animation="slide-left-animation">
+            <div class="flex container">
+              <uqlibrary-loans id="loans" loans="{{ data.checkedOut }}" patron="{{ patron }}"></uqlibrary-loans>
             </div>
-            <div class="flex">
-              <uqlibrary-holds id="holds" holds="{{ data.holds }}"></uqlibrary-holds>
+            <div class="flex container">
+              <uqlibrary-holds id="holds" holds="{{ data.holds }}" patron="{{ patron }}"></uqlibrary-holds>
             </div>
-            <div class="flex">
-              <uqlibrary-fines id="fines" fines="{{ data.fines }}"></uqlibrary-fines>
+            <div class="flex container">
+              <uqlibrary-fines id="fines" fines="{{ data.fines }}" patron="{{ patron }}"></uqlibrary-fines>
             </div>
-          </iron-pages>
+          </neon-animated-pages>
         </div>
       </div>
     </paper-drawer-panel>
