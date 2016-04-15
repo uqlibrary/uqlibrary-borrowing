@@ -37,7 +37,7 @@
      * object containing item details is returned
      * @item item-selected
      */
-    itemSelected: function (item, data, source) {
+    _itemSelected: function (item, data, source) {
       var itemId = source.getAttribute('data-item-id');
       var selectedItem = this.items.filter(function (item) {
         return item.id == itemId;

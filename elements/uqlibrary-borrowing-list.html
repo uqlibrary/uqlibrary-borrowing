@@ -17,7 +17,6 @@
       font-weight: 400;
       line-height: 1.1em;
       overflow: hidden;
-      white-space: nowrap;
       text-overflow: ellipsis;
     }
     .line1, .line2 {
@@ -68,8 +67,8 @@
                 <div class="title">{{item.day}}</div>
                 <div class="caption">{{item.daySuffixText}}</div>
               </div>
-              <div class="description flex" on-tap="{{itemSelected}}" data-item-id="{{item.id}}">
-                <div class="line1"><a href="javascript:;">{{item.title}}</a></div>
+              <div class="description flex">
+                <div class="line1"><a href="{{item.url}}">{{item.title}}</a></div>
                 <div class="line2">{{item.subtitle}}</div>
                 <div class="line3 caption">{{item.secondaryText}}</div>
               </div>
@@ -79,11 +78,12 @@
                 <paper-button class="actionButton" raised="" href="{{action.url}}">{{action.title}}</paper-button>
               </template>
             </div>
-            <div class="attentionIcon {{item.attentionIcon.type}} layout horizontal end"
-                 hidden?="{{!item.attentionIcon.icon}}">
-              <div class="tooltip caption inverse" flex="">{{item.attentionIcon.text}}</div>
-              <iron-icon class="caption inverse end-justified" icon="{{item.attentionIcon.icon}}"></iron-icon>
-            </div>
+            <template is="dom-if" if="{{!item.attentionIcon.icon}}">
+              <div class="attentionIcon {{item.attentionIcon.type}} layout horizontal end">
+                <div class="tooltip caption inverse" flex="">{{item.attentionIcon.text}}</div>
+                <iron-icon class="caption inverse end-justified" icon="{{item.attentionIcon.icon}}"></iron-icon>
+              </div>
+            </template>
           </li>
         </template>
         <template is="dom-if" if="{{item.isDivider}}">

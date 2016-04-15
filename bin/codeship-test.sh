@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Testing branch: ${CI_BRANCH} with pipe ${PIPE_NUM}"
+echo "Testing branch: ${CI_BRANCH}"
 
 if [ ${CI_BRANCH} != "GH_PAGES" ]; then
     # Run local tests

@@ -14,26 +14,27 @@
       <div layout="" horizontal="" class="persistentFooter">
         <div class="footerInfo flex"> <b>Total</b>: <span>{{moneyFormat(finesSum)}}</span> </div>
         <div class="footerButtons">
-          <paper-button data-dialog="finesInfoDialog">Info</paper-button>
-          <a target="_blank" href="{{_getHref()}}" tabindex="-1">
-            <paper-button raised class="colored" disabled$="{{_lessThenMin()}}">Pay now</paper-button>
-          </a>
+          <paper-button on-tap="_toggleInfo">Info</paper-button>
+          <template is="dom-if" if="{{_moreThenMin()}}">
+            <a target="_blank" href="{{_getHref()}}" tabindex="-1">
+              <paper-button raised class="colored" >Pay now</paper-button>
+            </a>
+          </template>
         </div>
       </div>
     </uqlibrary-persistent-footer>
 
-    <paper-dialog id="finesInfoDialog">
+    <paper-dialog id="finesInfoDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+      <h2>Payment Info</h2>
       <p>
         You don't need to pay your overdue charges unless you reach <span>{{moneyFormat(fineMinimumPayableAmount)}}</span>.
         You currently have <span>{{moneyFormat(finesSum)}}</span>, so you <span>{{needToPay}}</span> to pay your overdue charges.
       </p>
       <template is="dom-repeat" items="{{contextual}}" as="button">
-        <div class="text-container">
-          <a target="_blank" id="{{button.id}}" on-click="contextualButtonClicked"
-             href$="{{button.url}}" on-click="{{contextualButtonClicked}}">
-            <iron-icon class="link" icon="info-outline"></iron-icon>{{button.title}}
-          </a>
-        </div>
+        <a target="_blank" id="{{button.id}}" on-click="contextualButtonClicked"
+           href$="{{button.url}}" on-click="{{contextualButtonClicked}}">
+          <iron-icon class="link" icon="info-outline"></iron-icon>{{button.title}}
+        </a>
       </template>
       <div class="buttons">
         <paper-button class="colored" raised="" dialog-dismiss>Okay, I got it</paper-button>

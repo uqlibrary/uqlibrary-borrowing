@@ -140,11 +140,15 @@
     _msgNoPay: function () {
       return 'No need to pay unless you reach ' + this.moneyFormat(this.fineMinimumPayableAmount);
     },
-    _lessThenMin: function () {
-      return (this.finesSum < this.fineMinimumPayableAmount);
+    _moreThenMin: function () {
+      return (this.finesSum > this.fineMinimumPayableAmount);
     },
     _getHref: function () {
       return 'https://library.uq.edu.au/patroninfo~S7/' + this._patronNumber() + '/overdues';
+    },
+    _toggleInfo: function() {
+      this.$.finesInfoDialog.toggle();
     }
+
   });
 }());

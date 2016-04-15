@@ -203,44 +203,6 @@ h1#toolbar-page-title {
   line-height: 1.1em;
   color: rgba(255, 255, 255, 0.87); }
 
-uqlibrary-holds::shadow uqlibrary-borrowing-list::shadow .date {
-  padding-top: 20px; }
-
-uqlibrary-fines::shadow uqlibrary-borrowing-list::shadow .title {
-  padding-top: 20px;
-  font-family: "Roboto";
-  font-weight: 400;
-  font-size: 1em;
-  line-height: 1.1em;
-  color: #7b0c9d; }
-uqlibrary-fines::shadow uqlibrary-borrowing-list::shadow .content {
-  margin-left: 64px; }
-
-.container {
-  padding: 40px; }
-
-.main {
-  background-color: #FAFAFA;
-  height: 100%; }
-
-.attentionIcon {
-  position: absolute;
-  bottom: 4px;
-  right: 4px;
-  padding-left: 16px;
-  height: 32px;
-  overflow: hidden;
-  width: 100%; }
-  .attentionIcon paper-icon {
-    width: 24px;
-    height: 24px; }
-
-.flex {
-  @apply (--layout-flex); }
-
-.persistentFooter {
-  @apply (--layout-horizontal); }
-
 paper-toolbar {
   --paper-toolbar-background: #4a075f;
   --paper-toolbar-color: rgba(255, 255, 255, 0.87); }
@@ -308,6 +270,69 @@ paper-slider::shadow #sliderKnobInner::before {
 
 paper-slider#timePeriod {
   width: 50%; }
+
+neon-animated-pages {
+  height: 100%; }
+
+uqlibrary-holds::shadow uqlibrary-borrowing-list::shadow .date {
+  padding-top: 20px; }
+
+uqlibrary-fines::shadow uqlibrary-borrowing-list::shadow .title {
+  padding-top: 20px;
+  font-family: "Roboto";
+  font-weight: 400;
+  font-size: 1em;
+  line-height: 1.1em;
+  color: #7b0c9d; }
+uqlibrary-fines::shadow uqlibrary-borrowing-list::shadow .content {
+  margin-left: 64px; }
+
+.container {
+  padding: 40px 20px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 100%;
+  max-height: -moz-calc(100% - 128px);
+  max-height: -webkit-calc(100% - 128px);
+  max-height: calc(100% - 128px); }
+
+.main {
+  background-color: #FAFAFA;
+  height: 100%; }
+
+.attentionIcon {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  padding-left: 16px;
+  height: 32px;
+  overflow: hidden;
+  width: 100%; }
+  .attentionIcon paper-icon {
+    width: 24px;
+    height: 24px; }
+
+.flex {
+  @apply (--layout-flex); }
+
+#content {
+  height: -moz-calc(100% - 64px);
+  height: -webkit-calc(100% - 64px);
+  height: calc(100% - 64px);
+  overflow: hidden; }
+
+.persistentFooter {
+  @apply (--layout-horizontal); }
+
+@media screen and (max-width: 767px) {
+  .persistentFooter {
+    left: 0;
+    z-index: 1; } }
+.footerButtons {
+  padding-right: 16px; }
+
+#finesInfoDialog h2 {
+  font-size: 2.25em; }
 
 /*# sourceMappingURL=element.css.map */
 

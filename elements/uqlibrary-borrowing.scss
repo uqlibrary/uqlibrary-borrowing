@@ -10,65 +10,7 @@
 //                                              |___/
 // UQ My Library Borrowing app
 
-uqlibrary-holds {
-  &::shadow {
-    uqlibrary-borrowing-list {
-      &::shadow {
-        .date {
-          padding-top: $three-line-list-item-padding-top;
-        }
-      }
-    }
-  }
-}
 
-uqlibrary-fines {
-  &::shadow {
-    uqlibrary-borrowing-list {
-      &::shadow {
-        .title {
-          padding-top: $three-line-list-item-padding-top;
-          @include gmd-type-style(body1, $primary);
-        }
-        // For fines with 3 digits we need a bit more space
-        .content {
-          margin-left: $three-line-list-icon-item-text-padding-left - $three-line-list-icon-item-icon-padding-left + 8;
-        }
-      }
-    }
-  }
-}
-
-.container {
-  padding: 40px;
-}
-
-.main {
-  background-color:#FAFAFA;
-  height:100%;
-}
-
-.attentionIcon {
-  position: absolute;
-  bottom: 4px;
-  right: 4px;
-  padding-left: 16px;
-  height: 32px;
-  overflow: hidden;
-  width: 100%;
-  paper-icon {
-    width: 24px;
-    height: 24px;
-  }
-}
-
-.flex {
-  @apply(--layout-flex);
-}
-
-.persistentFooter {
-  @apply(--layout-horizontal);
-}
 paper-toolbar {
   --paper-toolbar-background: #4a075f;
   --paper-toolbar-color: rgba(255, 255, 255, 0.87); }
@@ -123,5 +65,99 @@ paper-slider::shadow #sliderKnobInner::before {
   display: block !important; }
 paper-slider#timePeriod {
   width: 50%; }
+
+neon-animated-pages {
+  height:100%; }
+
+uqlibrary-holds {
+  &::shadow {
+    uqlibrary-borrowing-list {
+      &::shadow {
+        .date {
+          padding-top: $three-line-list-item-padding-top;
+        }
+      }
+    }
+  }
+}
+
+uqlibrary-fines {
+  &::shadow {
+    uqlibrary-borrowing-list {
+      &::shadow {
+        .title {
+          padding-top: $three-line-list-item-padding-top;
+          @include gmd-type-style(body1, $primary);
+        }
+        // For fines with 3 digits we need a bit more space
+        .content {
+          margin-left: $three-line-list-icon-item-text-padding-left - $three-line-list-icon-item-icon-padding-left + 8;
+        }
+      }
+    }
+  }
+}
+
+.container {
+  padding: 40px 20px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 100%;
+
+  // topbar + tabs + content padding = 128px
+  max-height: -moz-calc(100% - 128px);
+  max-height: -webkit-calc(100% - 128px);
+  max-height: calc(100% - 128px);
+}
+
+.main {
+  background-color:#FAFAFA;
+  height:100%;
+}
+
+.attentionIcon {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  padding-left: 16px;
+  height: 32px;
+  overflow: hidden;
+  width: 100%;
+  paper-icon {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.flex {
+  @apply(--layout-flex);
+}
+
+#content {
+  // topbar = 64px
+  height:-moz-calc(100% - 64px);
+  height:-webkit-calc(100% - 64px);
+  height:calc(100% - 64px);
+  overflow: hidden;
+}
+
+.persistentFooter {
+  @apply(--layout-horizontal);
+}
+
+@media screen and (max-width: 767px) {
+  .persistentFooter {
+    left: 0;
+    z-index: 1;
+  }
+}
+
+.footerButtons {
+  padding-right:16px;
+}
+
+#finesInfoDialog h2 {
+  font-size:2.25em;
+}
 
 /*# sourceMappingURL=element.css.map */

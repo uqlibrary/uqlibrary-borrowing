@@ -10,11 +10,11 @@
 
   <link rel="import" href="../elements/uqlibrary-borrowing.html">
 </head>
-<body>
+<body class="fullbleed">
 
-<uqlibrary-borrowing autoload="false"></uqlibrary-borrowing>
-
+<uqlibrary-borrowing></uqlibrary-borrowing>
 <script>
+
   window.addEventListener('polymer-ready', function() {
     var borrowingEl = document.querySelector('uqlibrary-borrowing');
 
@@ -23,26 +23,30 @@
         {
           "title": "Pharmaceutics : the science of dosage form design",
           "dueDate": "2014-12-06T04:00:00+10:00",
-          "url": "http:\/\/library.uq.edu.au\/record=i3349004"
-        },
-        {
-          "title": "Physicochemical principles of pharmacy",
-          "dueDate": "2014-11-24T04:00:00+10:00",
-          "url": "http:\/\/library.uq.edu.au\/record=i3715828"
+          "url": "http:\/\/library.uq.edu.au\/record=i3349004",
+          "barcodes": "1234567890",
+          "callNumber": "04123456789"
         }
       ],
       "holds": [
         {
           "title": "Regression analysis of count data",
-          "datePlaced": "2014-04-30T14:00:00+10:00",
-          "url": "http:\/\/library.uq.edu.au\/record=i2673780"
+          "datePlaced": "2014-11-22T14:00:00+10:00",
+          "url": "http:\/\/library.uq.edu.au\/record=i2673780",
+          "status": 'onHold'
+        },
+        {
+          "title": "Regression analysis of count data. Part 2",
+          "datePlaced": "2014-02-12T14:00:00+10:00",
+          "url": "http:\/\/library.uq.edu.au\/record=i2673780",
+          "pickupLocation": 'BSL - Level 3',
+          "status": 'itemReady'
         }
-
       ],
       "fines": [
         {
           "title": "1. Human physiology : from cells to systems \/ Lauralee Sherwood.",
-          "fineAmount": 840,
+          "fineAmount": 1840,
           "dueDate": "2014-04-08T04:00:00+10:00",
           "dateReturned": "2014-04-14T14:02:05+10:00",
           "dateAssessed": "2014-04-15T14:02:05+10:00",
@@ -60,9 +64,7 @@
           "fineType": "overdue",
           "url": "http:\/\/library.uq.edu.au\/record=i3704585"
         }
-
-      ],
-      "retrievedAt": "2014-05-02T09:11:52+10:00"
+      ]
     };
 
 
@@ -91,7 +93,6 @@
             // check block visibility asynchronously
             setTimeout(function() {
               var tabs = borrowingEl.$.tabs.querySelectorAll('paper-tab');
-              assert.isNotNull(tabs, 'Tabs are not visible');
 
               // Check all tabs are shown
               expect(tabs.length).to.be.equal(3);
@@ -112,7 +113,7 @@
               expect(_titleNumber.innerHTML).to.be.equal('$0');
 
 
-              expect(borrowingEl.selectedTab).to.be.equal('loans');
+              expect(borrowingEl.selectedTab).to.be.equal(0);
 
               var _list = borrowingEl.$.loans.$.loansTimeline;
 
@@ -141,7 +142,6 @@
             // check block visibility asynchronously
             setTimeout(function() {
               var tabs = borrowingEl.$.tabs.querySelectorAll('paper-tab');
-              assert.isNotNull(tabs, 'Tabs are not visible');
 
               // Check all tabs are shown
               expect(tabs.length).to.be.equal(3);
