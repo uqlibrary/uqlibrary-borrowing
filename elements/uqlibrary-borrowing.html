@@ -123,13 +123,13 @@ Element providing an overview for loans, holds and fines.
                                entry-animation="slide-from-right-animation"
                                exit-animation="slide-left-animation">
             <div class="flex container">
-              <uqlibrary-loans id="loans" loans="{{ data.checkedOut }}" patron="{{ patron }}"></uqlibrary-loans>
+              <uqlibrary-loans id="loans" loans="{{ data.checkedOut }}"></uqlibrary-loans>
             </div>
             <div class="flex container">
-              <uqlibrary-holds id="holds" holds="{{ data.holds }}" patron="{{ patron }}"></uqlibrary-holds>
+              <uqlibrary-holds id="holds" holds="{{ data.holds }}"></uqlibrary-holds>
             </div>
             <div class="flex container">
-              <uqlibrary-fines id="fines" fines="{{ data.fines }}" patron="{{ patron }}"></uqlibrary-fines>
+              <uqlibrary-fines id="fines" fines="{{ data.fines }}"></uqlibrary-fines>
             </div>
           </neon-animated-pages>
         </div>

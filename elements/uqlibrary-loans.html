@@ -2,6 +2,7 @@
 <link rel="import" href="uqlibrary-borrowing-list.html">
 
 <dom-module id="uqlibrary-loans">
+  <link rel="import" type="css" href="uqlibrary-borrowing.css">
   <!-- Template -->
   <template>
     <iron-signals on-iron-signal-transitioning-change="{{transitioningChangeHandler}}"></iron-signals>
@@ -17,8 +18,12 @@
         </template>
       </div>
     </section>
-    <uqlibrary-persistent-footer id="persistentFooter" actionbuttons="{{footer}}">
-    </uqlibrary-persistent-footer>
+
+    <div id="persistentFooter" class="persistentFooter horizontal-reverse" hidden$="{{hideFooter}}">
+      <span class="flex"></span>
+      <paper-button raised class="button-colored-accent raised" on-tap="_openUrl">Renew Loans</paper-button>
+    </div>
+
   </template>
 
   <!-- Location of the script -->

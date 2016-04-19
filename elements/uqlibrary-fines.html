@@ -10,19 +10,13 @@
       <uqlibrary-borrowing-list id="finesList" items="{{processedItems}}"></uqlibrary-borrowing-list>
     </section>
 
-    <uqlibrary-persistent-footer id="persistentFooter" actionbuttons="{{footer}}">
-      <div layout="" horizontal="" class="persistentFooter">
-        <div class="footerInfo flex"> <b>Total</b>: <span>{{moneyFormat(finesSum)}}</span> </div>
-        <div class="footerButtons">
-          <paper-button on-tap="_toggleInfo">Info</paper-button>
-          <template is="dom-if" if="{{_moreThenMin()}}">
-            <a target="_blank" href="{{_getHref()}}" tabindex="-1">
-              <paper-button raised class="colored" >Pay now</paper-button>
-            </a>
-          </template>
-        </div>
+    <div id="persistentFooter" class="persistentFooter layout horizontal">
+      <div class="footerInfo flex"> <b>Total</b>: <span>{{moneyFormat(finesSum)}}</span> </div>
+      <div class="footerButtons">
+        <paper-button on-tap="_toggleInfo">Info</paper-button>
+        <paper-button raised class="colored" on-tap="_openUrl" hidden$="{{hidePayNow}}">Pay now</paper-button>
       </div>
-    </uqlibrary-persistent-footer>
+    </div>
 
     <paper-dialog id="finesInfoDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
       <h2>Payment Info</h2>

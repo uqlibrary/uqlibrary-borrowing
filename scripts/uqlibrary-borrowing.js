@@ -2,9 +2,6 @@
   Polymer({
     is: 'uqlibrary-borrowing',
     properties: {
-      patron: {
-        type: String
-      },
       autoload: {
         type: Boolean,
         value: true,
@@ -82,17 +79,18 @@
     dataChanged: function () {
       if (this.user) {
         this.sumFines = this.$.fines.moneyFormat(this.$.fines.calculateFines(this.data.fines));
-        if (this.data && typeof this.data.recordNumber !== 'undefined' && this.data.recordNumber) {
-          this.patron = this.data.recordNumber;
-        } else {
-          this.patron = '';
-        }
+
+        var patron = this.data.recordNumber;
+        this.$.loans.patron = patron;
+        this.$.holds.patron = patron;
+        this.$.fines.patron = patron;
+
         this.fire('uqlibrary-borrowing-data-loaded');
       }
     },
     selectedTabChanged: function (newValue, oldValue) {
       // check oldValue to prevent load on init
-      if (oldValue != '' && newValue != '') {
+      if (oldValue != '' && newValue != '' && oldValue != newValue) {
         this.get(newValue);
         this.$.ga.addEvent('Borrowing Tab', newValue);
       }

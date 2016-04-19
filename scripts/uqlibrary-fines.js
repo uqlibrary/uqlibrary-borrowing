@@ -2,14 +2,7 @@
   Polymer({
     is: 'uqlibrary-fines',
     properties: {
-      patron: {
-        type: String,
-        value: ''
-      },
       contextual: {
-        type: Array
-      },
-      footer: {
         type: Array
       },
       fineMinimumPayableAmount: {
@@ -36,12 +29,19 @@
         type: Number,
         value: 0
       },
+      patron: {
+        type: String
+      },
       // in cents
       needToPay: {
         type: String,
         value: 'don\'t need'
       },
       transitioning: {
+        type: Boolean,
+        value: false
+      },
+      hidePayNow: {
         type: Boolean,
         value: false
       }
@@ -92,6 +92,7 @@
       }
       this.processedItems = fines;
       this.finesSum = this.calculateFines(fines);
+      this.hidePayNow = !(this.finesSum > this.fineMinimumPayableAmount);
       this.contextual = [
         {
           title: 'About overdue charges',
@@ -104,14 +105,6 @@
           id: 'paymentOptions'
         }
       ];
-      if (this._patronNumber()) {
-        this.footer = [{
-          title: 'Pay now',
-          url: 'https://library.uq.edu.au/patroninfo~S7/' + this._patronNumber() + '/overdues'
-        }];
-      } else {
-        this.footer = [];
-      }
       if (this.finesSum >= this.fineMinimumPayableAmount) {
         this.needToPay = 'need';
       }
@@ -119,9 +112,6 @@
     transitioningChangeHandler: function (e) {
       if (e.detail.hasOwnProperty('transitioning'))
         this.transitioning = e.detail.transitioning;
-    },
-    _patronNumber: function() {
-      return this.patron;
     },
     calculateFines: function (fines) {
       this.finesSum = 0;
@@ -140,11 +130,8 @@
     _msgNoPay: function () {
       return 'No need to pay unless you reach ' + this.moneyFormat(this.fineMinimumPayableAmount);
     },
-    _moreThenMin: function () {
-      return (this.finesSum > this.fineMinimumPayableAmount);
-    },
-    _getHref: function () {
-      return 'https://library.uq.edu.au/patroninfo~S7/' + this._patronNumber() + '/overdues';
+    _openUrl: function () {
+      return 'https://library.uq.edu.au/patroninfo~S7/' + this.patron + '/overdues';
     },
     _toggleInfo: function() {
       this.$.finesInfoDialog.toggle();

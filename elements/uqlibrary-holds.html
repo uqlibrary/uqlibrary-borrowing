@@ -19,10 +19,11 @@
         </template>
       </div>
     </section>
-    <template is="dom-if" if="{{!_computeHidden()}}">
-      <uqlibrary-persistent-footer id="persistentFooter" actionbuttons="{{footer}}">
-      </uqlibrary-persistent-footer>
-    </template>
+
+    <div id="persistentFooter" class="persistentFooter horizontal-reverse" hidden$="{{hideFooter}}">
+      <span class="flex"></span>
+      <paper-button raised class="button-colored-accent raised" on-tap="_openUrl">Manage Holds</paper-button>
+    </div>
 
   </template>
 

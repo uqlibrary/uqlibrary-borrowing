@@ -2,13 +2,7 @@
   Polymer({
     is: 'uqlibrary-holds',
     properties: {
-      patron: {
-        type: String
-      },
       contextual: {
-        type: Array
-      },
-      footer: {
         type: Array
       },
       holds: {
@@ -20,7 +14,14 @@
         observer: 'holdsChanged',
         reflectToAttribute: true
       },
+      patron: {
+        type: String
+      },
       transitioning: {
+        type: Boolean,
+        value: false
+      },
+      hideFooter: {
         type: Boolean,
         value: false
       }
@@ -92,24 +93,15 @@
         url: 'https://www.library.uq.edu.au/help/place-hold',
         id: 'aboutPlacingHold'
       }];
-      if (this._patronNumber()) {
-        this.footer = [{
-          title: 'Manage Holds',
-          url: 'https://library.uq.edu.au/patroninfo~S7/' + this._patronNumber() + '/holds'
-        }];
-      } else {
-        this.footer = [];
-      }
+      
+      this.hideFooter = !(this.holds.length>0);
     },
     transitioningChangeHandler: function (e) {
       if (e.detail.hasOwnProperty('transitioning'))
         this.transitioning = e.detail.transitioning;
     },
-    _patronNumber: function() {
-      return this.patron;
-    },
-    _computeHidden: function () {
-      return !(this.footer && this.footer.length);
+    _openUrl: function() {
+      window.location = 'https://library.uq.edu.au/patroninfo~S7/' + this.patron + '/holds';
     }
   });
 }());

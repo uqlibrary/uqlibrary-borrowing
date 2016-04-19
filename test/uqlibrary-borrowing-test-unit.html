@@ -1,31 +1,86 @@
 <!doctype html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
-  <title>uqlibrary-borrowing</title>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <title>uqlibrary-element</title>
 
   <script src="../bower_components/webcomponentsjs/webcomponents.min.js"></script>
   <script src="../bower_components/web-component-tester/browser.js"></script>
+  <script src="../bower_components/test-fixture/test-fixture-mocha.js"></script>
 
+  <!-- Import the element to test -->
   <link rel="import" href="../elements/uqlibrary-borrowing.html">
+
 </head>
-<body class="fullbleed">
+<body>
 
-<uqlibrary-borrowing></uqlibrary-borrowing>
+<test-fixture id="element">
+  <template>
+    <uqlibrary-borrowing></uqlibrary-borrowing>
+  </template>
+</test-fixture>
+
 <script>
-
-  window.addEventListener('polymer-ready', function() {
-    var borrowingEl = document.querySelector('uqlibrary-borrowing');
-
+  suite('<uqlibrary-borrowing> tests', function () {
+    var element;
     var data = {
+      "recordNumber": "1234567",
       "checkedOut": [
         {
           "title": "Pharmaceutics : the science of dosage form design",
           "dueDate": "2014-12-06T04:00:00+10:00",
           "url": "http:\/\/library.uq.edu.au\/record=i3349004",
-          "barcodes": "1234567890",
-          "callNumber": "04123456789"
+          "callNumber": "Q222 .T83 1990",
+          "barcodes": "34067027831923",
+          "itemStatus": "AVAILABLE"
+        },
+        {
+          "title": "Physicochemical principles of pharmacy",
+          "dueDate": "2014-12-22T04:00:00+10:00",
+          "url": "http:\/\/library.uq.edu.au\/record=i3715828",
+          "callNumber": "Q222 .T83 1990",
+          "barcodes": "34067027831923",
+          "itemStatus": "AVAILABLE"
+        },
+        {
+          "title": "Pharmaceutics : the science of dosage form design",
+          "dueDate": "2014-10-06T04:00:00+10:00",
+          "url": "http:\/\/library.uq.edu.au\/record=i3349004",
+          "callNumber": "Q222 .T83 1990",
+          "barcodes": "34067027831923",
+          "itemStatus": "AVAILABLE"
+        },
+        {
+          "title": "Physicochemical principles of pharmacy",
+          "dueDate": "2014-12-24T04:00:00+10:00",
+          "url": "http:\/\/library.uq.edu.au\/record=i3715828",
+          "callNumber": "Q222 .T83 1990",
+          "barcodes": "34067027831923",
+          "itemStatus": "AVAILABLE"
+        },
+        {
+          "title": "Physicochemical principles of pharmacy",
+          "dueDate": "2014-12-26T04:00:00+10:00",
+          "url": "http:\/\/library.uq.edu.au\/record=i3715828",
+          "callNumber": "Q222 .T83 1990",
+          "barcodes": "34067027831923",
+          "itemStatus": "AVAILABLE"
+        },
+        {
+          "title": "Physicochemical principles of pharmacy",
+          "dueDate": "2014-11-22T04:00:00+10:00",
+          "url": "http:\/\/library.uq.edu.au\/record=i3715828",
+          "callNumber": "Q222 .T83 1990",
+          "barcodes": "34067027831923",
+          "itemStatus": "AVAILABLE"
+        },
+        {
+          "title": "Physicochemical principles of pharmacy",
+          "dueDate": "2014-10-28T04:00:00+10:00",
+          "url": "http:\/\/library.uq.edu.au\/record=i3715828",
+          "callNumber": "Q222 .T83 1990",
+          "barcodes": "34067027831923",
+          "itemStatus": "AVAILABLE"
         }
       ],
       "holds": [
@@ -33,20 +88,34 @@
           "title": "Regression analysis of count data",
           "datePlaced": "2014-11-22T14:00:00+10:00",
           "url": "http:\/\/library.uq.edu.au\/record=i2673780",
-          "status": 'onHold'
+          "status": "onHold"
         },
         {
           "title": "Regression analysis of count data. Part 2",
           "datePlaced": "2014-02-12T14:00:00+10:00",
           "url": "http:\/\/library.uq.edu.au\/record=i2673780",
-          "pickupLocation": 'BSL - Level 3',
-          "status": 'itemReady'
+          "pickupLocation": "BSL - Level 3",
+          "status": "itemReady"
+        },
+        {
+          "title": "Image processing",
+          "datePlaced": "2013-12-30T14:00:00+10:00",
+          "url": "http:\/\/library.uq.edu.au\/record=i2673780",
+          "pickupLocation": "SS&H Library - High Use area",
+          "status": "itemTransit"
+        },
+        {
+          "title": "Regression analysis of count data",
+          "datePlaced": "2014-04-30T14:00:00+10:00",
+          "url": "http:\/\/library.uq.edu.au\/record=i2673780",
+          "pickupLocation": "SS&H Library - High Use area",
+          "status": "bibReady"
         }
       ],
       "fines": [
         {
           "title": "1. Human physiology : from cells to systems \/ Lauralee Sherwood.",
-          "fineAmount": 1840,
+          "fineAmount": 840,
           "dueDate": "2014-04-08T04:00:00+10:00",
           "dateReturned": "2014-04-14T14:02:05+10:00",
           "dateAssessed": "2014-04-15T14:02:05+10:00",
@@ -63,204 +132,98 @@
           "description": "Book loan overdue and slight damage",
           "fineType": "overdue",
           "url": "http:\/\/library.uq.edu.au\/record=i3704585"
+        },
+        {
+          "title": "3. Human physiology : from cells to systems \/ Lauralee Sherwood.",
+          "fineAmount": 340,
+          "dueDate": "2014-04-08T04:00:00+10:00",
+          "dateReturned": "2014-04-14T14:02:05+10:00",
+          "dateAssessed": "2014-04-14T14:02:05+10:00",
+          "description": "Lost book",
+          "fineType": "lostBook",
+          "url": "http:\/\/library.uq.edu.au\/record=i3698283"
         }
-      ]
+
+      ],
+      "retrievedAt": "2014-05-02T09:11:52+10:00"
     };
 
+    setup(function () {
+      element = fixture('element');
+    });
 
-    var dataLoadedEventListeners = [];
+    test('It should display the uqlibrary-borrowing component', function (done) {
+      expect(element).to.not.be.null;
+      done();
+    });
 
-    describe('uqlibrary-borrowing', function () {
-      before(function () {
+    test('it should have three tabs', function (done) {
+      var els = element.querySelectorAll('paper-tab');
+      expect(els.length).to.equal(3);
+      done();
+    });
+
+    test('it should active the Loans tab', function (done) {
+      element.addEventListener('uqlibrary-borrowing-data-loaded', function(){
+        var els = element.querySelectorAll('paper-tab');
+        els[0].click();
+        var el = element.querySelector('paper-tab.iron-selected');
+        expect(el.textContent).to.match(/Loans*/);
+        done();
       });
+    });
 
-      afterEach(function () {
-
-        //remove all previous listeners
-        for(var i=0; i< dataLoadedEventListeners.length; i++) {
-          borrowingEl.removeEventListener('uqlibrary-borrowing-data-loaded', dataLoadedEventListeners[i]);
-        }
+    test('it should active the Holds tab', function (done) {
+      element.addEventListener('uqlibrary-borrowing-data-loaded', function(){
+        var els = element.querySelectorAll('paper-tab');
+        els[1].click();
+        var el = element.querySelector('paper-tab.iron-selected');
+        expect(el.textContent).to.match(/Holds*/);
+        done();
       });
+    });
 
-      describe('no data loaded', function () {
-        it('should show tabs with no data message if no data loaded', function(done) {
-          borrowingEl.data = {
-            "checkedOut": [],
-            "holds": [],
-            "fines": []
-          };
-          var noDataListener = function() {
-            // check block visibility asynchronously
-            setTimeout(function() {
-              var tabs = borrowingEl.$.tabs.querySelectorAll('paper-tab');
-
-              // Check all tabs are shown
-              expect(tabs.length).to.be.equal(3);
-
-              var _title = tabs[0].querySelector('.tabTitle');
-              var _titleNumber = tabs[0].querySelector('.tabTitleNumber');
-              expect(_title.innerHTML).to.be.equal('Loans');
-              expect(_titleNumber.innerHTML).to.be.equal('0');
-
-              var _title = tabs[1].querySelector('.tabTitle');
-              var _titleNumber = tabs[1].querySelector('.tabTitleNumber');
-              expect(_title.innerHTML).to.be.equal('Holds');
-              expect(_titleNumber.innerHTML).to.be.equal('0');
-
-              var _title = tabs[2].querySelector('.tabTitle');
-              var _titleNumber = tabs[2].querySelector('.tabTitleNumber');
-              expect(_title.innerHTML).to.be.equal('Overdue Charges');
-              expect(_titleNumber.innerHTML).to.be.equal('$0');
-
-
-              expect(borrowingEl.selectedTab).to.be.equal(0);
-
-              var _list = borrowingEl.$.loans.$.loansTimeline;
-
-              expect(_list.processedItems).to.be.empty();
-
-              var isHidden = _list.$.emptyItems.getAttribute('hidden');
-              assert.isNull(isHidden, 'No Loans message is hidden');
-
-              expect(_list.$.emptyItems.innerHTML).to.contain(_list.noItemsMessage);
-
-              done();
-            }, 2000);
-          };
-          borrowingEl.addEventListener('uqlibrary-borrowing-data-loaded', noDataListener);
-          dataLoadedEventListeners.push(noDataListener);
-        });
-
+    test('it should active the Overdue Charges tab', function (done) {
+      element.addEventListener('uqlibrary-borrowing-data-loaded', function(){
+        var els = element.querySelectorAll('paper-tab');
+        els[2].click();
+        var el = element.querySelector('paper-tab.iron-selected');
+        expect(el.textContent).to.match(/Overdue*/);
+        done();
       });
+    });
 
+    test('It should show the totals for each the tab', function(done) {
+      element.addEventListener('uqlibrary-borrowing-data-loaded', function(){
+        var tabs = element.querySelectorAll('paper-tab');
 
-      describe('data loaded', function () {
-        it('should display tabs with data', function(done) {
+        var _title = tabs[0].querySelector('.tabTitle');
+        var _titleNumber = tabs[0].querySelector('.tabTitleNumber');
+        expect(_title.innerHTML).to.be.equal('Loans');
+        expect(_titleNumber.innerHTML).to.be.equal('7');
 
-          borrowingEl.data = data;
-          var dataLoadedListener = function() {
-            // check block visibility asynchronously
-            setTimeout(function() {
-              var tabs = borrowingEl.$.tabs.querySelectorAll('paper-tab');
+        _title = tabs[1].querySelector('.tabTitle');
+        _titleNumber = tabs[1].querySelector('.tabTitleNumber');
+        expect(_title.innerHTML).to.be.equal('Holds');
+        expect(_titleNumber.innerHTML).to.be.equal('4');
 
-              // Check all tabs are shown
-              expect(tabs.length).to.be.equal(3);
+        _title = tabs[2].querySelector('.tabTitle');
+        _titleNumber = tabs[2].querySelector('.tabTitleNumber');
+        expect(_title.innerHTML).to.be.equal('Overdue Charges');
+        expect(_titleNumber.innerHTML).to.be.equal('$13.40');
 
-              var _title = tabs[0].querySelector('.tabTitle');
-              var _titleNumber = tabs[0].querySelector('.tabTitleNumber');
-              expect(_title.innerHTML).to.be.equal('Loans');
-              expect(_titleNumber.innerHTML).to.be.equal(data.checkedOut.length+'');
+        done();
+      });
+    });
 
-              var _title = tabs[1].querySelector('.tabTitle');
-              var _titleNumber = tabs[1].querySelector('.tabTitleNumber');
-              expect(_title.innerHTML).to.be.equal('Holds');
-              expect(_titleNumber.innerHTML).to.be.equal(data.holds.length+'');
+    test('Should populate the correct number of records in each tab', function(done) {
+      element.addEventListener('uqlibrary-borrowing-data-loaded', function(){
+        var _data = element.data;
+        expect(_data.checkedOut.length).to.be.equal(data.checkedOut.length);
+        expect(_data.holds.length).to.be.equal(data.holds.length);
+        expect(_data.fines.length).to.be.equal(data.fines.length);
 
-              var _title = tabs[2].querySelector('.tabTitle');
-              var _titleNumber = tabs[2].querySelector('.tabTitleNumber');
-              expect(_title.innerHTML).to.be.equal('Overdue Charges');
-              expect(_titleNumber.innerHTML).to.be.equal(borrowingEl.$.fines.moneyFormat(borrowingEl.$.fines.finesSum)+'');
-
-
-              expect(borrowingEl.selectedTab).to.be.equal('loans');
-
-              var isHoldsHidden = borrowingEl.$.holdsSection.getAttribute('hidden');
-              assert.isNotNull(isHoldsHidden, 'Holds tab is not hidden');
-
-              var isFinesHidden = borrowingEl.$.finesSection.getAttribute('hidden');
-              assert.isNotNull(isFinesHidden, 'Fines tab is not hidden');
-
-
-              var _list = borrowingEl.$.loans.$.loansTimeline;
-
-              expect(_list.processedItems.length).to.be.equal(data.checkedOut.length);
-
-              var isHidden = _list.$.emptyItems.getAttribute('hidden');
-              assert.isNotNull(isHidden, 'No Loans message is hidden');
-
-
-              var firstItem = _list.$.timeline.querySelector('li.first');
-              assert.isNotNull(firstItem, 'No first item shown');
-
-              var _date = firstItem.querySelector('div.title');
-              expect(_date.innerHTML).to.contain(_list.processedItems[0].day);
-
-              var _title = firstItem.querySelector('div.line1');
-              expect(_title.innerHTML).to.contain(_list.processedItems[0].title);
-
-              var isFooterHidden = borrowingEl.$.holds.$.persistentFooter.getAttribute('hidden');
-              assert.isNull(isFooterHidden, 'Persistent footer is not visible');
-
-              // Switch to holds tab
-              borrowingEl.selectedTab = 'holds';
-              setTimeout(function() {
-                var _list = borrowingEl.$.holds.$.holdsTimeline;
-                var isHoldsHidden = borrowingEl.$.loansSection.getAttribute('hidden');
-                assert.isNotNull(isHoldsHidden, 'Holds tab is not hidden');
-
-                var isFinesHidden = borrowingEl.$.finesSection.getAttribute('hidden');
-                assert.isNotNull(isFinesHidden, 'Fines tab is not hidden');
-
-                expect(_list.processedItems.length).to.be.equal(data.holds.length);
-
-                var firstItem = _list.$.timeline.querySelector('li.first');
-                assert.isNotNull(firstItem, 'No first item shown');
-
-                var _texts = firstItem.querySelectorAll('div.caption');
-                expect(_texts[0].innerHTML).to.contain('On');
-                expect(_texts[1].innerHTML).to.contain('Hold');
-
-                var _title = firstItem.querySelector('div.line1');
-                expect(_title.innerHTML).to.contain(_list.processedItems[0].title);
-
-                var isFooterHidden = borrowingEl.$.holds.$.persistentFooter.getAttribute('hidden');
-                assert.isNull(isFooterHidden, 'Persistent footer is not visible');
-
-                // Switch to fines tab
-                borrowingEl.selectedTab = 'fines';
-                setTimeout(function() {
-                  var _list = borrowingEl.$.fines.$.finesList;
-
-                  var isLoansHidden = borrowingEl.$.loansSection.getAttribute('hidden');
-                  assert.isNotNull(isLoansHidden, 'Loans tab is not hidden');
-
-                  var isHoldsHidden = borrowingEl.$.holdsSection.getAttribute('hidden');
-                  assert.isNotNull(isHoldsHidden, 'Holds tab is not hidden');
-
-                  expect(_list.processedItems.length).to.be.equal(data.fines.length);
-
-                  var firstItem = _list.$.timeline.querySelector('li.first');
-                  assert.isNotNull(firstItem, 'No first item shown');
-
-                  var _amount = firstItem.querySelector('div.title');
-                  expect(_amount.innerHTML).to.contain(borrowingEl.$.fines.moneyFormat(_list.processedItems[0].fineAmount));
-
-                  var _text = firstItem.querySelector('div.line1');
-                  expect(_text.innerHTML).to.contain(_list.processedItems[0].title);
-
-                  _text = firstItem.querySelector('div.line2');
-                  expect(_text.innerHTML).to.contain('Due date');
-
-                  _text = firstItem.querySelector('div.line3');
-                  expect(_text.innerHTML).to.contain('Date returned');
-
-                  var isFooterHidden = borrowingEl.$.fines.$.persistentFooter.getAttribute('hidden');
-                  assert.isNull(isFooterHidden, 'Persistent footer is not visible');
-
-                  expect(borrowingEl.$.fines.$.persistentFooter.innerHTML).to.contain(borrowingEl.$.fines.moneyFormat(borrowingEl.$.fines.finesSum));
-
-                  done();
-                }, 2000);
-
-
-              }, 2000);
-
-
-            }, 2000);
-          };
-          borrowingEl.addEventListener('uqlibrary-borrowing-data-loaded', dataLoadedListener);
-          dataLoadedEventListeners.push(dataLoadedListener);
-        });
+        done();
       });
     });
 
