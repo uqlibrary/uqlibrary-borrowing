@@ -32,11 +32,6 @@
       patron: {
         type: String
       },
-      // in cents
-      needToPay: {
-        type: String,
-        value: 'don\'t need'
-      },
       transitioning: {
         type: Boolean,
         value: false
@@ -92,7 +87,7 @@
       }
       this.processedItems = fines;
       this.finesSum = this.calculateFines(fines);
-      this.hidePayNow = !(this.finesSum > this.fineMinimumPayableAmount);
+      this.hidePayNow = (this.finesSum < this.fineMinimumPayableAmount);
       this.contextual = [
         {
           title: 'About overdue charges',
@@ -105,9 +100,6 @@
           id: 'paymentOptions'
         }
       ];
-      if (this.finesSum >= this.fineMinimumPayableAmount) {
-        this.needToPay = 'need';
-      }
     },
     transitioningChangeHandler: function (e) {
       if (e.detail.hasOwnProperty('transitioning'))

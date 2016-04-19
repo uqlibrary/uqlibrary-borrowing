@@ -23,7 +23,6 @@
         value: '',
         observer: 'selectedTabChanged'
       },
-      // Accessibility issues fixes
       keyboardNavigationKeys: {
         type: String,
         value: 'space enter'
@@ -67,14 +66,6 @@
       this.$.loansApi.addEventListener('uqlibrary-api-account-loans-loaded', function (e) {
         that.data = e.detail;
       });
-      // Listen to persistent footer buttons clicks
-      this.addEventListener('uqlibrary-persistent-footer-action-button-clicked', function (e) {
-        this.$.ga.addEvent('Action button clicked', e.detail.button.title);
-      });
-      // Listen to persistent footer buttons clicks
-      this.addEventListener('uqlibrary-borrowing-contextual-button-clicked', function (e) {
-        this.$.ga.addEvent('Contextual button clicked', e.detail.button.id);
-      });
     },
     dataChanged: function () {
       if (this.user) {
@@ -112,9 +103,6 @@
     hostAttributes: {
       'layout': '',
       'center': ''
-    },
-    _polywrapper: function(field) {
-      return this.$[field];
     }
   });
 }());

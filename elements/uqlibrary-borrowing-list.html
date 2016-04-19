@@ -50,11 +50,9 @@
     <link rel="stylesheet" href="../../uqlibrary-elements/resources/theme/element.css">
     <link rel="stylesheet" href="uqlibrary-borrowing.css">
 
-    <template is="dom-if" if="{{_isEmpty()}}">
-      <div class="noItem caption">
-        {{ noItemsMessage }}
-      </div>
-    </template>
+    <div class="noItem caption" hidden$="{{processedItems.length}}">
+      {{ noItemsMessage }}
+    </div>
 
     <ul id="timeline" class="three-line-icon-list">
       <li class="gap"></li>

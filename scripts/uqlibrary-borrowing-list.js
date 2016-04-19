@@ -99,9 +99,6 @@
       if (_id) {
         this.fire('uqlibrary-borrowing-contextual-button-clicked', { button: { id: _id } });
       }
-    },
-    _isEmpty: function() {
-      return !!(typeof this.items !== 'undefined' && this.items.length);
     }
   });
 }());

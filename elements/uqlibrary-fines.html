@@ -22,7 +22,7 @@
       <h2>Payment Info</h2>
       <p>
         You don't need to pay your overdue charges unless you reach <span>{{moneyFormat(fineMinimumPayableAmount)}}</span>.
-        You currently have <span>{{moneyFormat(finesSum)}}</span>, so you <span>{{needToPay}}</span> to pay your overdue charges.
+        You currently have <span>{{moneyFormat(finesSum)}}</span>, so you <span hidden$="{{hidePayNow}}">don't </span>need to pay your overdue charges.
       </p>
       <template is="dom-repeat" items="{{contextual}}" as="button">
         <a target="_blank" id="{{button.id}}" on-click="contextualButtonClicked"
