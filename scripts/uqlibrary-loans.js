@@ -58,7 +58,7 @@
 
     /*
      * If 'loans' array change, 
-     * recalculate the total in fees and inject the patrons id in each sub component
+     * reformat rows and reset hideFooter property
      */
     loansChanged: function () {
       this.processedItems = [];

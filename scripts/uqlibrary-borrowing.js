@@ -9,7 +9,7 @@
         notify: true
       },
 
-      // Users data
+      // Users borrowed assets data
       data: {
         notify: true,
         observer: 'dataChanged'

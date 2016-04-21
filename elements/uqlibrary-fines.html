@@ -2,7 +2,47 @@
 <link rel="import" href="uqlibrary-borrowing-list.html">
 
 <dom-module id="uqlibrary-fines">
-  <link rel="import" type="css" href="uqlibrary-borrowing.css">
+  <!-- All element styles -->
+  <style is="custom-style" include="iron-flex iron-flex-alignment common-styles">
+    .persistentFooter, .modalLinks {
+      @apply(--layout-horizontal);
+      background-color:#eee;
+      position: fixed;
+      width: 100%;
+      bottom: 0;
+      left: 0;
+    }
+
+    .footerInfo {
+      font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+      font-weight: 500;
+      font-size: 1.2em;
+      line-height: 1.1em;
+      white-space: normal;
+      padding: 12px;
+    }
+
+    .footerButtons {
+      padding:10px 16px;
+    }
+
+    #finesInfoDialog h2 {
+      font-size:2.25em;
+    }
+
+    @media screen and (max-width: 767px) {
+      .persistentFooter {
+        left: 0;
+        z-index: 1;
+      }
+    }
+
+    @media screen and (max-width: 600px) {
+      .modalLinks {
+        @apply(--layout-vertical);
+      }
+    }
+  </style>
   <template>
     <iron-signals on-core-signal-transitioning-change="transitioningChangeHandler"></iron-signals>
     <section name="list" class="body-footer-container">

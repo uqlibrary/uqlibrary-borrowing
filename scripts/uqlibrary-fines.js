@@ -77,7 +77,7 @@
 
     /*
      * If 'fines' array change, 
-     * recalculate the total in fees and inject the patrons id in each sub component
+     * recalculate the total in fees, reformat rows and reset hidePayNow property
      */
     finesChanged: function () {
       this.processedItems = [];

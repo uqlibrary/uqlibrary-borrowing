@@ -36,7 +36,6 @@
      * Initial settings
      */
     ready: function () {
-      this.set('$.holdsTimeline.noItemsMessage', 'No current holds');
       this.set('$.holdsTimeline.showEachDate', true);
 
       // we don't care about placed date, so disable sorting by date
@@ -58,7 +57,7 @@
 
     /*
      * If 'holds' array change
-     * reformat rows
+     * reformat rows and reset hideFooter property
      */
     holdsChanged: function () {
       for (var i = 0; i < this.holds.length; i++) {
