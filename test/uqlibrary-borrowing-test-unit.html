@@ -50,23 +50,19 @@
     });
 
     test('it should active the Holds tab', function (done) {
-      element.addEventListener('uqlibrary-borrowing-data-loaded', function(){
-        var els = element.querySelectorAll('paper-tab');
-        els[1].click();
-        var el = element.querySelector('paper-tab.iron-selected');
-        expect(el.textContent).to.match(/Holds*/);
-        done();
-      });
+      var els = element.querySelectorAll('paper-tab');
+      els[1].click();
+      var el = element.querySelector('paper-tab.iron-selected');
+      expect(el.textContent).to.match(/Holds*/);
+      done();
     });
 
     test('it should active the Overdue Charges tab', function (done) {
-      element.addEventListener('uqlibrary-borrowing-data-loaded', function(){
-        var els = element.querySelectorAll('paper-tab');
-        els[2].click();
-        var el = element.querySelector('paper-tab.iron-selected');
-        expect(el.textContent).to.match(/Overdue*/);
-        done();
-      });
+      var els = element.querySelectorAll('paper-tab');
+      els[2].click();
+      var el = element.querySelector('paper-tab.iron-selected');
+      expect(el.textContent).to.match(/Overdue*/);
+      done();
     });
 
     test('It should show the totals for each the tab', function(done) {

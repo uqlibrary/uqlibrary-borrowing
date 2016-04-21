@@ -67,6 +67,7 @@
           that.$.account.login(window.location.href);
         }
       });
+      
       if (this.autoload) {
         this.$.account.get();
       }
