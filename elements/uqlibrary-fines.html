@@ -4,17 +4,17 @@
 <dom-module id="uqlibrary-fines">
   <link rel="import" type="css" href="uqlibrary-borrowing.css">
   <template>
-
     <iron-signals on-core-signal-transitioning-change="transitioningChangeHandler"></iron-signals>
     <section name="list" class="body-footer-container">
-      <uqlibrary-borrowing-list id="finesList" items="{{processedItems}}"></uqlibrary-borrowing-list>
+      <uqlibrary-borrowing-list id="finesList" items="{{processedItems}}" empty-message="No overdue charges">
+      </uqlibrary-borrowing-list>
     </section>
 
     <div id="persistentFooter" class="persistentFooter layout horizontal">
       <div class="footerInfo flex"> <b>Total</b>: <span>{{moneyFormat(finesSum)}}</span> </div>
       <div class="footerButtons">
         <paper-button on-tap="_toggleInfo">Info</paper-button>
-        <paper-button raised class="colored" on-tap="_openUrl" hidden$="{{hidePayNow}}">Pay now</paper-button>
+        <paper-button raised class="colored" on-tap="_openUrl" disabled$="{{hidePayNow}}">Pay now</paper-button>
       </div>
     </div>
 
@@ -22,14 +22,16 @@
       <h2>Payment Info</h2>
       <p>
         You don't need to pay your overdue charges unless you reach <span>{{moneyFormat(fineMinimumPayableAmount)}}</span>.
-        You currently have <span>{{moneyFormat(finesSum)}}</span>, so you <span hidden$="{{hidePayNow}}">don't </span>need to pay your overdue charges.
+        You currently have <span>{{moneyFormat(finesSum)}}</span>, so you <span hidden$="{{!hidePayNow}}">don't </span>need to pay your overdue charges.
       </p>
-      <template is="dom-repeat" items="{{contextual}}" as="button">
-        <a target="_blank" id="{{button.id}}" on-click="contextualButtonClicked"
-           href$="{{button.url}}" on-click="{{contextualButtonClicked}}">
-          <iron-icon class="link" icon="info-outline"></iron-icon>{{button.title}}
-        </a>
-      </template>
+      <div class="modalLinks">
+        <template is="dom-repeat" items="{{contextual}}" as="button">
+          <a target="_blank" id="{{button.id}}" on-click="contextualButtonClicked"
+             href$="{{button.url}}" on-click="{{contextualButtonClicked}}">
+            <iron-icon class="link" icon="info-outline"></iron-icon>{{button.title}}
+          </a>
+        </template>
+      </div>
       <div class="buttons">
         <paper-button class="colored" raised="" dialog-dismiss>Okay, I got it</paper-button>
       </div>

@@ -2,14 +2,17 @@
   Polymer({
     is: 'uqlibrary-fines',
     properties: {
+      // links to be displayed in the Info modal page
       contextual: {
         type: Array
       },
+      // Fine Minimum payable amount, literally
       fineMinimumPayableAmount: {
         value: function () {
           return 20 * 100;
         }
       },
+      // Array with all users fines
       fines: {
         type: Array,
         value: function () {
@@ -18,6 +21,7 @@
         notify: true,
         observer: 'finesChanged'
       },
+      // users fines data formatted
       processedItems: {
         type: Array,
         value: function () {
@@ -25,24 +29,31 @@
         },
         notify: true
       },
+      // Users total fine
       finesSum: {
         type: Number,
         value: 0
       },
+      // Users ID
       patron: {
         type: String
       },
+      // Transitioning process running 
       transitioning: {
         type: Boolean,
         value: false
       },
+      // Disable pay now button if finesSum < fineMinimumPayableAmount
       hidePayNow: {
         type: Boolean,
         value: false
       }
     },
+
+    /*
+     * Initial settings
+     */
     ready: function () {
-      this.set('$.finesList.noItemsMessage', 'No overdue charges');
       this.set('$.finesList.showEachDate', true);
       this.addEventListener('uqlibrary-borrowing-list-item-selected', function (e) {
         var _item = e.detail;
@@ -50,7 +61,24 @@
           window.location.href = _item.url;
         }
       });
+      this.contextual = [
+        {
+          title: 'About overdue charges',
+          url: 'https://www.library.uq.edu.au/help/borrowing#overdues',
+          id: 'aboutOverdueCharges'
+        },
+        {
+          title: 'Payment options',
+          url: 'https://www.library.uq.edu.au/help/payment-options',
+          id: 'paymentOptions'
+        }
+      ];
     },
+
+    /*
+     * If 'fines' array change, 
+     * recalculate the total in fees and inject the patrons id in each sub component
+     */
     finesChanged: function () {
       this.processedItems = [];
       var fines = [];
@@ -74,37 +102,27 @@
         if (_fine.dueDateText && _fine.dateReturnedText) {
           _fine.subtitle = 'Due date: ' + _fine.dueDateText;
           _fine.secondaryText = 'Date returned: ' + _fine.dateReturnedText;
-        } else
-        //if(_fine.description) {
-        //_fine.attentionIcon = {icon: "warning", text: _fine.description, type: 'warning'};
-        //}
-        {
-          if (_fine.description) {
-            _fine.subtitle = _fine.description;
-          }
+        } else if (_fine.description) {
+          _fine.subtitle = _fine.description;
         }
         fines.push(_fine);
       }
       this.processedItems = fines;
       this.finesSum = this.calculateFines(fines);
       this.hidePayNow = (this.finesSum < this.fineMinimumPayableAmount);
-      this.contextual = [
-        {
-          title: 'About overdue charges',
-          url: 'https://www.library.uq.edu.au/help/borrowing#overdues',
-          id: 'aboutOverdueCharges'
-        },
-        {
-          title: 'Payment options',
-          url: 'https://www.library.uq.edu.au/help/payment-options',
-          id: 'paymentOptions'
-        }
-      ];
     },
+
+    /*
+     * Transitioning change handler
+     */
     transitioningChangeHandler: function (e) {
       if (e.detail.hasOwnProperty('transitioning'))
         this.transitioning = e.detail.transitioning;
     },
+
+    /*
+     * sum all users fines and convert the total to integer
+     */
     calculateFines: function (fines) {
       this.finesSum = 0;
       if (fines && fines.length > 0) {
@@ -116,15 +134,24 @@
       }
       return this.finesSum;
     },
+
+    /*
+     * currency format ($.00) 
+     */
     moneyFormat: function (value) {
       return '$' + (value > 0 ? (parseFloat(value) / 100).toFixed(2) : '0');
     },
-    _msgNoPay: function () {
-      return 'No need to pay unless you reach ' + this.moneyFormat(this.fineMinimumPayableAmount);
-    },
+
+    /*
+     * Open users overdue dashboard
+     */
     _openUrl: function () {
-      return 'https://library.uq.edu.au/patroninfo~S7/' + this.patron + '/overdues';
+      window.location = 'https://library.uq.edu.au/patroninfo~S7/' + this.patron + '/overdues';
     },
+
+    /*
+     * Open Info modal page
+     */
     _toggleInfo: function() {
       this.$.finesInfoDialog.toggle();
     }

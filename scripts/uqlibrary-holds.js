@@ -2,9 +2,11 @@
   Polymer({
     is: 'uqlibrary-holds',
     properties: {
+      // links to be displayed in the Info modal page
       contextual: {
         type: Array
       },
+      // Array with all users holds
       holds: {
         type: Array,
         value: function () {
@@ -14,34 +16,51 @@
         observer: 'holdsChanged',
         reflectToAttribute: true
       },
+      // Users ID
       patron: {
         type: String
       },
+      // Transitioning process running
       transitioning: {
         type: Boolean,
         value: false
       },
+      // If no holds, hide footer
       hideFooter: {
         type: Boolean,
         value: false
       }
     },
+
+    /*
+     * Initial settings
+     */
     ready: function () {
       this.set('$.holdsTimeline.noItemsMessage', 'No current holds');
       this.set('$.holdsTimeline.showEachDate', true);
-      this.set('$.holdsTimeline.sortByDate', false);
+
       // we don't care about placed date, so disable sorting by date
+      this.set('$.holdsTimeline.sortByDate', false);
+
       this.addEventListener('uqlibrary-borrowing-list-item-selected', function (e) {
         var _item = e.detail;
         if (_item.hasOwnProperty('url')) {
           window.location.href = _item.url;
         }
       });
+
+      this.contextual = [{
+        title: 'About placing a hold',
+        url: 'https://www.library.uq.edu.au/help/place-hold',
+        id: 'aboutPlacingHold'
+      }];
     },
+
+    /*
+     * If 'holds' array change
+     * reformat rows
+     */
     holdsChanged: function () {
-      this.processData();
-    },
-    processData: function () {
       for (var i = 0; i < this.holds.length; i++) {
         var _hold = this.holds[i];
         _hold.class = 'hold-item';
@@ -87,19 +106,20 @@
         }
         return 0;
       });
-
-      this.contextual = [{
-        title: 'About placing a hold',
-        url: 'https://www.library.uq.edu.au/help/place-hold',
-        id: 'aboutPlacingHold'
-      }];
-      
       this.hideFooter = !(this.holds.length>0);
     },
+
+    /*
+     * Transitioning change handler
+     */
     transitioningChangeHandler: function (e) {
       if (e.detail.hasOwnProperty('transitioning'))
         this.transitioning = e.detail.transitioning;
     },
+
+    /*
+     * Open users holds dashboard
+     */
     _openUrl: function() {
       window.location = 'https://library.uq.edu.au/patroninfo~S7/' + this.patron + '/holds';
     }

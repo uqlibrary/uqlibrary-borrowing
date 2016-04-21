@@ -7,7 +7,8 @@
 
     <iron-signals on-core-signal-transitioning-change="transitioningChangeHandler"></iron-signals>
     <section name="list" class="body-footer-container">
-      <uqlibrary-borrowing-list id="holdsTimeline" items="{{holds}}" class="with-persistent-footer">
+      <uqlibrary-borrowing-list id="holdsTimeline" items="{{holds}}"
+                                class="with-persistent-footer" empty-message="No current holds">
       </uqlibrary-borrowing-list>
       <div class="layout horizontal">
         <template is="dom-repeat" items="{{contextual}}" as="button">
@@ -22,7 +23,9 @@
 
     <div id="persistentFooter" class="persistentFooter horizontal-reverse" hidden$="{{hideFooter}}">
       <span class="flex"></span>
-      <paper-button raised class="button-colored-accent raised" on-tap="_openUrl">Manage Holds</paper-button>
+      <div class="footerButtons">
+        <paper-button raised class="button-colored-accent raised" on-tap="_openUrl">Manage Holds</paper-button>
+      </div>
     </div>
 
   </template>

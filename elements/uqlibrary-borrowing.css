@@ -321,13 +321,19 @@ uqlibrary-fines::shadow uqlibrary-borrowing-list::shadow .content {
   height: calc(100% - 64px);
   overflow: hidden; }
 
-.persistentFooter {
+.persistentFooter, .modalLinks {
   @apply (--layout-horizontal); }
+
+.modalLinks a {
+  padding-right: 16px; }
 
 @media screen and (max-width: 767px) {
   .persistentFooter {
     left: 0;
     z-index: 1; } }
+@media screen and (max-width: 600px) {
+  .modalLinks {
+    @apply (--layout-vertical); } }
 .footerButtons {
   padding-right: 16px; }
 

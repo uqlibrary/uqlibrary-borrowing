@@ -2,15 +2,20 @@
   Polymer({
     is: 'uqlibrary-borrowing',
     properties: {
+      // Should the component auto-load the user account. turn it off for debug
       autoload: {
         type: Boolean,
         value: true,
         notify: true
       },
+
+      // Users data
       data: {
         notify: true,
         observer: 'dataChanged'
       },
+
+      // Users data formatted
       processedItems: {
         type: Array,
         value: function () {
@@ -18,23 +23,27 @@
         },
         notify: true
       },
+
+      // Tab selected
       selectedTab: {
         type: String,
         value: '',
         observer: 'selectedTabChanged'
       },
+
+      // Keyboard navigation
       keyboardNavigationKeys: {
         type: String,
         value: 'space enter'
       },
-      patronNumber: {
-        type: String,
-        value: ''
-      },
+
+      // Total in Fines
       sumFines: {
         type: Number,
         value: 0
       },
+
+      // Users details
       user: {
         type: Object,
         value: function () {
@@ -42,11 +51,10 @@
         }
       }
     },
-    a11yKeyPressed: function (source, event) {
-      if (source.path && source.path.length > 0 && source.path[0].target) {
-        source.path[0].target.fire('tap');
-      }
-    },
+
+    /*
+     * Link current user and load its account information related to Loans, Holds and Fines
+     */
     ready: function () {
       var that = this;
 
@@ -67,6 +75,10 @@
         that.data = e.detail;
       });
     },
+
+    /*
+    * If the data property has changed, recalculate the total in fees and inject the patrons id in each sub component
+    */
     dataChanged: function () {
       if (this.user) {
         this.sumFines = this.$.fines.moneyFormat(this.$.fines.calculateFines(this.data.fines));
@@ -79,30 +91,16 @@
         this.fire('uqlibrary-borrowing-data-loaded');
       }
     },
+
+    /*
+     * Callback when the main tab is selected / changed
+     */
     selectedTabChanged: function (newValue, oldValue) {
       // check oldValue to prevent load on init
       if (oldValue != '' && newValue != '' && oldValue != newValue) {
         this.get(newValue);
         this.$.ga.addEvent('Borrowing Tab', newValue);
       }
-    },
-    transitionPrepareHandler: function () {
-      this.transitioning = true;
-      this.fire('iron-signal', {
-        name: 'transitioning-change',
-        data: { transitioning: this.transitioning }
-      });
-    },
-    transitionEndHandler: function () {
-      this.transitioning = false;
-      this.fire('iron-signal', {
-        name: 'transitioning-change',
-        data: { transitioning: this.transitioning }
-      });
-    },
-    hostAttributes: {
-      'layout': '',
-      'center': ''
     }
   });
 }());

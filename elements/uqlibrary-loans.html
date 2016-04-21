@@ -5,9 +5,11 @@
   <link rel="import" type="css" href="uqlibrary-borrowing.css">
   <!-- Template -->
   <template>
+
     <iron-signals on-iron-signal-transitioning-change="{{transitioningChangeHandler}}"></iron-signals>
     <section name="list" class="body-footer-container">
-      <uqlibrary-borrowing-list id="loansTimeline" items="{{processedItems}}"></uqlibrary-borrowing-list>
+      <uqlibrary-borrowing-list id="loansTimeline" items="{{processedItems}}" empty-message="No Loans">
+      </uqlibrary-borrowing-list>
       <div class="layout horizontal">
         <template is="dom-repeat" items="{{contextual}}" as="button">
           <div class="text-container">
@@ -21,7 +23,9 @@
 
     <div id="persistentFooter" class="persistentFooter horizontal-reverse" hidden$="{{hideFooter}}">
       <span class="flex"></span>
-      <paper-button raised class="button-colored-accent raised" on-tap="_openUrl">Renew Loans</paper-button>
+      <div class="footerButtons">
+        <paper-button raised class="button-colored-accent raised" on-tap="_openUrl">Renew Loans</paper-button>
+      </div>
     </div>
 
   </template>

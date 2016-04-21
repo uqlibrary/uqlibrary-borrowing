@@ -2,52 +2,50 @@
   Polymer({
     is: 'uqlibrary-borrowing-list',
     properties: {
-      /**
-       * The `items` attribute is an array of items to display on the timeline.
-       *
-       * @property items
-       * @type array
-       */
+      // Items array to be displayed
       items: { observer: 'itemsChanged' },
-      /**
-       * The `noitemsMessage` a message to display when there are no upcoming items
-       *
-       * @property noitemsMessage
-       * @type String
-       */
-      noItemsMessage: {
-        type: String,
-        value: 'You do not have any items'
+      // If items array is empty, display emptyMessage
+      emptyMessage: {
+        type: String
       },
+      // same day items should not display date
       showEachDate: {
         type: Boolean,
         value: false
       },
+      // the list should be order by date? true/false
       sortByDate: {
+        type: Boolean,
+        value: true
+      },
+      // true if items array is empty
+      isEmpty: {
         type: Boolean,
         value: true
       }
     },
+
+    /*
+     * once component has been loaded, reset main properties
+     */
     ready: function () {
       this.items = [];
       this.processedItems = [];
     },
-    /**
-     * The 'uqlibrary-borrowing-list-item-selected' item is fired when a user taps on an item in timeline,
-     * object containing item details is returned
-     * @item item-selected
+
+    /*
+     * when item clicked, open its respective URL
      */
-    _itemSelected: function (item, data, source) {
-      var itemId = source.getAttribute('data-item-id');
-      var selectedItem = this.items.filter(function (item) {
-        return item.id == itemId;
-      });
-      this.fire('uqlibrary-borrowing-list-item-selected', selectedItem.length ? selectedItem[0] : undefined);
+    _itemSelected: function (item) {
+      window.location = item.currentTarget.children[0].firstChild.href;
     },
+
+    /*
+     * If the 'data' property has changed, recalculate the total in fees and inject the patrons id in each sub component
+     */
     itemsChanged: function (_, changeValue) {
       var items = this.items;
       var processed = [];
-      // Sort by date (ascending) is necessary
       if (this.sortByDate) {
         items.sort(function (a, b) {
           var aDate = new Date(a.date).getTime();
@@ -62,7 +60,6 @@
         });
       }
       var haveDivider = false;
-      //build processed items lists for display in timeline
       for (var i = 0; i < items.length; i++) {
         items[i].date = new Date(items[i].date);
         if (!items[i].hasOwnProperty('day')) {
@@ -75,7 +72,7 @@
           items[i].daySuffixText = moment(items[i].date).format('MMM');
         }
         items[i].class += ' item-item';
-        //same day items should not display date
+
         if (!this.showEachDate && i > 0 && items[i].date.getDay() === items[i - 1].date.getDay() && items[i].date.getDate() === items[i - 1].date.getDate()) {
           items[i].day = '';
           items[i].dayPrefixText = '';
@@ -91,13 +88,10 @@
       }
       if (processed.length > 0) {
         processed[0].class += ' first';
-      }
-      this.processedItems = processed;
-    },
-    contextualButtonClicked: function (e, data, sender) {
-      var _id = sender.getAttribute('id');
-      if (_id) {
-        this.fire('uqlibrary-borrowing-contextual-button-clicked', { button: { id: _id } });
+        this.processedItems = processed;
+        this.isEmpty = false;
+      } else {
+        this.isEmpty = true;
       }
     }
   });
