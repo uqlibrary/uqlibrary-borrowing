@@ -1,0 +1,33 @@
+{
+  "name": "uqlibrary-borrowing",
+  "version": "1.0.0",
+  "description": "uqlibrary-borrowing",
+  "main": "index.html",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "wct"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/uqlibrary/uqlibrary-borrowing.git"
+  },
+  "keywords": [
+    "courses",
+    "uq",
+    "library"
+  ],
+  "author": "j.wisgerhof@library.uq.edu.au",
+  "bugs": {
+    "url": "https://github.com/uqlibrary/uqlibrary-borrowing/issues"
+  },
+  "devDependencies": {
+    "web-component-tester": "~4.2.2",
+    "gulp": "~3.9.1",
+    "browser-sync": "~2.12.5"
+  },
+  "dependencies": {
+    "bower": "~1.7.9"
+  }
+}
