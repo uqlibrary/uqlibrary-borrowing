@@ -80,6 +80,7 @@
         _fine.day = this.moneyFormat(_fine.fineAmount);
         _fine.dayPrefixText = '';
         _fine.daySuffixText = '';
+        _fine.ariaLabel = _fine.day + ' due for loan ' + _fine.title;
         if (_fine.dueDate) {
           _fine.dueDate = new Date(_fine.dueDate);
           _fine.dueDateText = _fine.dueDate.getDate() + '/' + (_fine.dueDate.getMonth() + 1) + '/' + _fine.dueDate.getFullYear();

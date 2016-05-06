@@ -73,6 +73,9 @@
         } else  if (overdue >= 0 && overdue < 5) {
           _loan.daysRemain = overdue;
         }
+
+        _loan.ariaLabel = _loan.title + ". Due " + _loan.dateText;
+
         loans.push(_loan);
       }
       this._processedItems = loans;

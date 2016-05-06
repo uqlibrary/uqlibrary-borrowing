@@ -53,27 +53,34 @@
         _hold.id = i;
         _hold.date = new Date(_hold.datePlaced);
         _hold.dateText = _hold.date.getDate() + '/' + (_hold.date.getMonth() + 1) + '/' + _hold.date.getFullYear();
+        _hold.ariaLabel = _hold.title + '. Status: ';
+
         //_hold.actions = [];
         if (_hold.status == 'bibReady' || _hold.status == 'itemReady') {
           _hold.dayPrefixText = 'Ready';
           _hold.day = '';
           _hold.daySuffixText = 'for pickup';
+          _hold.ariaLabel += 'Ready for pickup';
           if (_hold.pickupLocation) {
             _hold.subtitle = 'Pickup location: ' + _hold.pickupLocation;
+            _hold.ariaLabel += _hold.subtitle;
           }
         } else if (_hold.status == 'itemTransit') {
           _hold.dayPrefixText = 'Transit';
           _hold.day = '';
           _hold.daySuffixText = 'for pickup';
           _hold.subtitle = '';
+          _hold.ariaLabel += 'Transit for pickup.';
           if (_hold.pickupLocation) {
             _hold.secondaryText = 'Pickup location: ' + _hold.pickupLocation;
+            _hold.ariaLabel += _hold.secondaryText;
           }
         } else {
           _hold.dayPrefixText = 'On';
           _hold.daySuffixText = 'Hold';
           _hold.day = '';
           _hold.subtitle = 'Date placed: ' + _hold.dateText;
+          _hold.ariaLabel += 'On Hold. ' + _hold.subtitle;
         }
       }
       // Sort by status
