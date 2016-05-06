@@ -20,29 +20,31 @@
     </style>
 
     <section class="flex">
-      <uqlibrary-borrowing-list items="{{processedItems}}" empty-message="No overdue charges"></uqlibrary-borrowing-list>
+      <uqlibrary-borrowing-list items="{{_processedItems}}" empty-message="No overdue charges"></uqlibrary-borrowing-list>
     </section>
 
-    <paper-toolbar class="uqlibrary-app-footer">
-      <!-- Total -->
-      <span class="subhead"><strong>Total:</strong> [[moneyFormat(finesSum)]]</span>
-      <span class="flex"></span>
-      <!-- Info -->
-      <paper-button class="button-theme"
-                    on-tap="_toggleInfo"
-                    title="Info"
-                    aria-label="More information about overdue charges">
-        INFO
-      </paper-button>
-      <!-- Pay Now -->
-      <paper-button class="button-colored-theme"
-                    on-tap="_openUrl"
-                    title="Pay now"
-                    disabled$="{{hidePayNow}}"
-                    aria-label="Pay overdue charges now">
-        PAY NOW
-      </paper-button>
-    </paper-toolbar>
+    <template is="dom-if" if="{{!_hideFooter}}">
+      <paper-toolbar class="uqlibrary-app-footer">
+        <!-- Total -->
+        <span class="subhead"><strong>Total:</strong> [[moneyFormat(finesSum)]]</span>
+        <span class="flex"></span>
+        <!-- Info -->
+        <paper-button class="button-theme"
+                      on-tap="_toggleInfo"
+                      title="Info"
+                      aria-label="More information about overdue charges">
+          INFO
+        </paper-button>
+        <!-- Pay Now -->
+        <paper-button class="button-colored-theme"
+                      on-tap="_openUrl"
+                      title="Pay now"
+                      disabled$="{{_hidePayNow}}"
+                      aria-label="Pay overdue charges now">
+          PAY NOW
+        </paper-button>
+      </paper-toolbar>
+    </template>
 
     <paper-dialog id="finesInfoDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
       <h2>Payment Info</h2>

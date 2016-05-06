@@ -2,51 +2,54 @@
   Polymer({
     is: 'uqlibrary-fines',
     properties: {
-      // links to be displayed in the Info modal page
-      contextual: {
-        type: Array
-      },
-      // Fine Minimum payable amount, literally
+      /**
+       * The minimum amount when the fine becomes payable in cents
+       */
       fineMinimumPayableAmount: {
-        value: function () {
-          return 20 * 100;
-        }
+        type: Number,
+        value: 2000
       },
-      // Array with all users fines
+      /**
+       * The user's fines
+       */
       fines: {
         type: Array,
-        value: function () {
-          return [];
-        },
         notify: true,
         observer: 'finesChanged'
       },
-      // users fines data formatted
-      processedItems: {
+      /**
+       * Formatted version of the fines
+       */
+      _processedItems: {
         type: Array,
-        value: function () {
-          return [];
-        },
         notify: true
       },
-      // Users total fine
+      /**
+       * Total fine amount for the user
+       */
       finesSum: {
         type: Number,
         value: 0
       },
-      // Users ID
+      /**
+       * User ID
+       */
       patron: {
         type: String
       },
-      // Transitioning process running 
-      transitioning: {
+      /**
+       * Whether to hide the Pay now button
+       */
+      _hidePayNow: {
         type: Boolean,
-        value: false
+        value: true
       },
-      // Disable pay now button if finesSum < fineMinimumPayableAmount
-      hidePayNow: {
+      /**
+       * Whether to hide the bottom footer
+       */
+      _hideFooter: {
         type: Boolean,
-        value: false
+        value: true
       }
     },
 
@@ -61,25 +64,13 @@
           window.location.href = _item.url;
         }
       });
-      this.contextual = [
-        {
-          title: 'About overdue charges',
-          url: 'https://www.library.uq.edu.au/help/borrowing#overdues',
-          id: 'aboutOverdueCharges'
-        },
-        {
-          title: 'Payment options',
-          url: 'https://www.library.uq.edu.au/help/payment-options',
-          id: 'paymentOptions'
-        }
-      ];
     },
     /*
      * If 'fines' array change, 
-     * recalculate the total in fees, reformat rows and reset hidePayNow property
+     * recalculate the total in fees, reformat rows and reset _hidePayNow property
      */
     finesChanged: function () {
-      this.processedItems = [];
+      this._processedItems = [];
       var fines = [];
       for (var i = 0; i < this.fines.length; i++) {
         var _fine = this.fines[i];
@@ -106,9 +97,11 @@
         }
         fines.push(_fine);
       }
-      this.processedItems = fines;
+      this._processedItems = fines;
       this.finesSum = this.calculateFines(fines);
-      this.hidePayNow = (this.finesSum < this.fineMinimumPayableAmount);
+
+      this._hidePayNow = (this.finesSum < this.fineMinimumPayableAmount);
+      this._hideFooter = (this.finesSum == 0);
     },
     /*
      * sum all users fines and convert the total to integer
