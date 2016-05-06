@@ -2,61 +2,47 @@
 <link rel="import" href="uqlibrary-borrowing-list.html">
 
 <dom-module id="uqlibrary-fines">
-  <!-- All element styles -->
-  <style is="custom-style" include="iron-flex iron-flex-alignment common-styles">
-    .persistentFooter, .modalLinks {
-      @apply(--layout-horizontal);
-      background-color:#eee;
-      position: fixed;
-      width: 100%;
-      bottom: 0;
-      left: 0;
-    }
-
-    .footerInfo {
-      font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-      font-weight: 500;
-      font-size: 1.2em;
-      line-height: 1.1em;
-      white-space: normal;
-      padding: 12px;
-    }
-
-    .footerButtons {
-      padding:10px 16px;
-    }
-
-    #finesInfoDialog h2 {
-      font-size:2.25em;
-    }
-
-    @media screen and (max-width: 767px) {
-      .persistentFooter {
-        left: 0;
-        z-index: 1;
-      }
-    }
-
-    @media screen and (max-width: 600px) {
-      .modalLinks {
-        @apply(--layout-vertical);
-      }
-    }
-  </style>
   <template>
-    <iron-signals on-core-signal-transitioning-change="transitioningChangeHandler"></iron-signals>
-    <section name="list" class="body-footer-container">
-      <uqlibrary-borrowing-list id="finesList" items="{{processedItems}}" empty-message="No overdue charges">
-      </uqlibrary-borrowing-list>
+    <style is="custom-style" include="iron-flex iron-flex-alignment common-styles">
+      :host {
+        @apply(--layout-vertical);
+        @apply(--uql-app-host);
+      }
+
+      section {
+        padding: 10px;
+      }
+
+      paper-button[disabled] {
+        background-color: var(--secondary-color-light);
+        color: var(--secondary-color);
+      }
+    </style>
+
+    <section class="flex">
+      <uqlibrary-borrowing-list items="{{processedItems}}" empty-message="No overdue charges"></uqlibrary-borrowing-list>
     </section>
 
-    <div id="persistentFooter" class="persistentFooter layout horizontal">
-      <div class="footerInfo flex"> <b>Total</b>: <span>{{moneyFormat(finesSum)}}</span> </div>
-      <div class="footerButtons">
-        <paper-button on-tap="_toggleInfo">Info</paper-button>
-        <paper-button raised class="colored" on-tap="_openUrl" disabled$="{{hidePayNow}}">Pay now</paper-button>
-      </div>
-    </div>
+    <paper-toolbar class="uqlibrary-app-footer">
+      <!-- Total -->
+      <span class="subhead"><strong>Total:</strong> [[moneyFormat(finesSum)]]</span>
+      <span class="flex"></span>
+      <!-- Info -->
+      <paper-button class="button-theme"
+                    on-tap="_toggleInfo"
+                    title="Info"
+                    aria-label="More information about overdue charges">
+        INFO
+      </paper-button>
+      <!-- Pay Now -->
+      <paper-button class="button-colored-theme"
+                    on-tap="_openUrl"
+                    title="Pay now"
+                    disabled$="{{hidePayNow}}"
+                    aria-label="Pay overdue charges now">
+        PAY NOW
+      </paper-button>
+    </paper-toolbar>
 
     <paper-dialog id="finesInfoDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
       <h2>Payment Info</h2>
@@ -64,21 +50,22 @@
         You don't need to pay your overdue charges unless you reach <span>{{moneyFormat(fineMinimumPayableAmount)}}</span>.
         You currently have <span>{{moneyFormat(finesSum)}}</span>, so you <span hidden$="{{!hidePayNow}}">don't </span>need to pay your overdue charges.
       </p>
-      <div class="modalLinks">
-        <template is="dom-repeat" items="{{contextual}}" as="button">
-          <a target="_blank" id="{{button.id}}" on-click="contextualButtonClicked"
-             href$="{{button.url}}" on-click="{{contextualButtonClicked}}">
-            <iron-icon class="link" icon="info-outline"></iron-icon>{{button.title}}
-          </a>
-        </template>
+      <div>
+        <a href="https://www.library.uq.edu.au/help/borrowing#overdues" target="_blank">
+          <iron-icon icon="info-outline"></iron-icon> About overdue charges
+        </a>&nbsp;&nbsp;&nbsp;
+
+        <a href="https://www.library.uq.edu.au/help/payment-options" target="_blank">
+          <iron-icon icon="info-outline"></iron-icon> Payment options
+        </a>
       </div>
       <div class="buttons">
-        <paper-button class="colored" raised="" dialog-dismiss>Okay, I got it</paper-button>
+        <paper-button class="button-colored-theme" dialog-dismiss>Okay, I got it</paper-button>
       </div>
     </paper-dialog>
   </template>
 
   <!-- Location of the script -->
-  <script src="../scripts/uqlibrary-fines.js"></script>
+  <script src="uqlibrary-fines.js"></script>
 
 </dom-module>

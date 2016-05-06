@@ -2,13 +2,35 @@
   Polymer({
     is: 'uqlibrary-borrowing',
     properties: {
-      // Should the component auto-load the user account. turn it off for debug
+      /**
+       * Whether the element should auto load accounts
+       */
       autoload: {
         type: Boolean,
         value: true,
         notify: true
       },
-
+      /**
+       * Whether the app is in standalone mode
+       */
+      standAlone: {
+        type: Object,
+        value: false
+      },
+      /**
+       * The header title
+       */
+      headerTitle: {
+        type: String,
+        value: 'Borrowing'
+      },
+      /**
+       * The selected tab index
+       */
+      _selectedTabIndex: {
+        type: Number,
+        value: 0
+      },
       // Users borrowed assets data
       data: {
         notify: true,
@@ -38,7 +60,7 @@
       },
 
       // Total in Fines
-      sumFines: {
+      _sumFines: {
         type: Number,
         value: 0
       },
@@ -82,7 +104,7 @@
     */
     dataChanged: function () {
       if (this.user) {
-        this.sumFines = this.$.fines.moneyFormat(this.$.fines.calculateFines(this.data.fines));
+        this._sumFines = this.$.fines.moneyFormat(this.$.fines.calculateFines(this.data.fines));
 
         var patron = this.data.recordNumber;
         this.$.loans.patron = patron;

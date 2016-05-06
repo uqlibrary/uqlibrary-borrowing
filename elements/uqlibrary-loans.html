@@ -2,55 +2,40 @@
 <link rel="import" href="uqlibrary-borrowing-list.html">
 
 <dom-module id="uqlibrary-loans">
-  <!-- All element styles -->
-  <style is="custom-style" include="iron-flex iron-flex-alignment common-styles">
-    .persistentFooter {
-      @apply(--layout-horizontal);
-      background-color:#eee;
-      position: fixed;
-      width: 100%;
-      bottom: 0;
-      left: 0;
-    }
-
-    .footerButtons {
-      padding:10px 16px;
-    }
-
-    @media screen and (max-width: 767px) {
-      .persistentFooter {
-        left: 0;
-        z-index: 1;
-      }
-    }
-  </style>
-
   <template>
-    <iron-signals on-iron-signal-transitioning-change="{{transitioningChangeHandler}}"></iron-signals>
-    <section name="list" class="body-footer-container">
-      <uqlibrary-borrowing-list id="loansTimeline" items="{{processedItems}}" empty-message="No Loans">
-      </uqlibrary-borrowing-list>
-      <div class="layout horizontal">
-        <template is="dom-repeat" items="{{contextual}}" as="button">
-          <div class="text-container">
-            <a href="{{button.url}}" target="_blank" id="{{button.id}}" on-click="{{contextualButtonClicked}}">
-              <iron-icon class="link" icon="info-outline"></iron-icon>{{button.title}}
-            </a>
-          </div>
-        </template>
+    <style is="custom-style" include="iron-flex iron-flex-alignment common-styles">
+      :host {
+        @apply(--layout-vertical);
+        @apply(--uql-app-host);
+      }
+
+      section {
+        padding: 10px;
+      }
+    </style>
+
+    <section class="flex" name="list" class="body-footer-container">
+      <uqlibrary-borrowing-list items="{{_processedItems}}" empty-message="No Loans"></uqlibrary-borrowing-list>
+      <div>
+        <a href="https://www.library.uq.edu.au/borrowing-requesting/borrowing-rules" target="_blank">
+          <iron-icon icon="info-outline"></iron-icon> Your borrowing rights and limits
+        </a>
       </div>
     </section>
 
-    <div id="persistentFooter" class="persistentFooter horizontal-reverse" hidden$="{{hideFooter}}">
-      <span class="flex"></span>
-      <div class="footerButtons">
-        <paper-button raised class="button-colored-accent raised" on-tap="_openUrl">Renew Loans</paper-button>
-      </div>
-    </div>
-
+    <template is="dom-if" if="[[!_hideFooter]]">
+      <paper-toolbar class="uqlibrary-app-footer right">
+        <paper-button class="button-colored-accent"
+                      on-tap="_openUrl"
+                      title="Renew Loans"
+                      aria-label="Renew Loans">
+          Renew Loans
+        </paper-button>
+      </paper-toolbar>
+    </template>
   </template>
 
   <!-- Location of the script -->
-  <script src="../scripts/uqlibrary-loans.js"></script>
+  <script src="uqlibrary-loans.js"></script>
 
 </dom-module>

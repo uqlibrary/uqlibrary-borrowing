@@ -68,73 +68,82 @@ Element providing an overview for loans, holds and fines.
 
 <!-- Location of the script -->
 <dom-module id="uqlibrary-borrowing">
-  <link rel="import" type="css" href="uqlibrary-borrowing.css">
   <template>
+    <style is="custom-style" include="iron-flex iron-flex-alignment common-styles">
+      :host {
+        @apply(--uql-app-host);
+      }
+
+      .content {
+        @apply(--layout-vertical);
+      }
+
+      paper-tabs {
+        --paper-tabs-selection-bar-color: var(--accent-color);
+        --paper-tabs-selection-bar: {
+          z-index: 5;
+        }
+      }
+
+      paper-tab {
+        text-align: center;
+        color: var(--accent-color);
+      }
+    </style>
 
     <uqlibrary-api-account id="account"></uqlibrary-api-account>
     <uqlibrary-api-account-loans id="loansApi"></uqlibrary-api-account-loans>
     <uqlibrary-ga id="ga" appName="Borrowing"></uqlibrary-ga>
 
-    <paper-drawer-panel id="drawerPanel" class="flex drawer">
-
-      <div drawer="" class="left-drawer">
-        <uqlibrary-menu id="uqlibraryMenu" account="{{user}}"></uqlibrary-menu>
-      </div>
-
-      <div class="main">
-        <uqlibrary-toolbar on-uqlibrary-toolbar-menu-clicked="toggleMenuDrawer"
-                           app-title="Borrowing"
-                           id="toolbar">
-        </uqlibrary-toolbar>
-
-        <div id="content" class="flex">
-
-          <paper-tabs id="tabs" selected="{{selectedTab}}" selectedIndex="0">
-
-            <paper-tab name="loans" id="loansTab" aria-label="loans">
-              <div class="menu layout horizontal center">
-                <a href="javascript:;" class="layout vertical center">
-                  <span class="tabTitleNumber">{{ data.checkedOut.length }}</span>
-                  <span class="tabTitle">Loans</span>
-                </a>
-              </div>
+    <div class="fit layout vertical">
+      <paper-header-panel class="flex">
+        <!-- Header -->
+        <paper-toolbar>
+          <!-- Required -->
+          <template is="dom-if" if="{{!standAlone}}">
+            <paper-icon-button icon="menu" on-tap="_toggleDrawerPanel" paper-drawer-toggle></paper-icon-button>
+          </template>
+          <template is="dom-if" if="{{_backEnabled}}">
+            <paper-icon-button
+                class="back-arrow"
+                icon="icons:arrow-back"
+                on-tap="_goBack"
+                role="button"
+                aria-label="Go back one page">
+            </paper-icon-button>
+          </template>
+          <div class="title uqlibrary-app-title">[[headerTitle]]</div>
+        </paper-toolbar>
+        <!-- Content -->
+        <div class="fit content">
+          <!-- Tabs -->
+          <paper-tabs id="tabs" selected="{{_selectedTabIndex}}">
+            <paper-tab name="loans" aria-label="Loans">
+              [[ data.checkedOut.length ]]<br />Loans
             </paper-tab>
-
-            <paper-tab name="holds" id="holdsTab" aria-label="holds">
-              <div class="menu layout horizontal center">
-                <a href="javascript:;" class="layout vertical center">
-                  <span class="tabTitleNumber">{{ data.holds.length }}</span>
-                  <span class="tabTitle">Holds</span>
-                </a>
-              </div>
+            <paper-tab name="holds" aria-label="Holds">
+              [[ data.holds.length ]]<br />Holds
             </paper-tab>
-
-            <paper-tab name="fines" id="finesTab" aria-label="overdue charges">
-              <div class="menu layout horizontal center">
-                <a href="javascript:;" class="layout vertical center">
-                  <span class="tabTitleNumber">{{ sumFines }}</span>
-                  <span class="tabTitle">Overdue Charges</span>
-                </a>
-              </div>
+            <paper-tab name="fines" aria-label="Overdue charges">
+              [[ _sumFines ]]<br />Overdue Charges
             </paper-tab>
           </paper-tabs>
 
-          <neon-animated-pages id="animatedPages" transitions="slide-from-right" block="" selected="{{selectedTab}}"
-                               entry-animation="slide-from-right-animation"
-                               exit-animation="slide-left-animation">
-            <div class="flex container">
+          <!-- Pages -->
+          <neon-animated-pages class="flex" selected="{{_selectedTabIndex}}">
+            <section>
               <uqlibrary-loans id="loans" loans="{{ data.checkedOut }}"></uqlibrary-loans>
-            </div>
-            <div class="flex container">
+            </section>
+            <section>
               <uqlibrary-holds id="holds" holds="{{ data.holds }}"></uqlibrary-holds>
-            </div>
-            <div class="flex container">
+            </section>
+            <section>
               <uqlibrary-fines id="fines" fines="{{ data.fines }}"></uqlibrary-fines>
-            </div>
+            </section>
           </neon-animated-pages>
         </div>
-      </div>
-    </paper-drawer-panel>
+      </paper-header-panel>
+    </div>
   </template>
-  <script src="../scripts/uqlibrary-borrowing.js"></script>
+  <script src="uqlibrary-borrowing.js"></script>
 </dom-module>

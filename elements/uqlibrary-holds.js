@@ -2,30 +2,23 @@
   Polymer({
     is: 'uqlibrary-holds',
     properties: {
-      // links to be displayed in the Info modal page
-      contextual: {
-        type: Array
-      },
-      // Array with all users holds
+      /**
+       * All holds
+       */
       holds: {
         type: Array,
-        value: function () {
-          return [];
-        },
         notify: true,
-        observer: 'holdsChanged',
-        reflectToAttribute: true
+        observer: 'holdsChanged'
       },
-      // Users ID
+      /**
+       * UserID
+       */
       patron: {
         type: String
       },
-      // Transitioning process running
-      transitioning: {
-        type: Boolean,
-        value: false
-      },
-      // If no holds, hide footer
+      /**
+       * Whether to hide the footer
+       */
       hideFooter: {
         type: Boolean,
         value: false
@@ -47,12 +40,6 @@
           window.location.href = _item.url;
         }
       });
-
-      this.contextual = [{
-        title: 'About placing a hold',
-        url: 'https://www.library.uq.edu.au/help/place-hold',
-        id: 'aboutPlacingHold'
-      }];
     },
 
     /*
@@ -105,17 +92,8 @@
         }
         return 0;
       });
-      this.hideFooter = !(this.holds.length>0);
+      this._hideFooter = !(this.holds.length>0);
     },
-
-    /*
-     * Transitioning change handler
-     */
-    transitioningChangeHandler: function (e) {
-      if (e.detail.hasOwnProperty('transitioning'))
-        this.transitioning = e.detail.transitioning;
-    },
-
     /*
      * Open users holds dashboard
      */

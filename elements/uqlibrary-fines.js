@@ -74,7 +74,6 @@
         }
       ];
     },
-
     /*
      * If 'fines' array change, 
      * recalculate the total in fees, reformat rows and reset hidePayNow property
@@ -111,15 +110,6 @@
       this.finesSum = this.calculateFines(fines);
       this.hidePayNow = (this.finesSum < this.fineMinimumPayableAmount);
     },
-
-    /*
-     * Transitioning change handler
-     */
-    transitioningChangeHandler: function (e) {
-      if (e.detail.hasOwnProperty('transitioning'))
-        this.transitioning = e.detail.transitioning;
-    },
-
     /*
      * sum all users fines and convert the total to integer
      */
@@ -134,21 +124,18 @@
       }
       return this.finesSum;
     },
-
     /*
      * currency format ($.00) 
      */
     moneyFormat: function (value) {
       return '$' + (value > 0 ? (parseFloat(value) / 100).toFixed(2) : '0');
     },
-
     /*
      * Open users overdue dashboard
      */
     _openUrl: function () {
       window.location = 'https://library.uq.edu.au/patroninfo~S7/' + this.patron + '/overdues';
     },
-
     /*
      * Open Info modal page
      */

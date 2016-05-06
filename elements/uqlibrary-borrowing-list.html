@@ -16,26 +16,6 @@
       @apply(--laytou-flex);
       @apply(--layout-horizontal);
     }
-    .line1, .line2, .line3, .caption {
-      font-family: "Roboto";
-      font-weight: 400;
-      line-height: 1.1em;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .line1, .line2 {
-      color: rgba(0, 0, 0, 0.87);
-    }
-    .line3, .caption {
-      color: rgba(0, 0, 0, 0.54);
-      font-size:0.85714em;
-    }
-    .line1 {
-      font-size: 1em;
-    }
-    .line2 {
-      font-size: 0.85714em;
-    }
     .date {
       @apply(--layout-vertical);
       width:60px;
@@ -85,9 +65,9 @@
                 <div class="caption">{{item.daySuffixText}}</div>
               </div>
               <div class="description flex" on-tap="_itemSelected" id="item-{{item.id}}">
-                <div class="line1"><a href="{{item.url}}">{{item.title}}</a></div>
-                <div class="line2">{{item.subtitle}}</div>
-                <div class="line3 caption">{{item.secondaryText}}</div>
+                <div class="subhead"><a href="{{item.url}}">{{item.title}}</a></div>
+                <div class="body1">{{item.subtitle}}</div>
+                <div class="caption">{{item.secondaryText}}</div>
               </div>
             </div>
             <div class="layout vertical">
@@ -111,5 +91,5 @@
   </template>
 
   <!-- Location of the script -->
-  <script src="../scripts/uqlibrary-borrowing-list.js"></script>
+  <script src="uqlibrary-borrowing-list.js"></script>
 </dom-module>

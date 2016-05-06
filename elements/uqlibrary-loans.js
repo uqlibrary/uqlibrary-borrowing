@@ -2,43 +2,38 @@
   Polymer({
     is: 'uqlibrary-loans',
     properties: {
-      // links to be displayed in the Info modal page
-      contextual: {
-        type: Array
-      },
-      // Array with all users loans
+      /**
+       * Loans array received by uqlibrary-borrowing
+       */
       loans: {
         type: Array,
-        value: function () {
-          return [];
-        },
         notify: true,
         observer: 'loansChanged'
       },
-      // loans array formatted
-      processedItems: {
+      /**
+       * Formatted version of the Loans array
+       */
+      _processedItems: {
         type: Array,
         value: function () {
           return [];
         },
         notify: true
       },
-      // Transitioning process running 
-      transitioning: {
+      /**
+       * Whether to show the footer
+       */
+      _hideFooter: {
         type: Boolean,
         value: false
       },
-      // Hide footer if no loans
-      hideFooter: {
-        type: Boolean,
-        value: false
-      },
-      // User id
+      /**
+       * User ID
+       */
       patron: {
         type: String
       }
     },
-
     /*
      * Initial settings
      */
@@ -49,19 +44,13 @@
           window.location.href = _item.url;
         }
       });
-      this.contextual = [{
-        title: 'Your borrowing rights and limits',
-        url: 'https://www.library.uq.edu.au/borrowing-requesting/borrowing-rules',
-        id: 'borrowingGuide'
-      }];
     },
-
     /*
      * If 'loans' array change, 
      * reformat rows and reset hideFooter property
      */
     loansChanged: function () {
-      this.processedItems = [];
+      this._processedItems = [];
       var loans = [];
       for (var i = 0; i < this.loans.length; i++) {
         var _loan = this.loans[i];
@@ -86,18 +75,9 @@
         }
         loans.push(_loan);
       }
-      this.processedItems = loans;
-      this.hideFooter = !(loans.length>0);
+      this._processedItems = loans;
+      this._hideFooter = !(loans.length>0);
     },
-
-    /*
-     * Transitioning change handler
-     */
-    transitioningChangeHandler: function (e) {
-      if (e.detail.hasOwnProperty('transitioning'))
-        this.transitioning = e.detail.transitioning;
-    },
-
     /*
      * Open users loans dashboard
      */
