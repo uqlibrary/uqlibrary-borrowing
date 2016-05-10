@@ -124,6 +124,13 @@
         this.get(newValue);
         this.$.ga.addEvent('Borrowing Tab', newValue);
       }
+    },
+    /**
+     * Toggles the drawer panel of the main UQL app
+     * @private
+     */
+    _toggleDrawerPanel: function () {
+      this.fire('uqlibrary-toggle-drawer');
     }
   });
 }());

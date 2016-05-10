@@ -11,6 +11,16 @@
 
       section {
         padding: 10px;
+        overflow: auto;
+      }
+
+      paper-icon-item {
+        color: var(--accent-color);
+        line-height: 48px;
+      }
+
+      paper-icon-item a {
+        text-decoration: none;
       }
     </style>
 
@@ -19,9 +29,12 @@
       </uqlibrary-borrowing-list>
 
       <div>
-        <a href="https://www.library.uq.edu.au/help/place-hold" target="_blank">
-          <iron-icon icon="info-outline"></iron-icon> About placing a hold
-        </a>
+        <paper-icon-item>
+          <iron-icon item-icon icon="info-outline"></iron-icon>
+          <a href="https://www.library.uq.edu.au/help/place-hold" target="_blank">
+            About placing a hold
+          </a>
+        </paper-icon-item>
       </div>
     </section>
 

@@ -11,6 +11,16 @@
 
       section {
         padding: 10px;
+        overflow: auto;
+      }
+
+      paper-icon-item {
+        color: var(--accent-color);
+        line-height: 48px;
+      }
+
+      paper-icon-item a {
+        text-decoration: none;
       }
 
       paper-button[disabled] {
@@ -29,14 +39,14 @@
         <span class="subhead"><strong>Total:</strong> [[moneyFormat(finesSum)]]</span>
         <span class="flex"></span>
         <!-- Info -->
-        <paper-button class="button-theme"
+        <paper-button class="button-secondary"
                       on-tap="_toggleInfo"
                       title="Info"
                       aria-label="More information about overdue charges">
           INFO
         </paper-button>
         <!-- Pay Now -->
-        <paper-button class="button-colored-theme"
+        <paper-button class="button-colored-accent"
                       on-tap="_openUrl"
                       title="Pay now"
                       disabled$="{{_hidePayNow}}"
@@ -53,13 +63,18 @@
         You currently have <span>{{moneyFormat(finesSum)}}</span>, so you <span hidden$="{{!hidePayNow}}">don't </span>need to pay your overdue charges.
       </p>
       <div>
-        <a href="https://www.library.uq.edu.au/help/borrowing#overdues" target="_blank">
-          <iron-icon icon="info-outline"></iron-icon> About overdue charges
-        </a>&nbsp;&nbsp;&nbsp;
-
-        <a href="https://www.library.uq.edu.au/help/payment-options" target="_blank">
-          <iron-icon icon="info-outline"></iron-icon> Payment options
-        </a>
+        <paper-icon-item>
+          <iron-icon item-icon icon="info-outline"></iron-icon>
+          <a href="https://www.library.uq.edu.au/help/borrowing#overdues" target="_blank">
+            About overdue charges
+          </a>
+        </paper-icon-item>
+        <paper-icon-item>
+          <iron-icon item-icon icon="info-outline"></iron-icon>
+          <a href="https://www.library.uq.edu.au/help/payment-options" target="_blank">
+            Payment options
+          </a>
+        </paper-icon-item>
       </div>
       <div class="buttons">
         <paper-button class="button-colored-theme" dialog-dismiss>Okay, I got it</paper-button>
