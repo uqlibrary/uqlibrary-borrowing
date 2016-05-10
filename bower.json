@@ -22,5 +22,10 @@
   "devDependencies": {
     "test-fixture": "PolymerElements/test-fixture#^1.1.0",
     "web-component-tester": "^4.2.2"
+  },
+  "resolutions": {
+    "uqlibrary-autosuggest-input": "v1.0.6",
+    "uqlibrary-iron-dropdown": "v1.2.2",
+    "uqlibrary-api": "^1.0.3"
   }
 }
