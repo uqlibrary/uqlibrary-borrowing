@@ -46,7 +46,7 @@
         var els = element.querySelectorAll('paper-tab');
         els[0].click();
         var el = element.querySelector('paper-tab.iron-selected');
-        expect(el.textContent).to.match(/Loans*/);
+        expect(el.textContent).to.match(/LOANS*/);
         done();
       });
     });
@@ -55,7 +55,7 @@
       var els = element.querySelectorAll('paper-tab');
       els[1].click();
       var el = element.querySelector('paper-tab.iron-selected');
-      expect(el.textContent).to.match(/Holds*/);
+      expect(el.textContent).to.match(/HOLDS*/);
       done();
     });
 
@@ -63,7 +63,7 @@
       var els = element.querySelectorAll('paper-tab');
       els[2].click();
       var el = element.querySelector('paper-tab.iron-selected');
-      expect(el.textContent).to.match(/Overdue*/);
+      expect(el.textContent).to.match(/OVERDUE*/);
       done();
     });
 
@@ -72,15 +72,15 @@
         var tabs = element.querySelectorAll('paper-tab');
 
         var _title = tabs[0];
-        expect(_title.textContent).to.match(/Loans*/);
+        expect(_title.textContent).to.match(/LOANS*/);
         expect(_title.textContent).to.match(/7/);
 
         _title = tabs[1];
-        expect(_title.textContent).to.match(/Holds*/);
+        expect(_title.textContent).to.match(/HOLDS*/);
         expect(_title.textContent).to.match(/4/);
 
         _title = tabs[2];
-        expect(_title.textContent).to.match(/Overdue Charges*/);
+        expect(_title.textContent).to.match(/OVERDUE CHARGES*/);
 
         done();
       });
