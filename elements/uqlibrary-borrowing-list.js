@@ -37,7 +37,7 @@
      * when item clicked, open its respective URL
      */
     _itemSelected: function (item) {
-      window.location = item.currentTarget.children[0].firstChild.href;
+      window.open(item.currentTarget.children[0].firstChild.href, '_blank');
     },
 
     /*

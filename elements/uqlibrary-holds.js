@@ -105,7 +105,7 @@
      * Open users holds dashboard
      */
     _openUrl: function() {
-      window.location = 'https://library.uq.edu.au/patroninfo~S7/' + this.patron + '/holds';
+      window.open('https://library.uq.edu.au/patroninfo~S7/' + this.patron + '/holds', '_blank');
     }
   });
 }());

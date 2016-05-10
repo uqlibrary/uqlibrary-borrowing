@@ -85,7 +85,7 @@
      * Open users loans dashboard
      */
     _openUrl: function() {
-      window.location = 'https://library.uq.edu.au/patroninfo~S7/' + this.patron + '/items';
+      window.open('https://library.uq.edu.au/patroninfo~S7/' + this.patron + '/items', '_blank');
     }
   });
 }());

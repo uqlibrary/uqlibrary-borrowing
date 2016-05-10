@@ -128,7 +128,7 @@
      * Open users overdue dashboard
      */
     _openUrl: function () {
-      window.location = 'https://library.uq.edu.au/patroninfo~S7/' + this.patron + '/overdues';
+      window.open('https://library.uq.edu.au/patroninfo~S7/' + this.patron + '/overdues', '_blank');
     },
     /*
      * Open Info modal page
