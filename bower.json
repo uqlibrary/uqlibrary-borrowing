@@ -16,16 +16,10 @@
     "paper-elements": "PolymerElements/paper-elements#^1.0.7",
     "uqlibrary-api": "uqlibrary/uqlibrary-api#^1.0.5",
     "uqlibrary-ga": "uqlibrary/uqlibrary-ga#^1.0.3",
-    "uqlibrary-styles": "uqlibrary/uqlibrary-styles#v1.0.0",
-    "uqlibrary-toolbar": "uqlibrary/uqlibrary-toolbar#^1.0.7"
+    "uqlibrary-styles": "uqlibrary/uqlibrary-styles#v1.0.0"
   },
   "devDependencies": {
     "test-fixture": "PolymerElements/test-fixture#^1.1.0",
     "web-component-tester": "^4.2.2"
-  },
-  "resolutions": {
-    "uqlibrary-autosuggest-input": "v1.0.6",
-    "uqlibrary-iron-dropdown": "v1.2.2",
-    "uqlibrary-api": "^1.0.5"
   }
 }
