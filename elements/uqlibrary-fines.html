@@ -27,41 +27,12 @@
         background-color: var(--secondary-color-light);
         color: var(--secondary-color);
       }
+
     </style>
 
     <section class="flex">
       <uqlibrary-borrowing-list items="{{_processedItems}}" empty-message="No overdue charges"></uqlibrary-borrowing-list>
-    </section>
 
-    <template is="dom-if" if="{{!_hideFooter}}">
-      <paper-toolbar class="uqlibrary-app-footer">
-        <!-- Total -->
-        <span class="subhead"><strong>Total:</strong> [[moneyFormat(finesSum)]]</span>
-        <span class="flex"></span>
-        <!-- Info -->
-        <paper-button class="button-secondary"
-                      on-tap="_toggleInfo"
-                      title="Info"
-                      aria-label="More information about overdue charges">
-          INFO
-        </paper-button>
-        <!-- Pay Now -->
-        <paper-button class="button-colored-accent"
-                      on-tap="_openUrl"
-                      title="Pay now"
-                      disabled$="{{_hidePayNow}}"
-                      aria-label="Pay overdue charges now">
-          PAY NOW
-        </paper-button>
-      </paper-toolbar>
-    </template>
-
-    <paper-dialog id="finesInfoDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
-      <h2>Payment Info</h2>
-      <p>
-        You don't need to pay your overdue charges unless you reach <span>{{moneyFormat(fineMinimumPayableAmount)}}</span>.
-        You currently have <span>{{moneyFormat(finesSum)}}</span>, so you <span hidden$="{{!hidePayNow}}">don't </span>need to pay your overdue charges.
-      </p>
       <div>
         <paper-icon-item>
           <iron-icon item-icon icon="info-outline"></iron-icon>
@@ -75,6 +46,39 @@
             Payment options
           </a>
         </paper-icon-item>
+      </div>
+
+    </section>
+
+    <template is="dom-if" if="{{!_hideFooter}}">
+      <paper-toolbar class="uqlibrary-app-footer">
+        <!-- Total -->
+        <span class="subhead"><strong>Total:</strong> [[moneyFormat(finesSum)]]</span>
+
+        <span class="flex"></span>
+        <!-- Info -->
+        <paper-button class="button-secondary"
+                      on-tap="_toggleInfo"
+                      title="Info"
+                      aria-label="More information about overdue charges">
+          INFO
+        </paper-button>
+        <!-- Pay Now -->
+        <paper-button class="button-colored-accent"
+                      on-tap="_openUrl"
+                      title="Pay now"
+                      hidden$="{{_hidePayNow}}"
+                      aria-label="Pay overdue charges now">
+          PAY NOW
+        </paper-button>
+      </paper-toolbar>
+    </template>
+
+    <paper-dialog id="finesInfoDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+      <h2>Payment info</h2>
+      <div>
+        You don't need to pay your overdue charges unless you reach <span>{{moneyFormat(fineMinimumPayableAmount)}}</span>.
+        You currently have <span>{{moneyFormat(finesSum)}}</span>, so you <span hidden$="{{!hidePayNow}}">don't </span>need to pay your overdue charges.
       </div>
       <div class="buttons">
         <paper-button class="button-colored-theme" dialog-dismiss>Okay, I got it</paper-button>

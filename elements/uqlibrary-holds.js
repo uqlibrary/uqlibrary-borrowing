@@ -80,7 +80,7 @@
           _hold.daySuffixText = 'Hold';
           _hold.day = '';
           _hold.subtitle = 'Date placed: ' + _hold.dateText;
-          _hold.ariaLabel += 'On Hold. ' + _hold.subtitle;
+          _hold.ariaLabel += 'On hold. ' + _hold.subtitle;
         }
       }
       // Sort by status
