@@ -36,8 +36,8 @@
     /*
      * when item clicked, open its respective URL
      */
-    _itemSelected: function (item) {
-      window.open(item.currentTarget.children[0].firstChild.href, '_blank');
+    _itemSelected: function (e) {
+      window.open(e.model.item.url, '_blank');
     },
 
     /*
