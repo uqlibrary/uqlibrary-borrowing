@@ -92,7 +92,10 @@
         _fine.actions = [];
         if (_fine.dueDateText && _fine.dateReturnedText) {
           _fine.subtitle = 'Due date: ' + _fine.dueDateText;
-          _fine.secondaryText = 'Date returned: ' + _fine.dateReturnedText;
+          if(_fine.fineType != "Replacement") {
+            _fine.secondaryText = 'Date returned: ' + _fine.dateReturnedText;
+          }
+
         } else if (_fine.description) {
           _fine.subtitle = _fine.description;
         }

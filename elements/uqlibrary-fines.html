@@ -28,10 +28,14 @@
         color: var(--secondary-color);
       }
 
+      uqlibrary-borrowing-list /deep/ .title {
+        font-size: 1.3em;
+      }
+
     </style>
 
     <section class="flex">
-      <uqlibrary-borrowing-list items="{{_processedItems}}" empty-message="No overdue charges"></uqlibrary-borrowing-list>
+      <uqlibrary-borrowing-list items="{{_processedItems}}" show-each-date="true" empty-message="No overdue charges"></uqlibrary-borrowing-list>
 
       <div>
         <paper-icon-item>
@@ -54,6 +58,7 @@
         <paper-button class="button-secondary"
                       on-tap="_toggleInfo"
                       title="Info"
+                      hidden$="{{!_hidePayNow}}"
                       aria-label="More information about overdue charges">
           INFO
         </paper-button>
@@ -72,7 +77,7 @@
       <h2>Payment info</h2>
       <div>
         You don't need to pay your overdue charges unless you reach <span>{{moneyFormat(fineMinimumPayableAmount)}}</span>.
-        You currently have <span>{{moneyFormat(finesSum)}}</span>, so you <span hidden$="{{!hidePayNow}}">don't </span>need to pay your overdue charges.
+        You currently have <span>{{moneyFormat(finesSum)}}</span>, so you don't need to pay your overdue charges.
       </div>
       <div class="buttons">
         <paper-button class="button-colored-theme" dialog-dismiss>Okay, I got it</paper-button>

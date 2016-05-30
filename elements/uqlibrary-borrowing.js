@@ -96,6 +96,7 @@
 
       this.$.loansApi.addEventListener('uqlibrary-api-account-loans-loaded', function (e) {
         that.data = e.detail;
+        console.log(that.data);
       });
     },
 
