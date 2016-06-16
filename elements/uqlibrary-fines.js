@@ -81,22 +81,8 @@
         _fine.dayPrefixText = '';
         _fine.daySuffixText = '';
         _fine.ariaLabel = _fine.day + ' due for loan ' + _fine.title;
-        if (_fine.dueDate) {
-          _fine.dueDate = new Date(_fine.dueDate);
-          _fine.dueDateText = _fine.dueDate.getDate() + '/' + (_fine.dueDate.getMonth() + 1) + '/' + _fine.dueDate.getFullYear();
-        }
-        if (_fine.dateReturned) {
-          _fine.dateReturned = new Date(_fine.dateReturned);
-          _fine.dateReturnedText = _fine.dateReturned.getDate() + '/' + (_fine.dateReturned.getMonth() + 1) + '/' + _fine.dateReturned.getFullYear();
-        }
-        _fine.actions = [];
-        if (_fine.dueDateText && _fine.dateReturnedText) {
-          _fine.subtitle = 'Due date: ' + _fine.dueDateText;
-          if(_fine.fineType != "Replacement") {
-            _fine.secondaryText = 'Date returned: ' + _fine.dateReturnedText;
-          }
 
-        } else if (_fine.description) {
+        if (_fine.description) {
           _fine.subtitle = _fine.description;
         }
         fines.push(_fine);
@@ -125,7 +111,7 @@
      * currency format ($.00) 
      */
     moneyFormat: function (value) {
-      return '$' + (value > 0 ? (parseFloat(value) / 100).toFixed(2) : '0');
+      return '$' + (value > 0 ? (parseFloat(value)).toFixed(2) : '0');
     },
     /*
      * Open users overdue dashboard

@@ -56,7 +56,7 @@
         _hold.ariaLabel = _hold.title + '. Status: ';
 
         //_hold.actions = [];
-        if (_hold.status == 'bibReady' || _hold.status == 'itemReady') {
+        if (_hold.status == 'ON_HOLD_SHELF') {
           _hold.dayPrefixText = 'Ready';
           _hold.day = '';
           _hold.daySuffixText = 'for pickup';
@@ -65,7 +65,7 @@
             _hold.subtitle = 'Pickup location: ' + _hold.pickupLocation;
             _hold.ariaLabel += _hold.subtitle;
           }
-        } else if (_hold.status == 'itemTransit') {
+        } else if (_hold.status == 'IN_PROGRESS') {
           _hold.dayPrefixText = 'Transit';
           _hold.day = '';
           _hold.daySuffixText = 'for pickup';
