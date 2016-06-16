@@ -7,7 +7,7 @@
        */
       fineMinimumPayableAmount: {
         type: Number,
-        value: 2000
+        value: 20
       },
       /**
        * The user's fines
