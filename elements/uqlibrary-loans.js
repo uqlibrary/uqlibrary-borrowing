@@ -80,6 +80,7 @@
       }
       this._processedItems = loans;
       this._hideFooter = !(loans.length>0);
+
     },
     /*
      * Open users loans dashboard

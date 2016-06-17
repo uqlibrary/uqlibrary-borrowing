@@ -65,7 +65,7 @@
             _hold.subtitle = 'Pickup location: ' + _hold.pickupLocation;
             _hold.ariaLabel += _hold.subtitle;
           }
-        } else if (_hold.status == 'IN_PROGRESS') {
+        } else if (_hold.status == 'IN_PROCESS') {
           _hold.dayPrefixText = 'Transit';
           _hold.day = '';
           _hold.daySuffixText = 'for pickup';
@@ -75,7 +75,7 @@
             _hold.secondaryText = 'Pickup location: ' + _hold.pickupLocation;
             _hold.ariaLabel += _hold.secondaryText;
           }
-        } else {
+        } else { // NOT_STARTED
           _hold.dayPrefixText = 'On';
           _hold.daySuffixText = 'Hold';
           _hold.day = '';
@@ -86,10 +86,9 @@
       // Sort by status
       this.holds.sort(function (a, b) {
         var statusOrder = {
-          itemReady: 0,
-          bibReady: 0,
-          itemTransit: 5,
-          onHold: 10
+          ON_HOLD_SHELF: 0,
+          IN_PROCESS: 5,
+          NOT_STARTED: 10
         };
         if (statusOrder[a.status] > statusOrder[b.status]) {
           return 1;

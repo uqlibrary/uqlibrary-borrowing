@@ -80,7 +80,7 @@
         expect(_title.textContent).to.match(/2/);
 
         _title = tabs[2];
-        expect(_title.textContent).to.match(/OVERDUE CHARGES*/);
+        expect(_title.textContent.trim()).to.equal('$13.00OVERDUE CHARGES');
 
         done();
       });

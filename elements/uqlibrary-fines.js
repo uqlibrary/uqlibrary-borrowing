@@ -76,7 +76,7 @@
         var _fine = this.fines[i];
         _fine.class = 'fine-item';
         _fine.id = i;
-        _fine.date = new Date(_fine.dateAssessed);
+        _fine.date = new Date(_fine.dateAssessed); // for sorting
         _fine.day = this.moneyFormat(_fine.fineAmount);
         _fine.dayPrefixText = '';
         _fine.daySuffixText = '';
