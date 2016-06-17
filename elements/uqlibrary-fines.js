@@ -80,6 +80,7 @@
         _fine.day = this.moneyFormat(_fine.fineAmount);
         _fine.dayPrefixText = '';
         _fine.daySuffixText = '';
+        _fine.title = (_fine.title) ? _fine.title : '';
         _fine.ariaLabel = _fine.day + ' due for loan ' + _fine.title;
 
         if (_fine.description) {
