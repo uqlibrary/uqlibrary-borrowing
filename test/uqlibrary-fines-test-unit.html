@@ -71,9 +71,7 @@
     test('it should display titles and urls', function (done) {
       var els = element.querySelectorAll('li a');
       assert.notInclude(els[0].textContent,'null','shall not display title in null');
-      expect(els[0].getAttribute('href')).to.equals('http://search.library.uq.edu.au/primo_library/libweb/action/myAccountFee.do?command=details&feeId=1126899040003131');
       expect(els[1].textContent).to.equals('The apple / by Sir A. Daniel Hall and M.B. Crane.');
-      expect(els[1].getAttribute('href')).to.equals('http://search.library.uq.edu.au/primo_library/libweb/action/myAccountFee.do?command=details&feeId=1126899050003131');
 
       done();
     });
