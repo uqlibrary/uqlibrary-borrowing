@@ -118,7 +118,7 @@
      * Open users overdue dashboard
      */
     _openUrl: function () {
-      window.open('https://library.uq.edu.au/patroninfo~S7/' + this.patron + '/overdues', '_blank');
+      window.open('http://search.library.uq.edu.au/primo_library/libweb/action/myAccountMenu.do?activity=fees', '_blank');
     },
     /*
      * Open Info modal page
