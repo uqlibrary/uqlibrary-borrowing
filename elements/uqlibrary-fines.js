@@ -126,7 +126,7 @@
      * Open users overdue dashboard
      */
     _openUrl: function () {
-      window.open('http://search.library.uq.edu.au/primo_library/libweb/action/myAccountMenu.do?activity=fees&vid='+this.primoView, '_blank');
+      window.open('https://web.library.uq.edu.au/borrowing-requesting/overdue-items/pay-fine', '_blank');
     },
     /*
      * Open Info modal page
