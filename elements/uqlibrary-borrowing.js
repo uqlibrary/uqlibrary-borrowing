@@ -71,6 +71,10 @@
         value: function () {
           return {};
         }
+      },
+      primoView: {
+        type: String,
+        value: '61UQ'
       }
     },
 
@@ -110,6 +114,9 @@
         this.$.loans.patron = patron;
         this.$.holds.patron = patron;
         this.$.fines.patron = patron;
+        this.$.loans.primoView = this.primoView;
+        this.$.holds.primoView = this.primoView;
+        this.$.fines.primoView = this.primoView;
 
         this.fire('uqlibrary-borrowing-data-loaded');
       }

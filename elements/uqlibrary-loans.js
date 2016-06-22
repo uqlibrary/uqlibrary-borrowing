@@ -32,6 +32,10 @@
        */
       patron: {
         type: String
+      },
+      primoView: {
+        type: String,
+        observer: 'primoViewChanged'
       }
     },
     /*
@@ -44,6 +48,9 @@
           window.location.href = _item.url;
         }
       });
+    },
+    primoViewChanged: function () {
+      this.$.list.primoView = this.primoView;
     },
     /*
      * If 'loans' array change, 
@@ -86,7 +93,7 @@
      * Open users loans dashboard
      */
     _openUrl: function() {
-      window.open('http://search.library.uq.edu.au/primo_library/libweb/action/myAccountMenu.do?activity=loans', '_blank');
+      window.open('http://search.library.uq.edu.au/primo_library/libweb/action/myAccountMenu.do?activity=loans&vid='+this.primoView, '_blank');
     }
   });
 }());

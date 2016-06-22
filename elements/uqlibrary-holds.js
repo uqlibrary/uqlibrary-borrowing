@@ -22,6 +22,10 @@
       hideFooter: {
         type: Boolean,
         value: false
+      },
+      primoView: {
+        type: String,
+        observer: 'primoViewChanged'
       }
     },
 
@@ -41,7 +45,9 @@
         }
       });
     },
-
+    primoViewChanged: function () {
+      this.$.holdsTimeline.primoView = this.primoView;
+    },
     /*
      * If 'holds' array change
      * reformat rows and reset hideFooter property
@@ -104,7 +110,7 @@
      * Open users holds dashboard
      */
     _openUrl: function() {
-      window.open('http://search.library.uq.edu.au/primo_library/libweb/action/myAccountMenu.do?activity=requests', '_blank');
+      window.open('http://search.library.uq.edu.au/primo_library/libweb/action/myAccountMenu.do?activity=requests&vid='+this.primoView, '_blank');
     }
   });
 }());

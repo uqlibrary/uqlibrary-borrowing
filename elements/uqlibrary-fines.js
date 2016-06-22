@@ -50,6 +50,10 @@
       _hideFooter: {
         type: Boolean,
         value: true
+      },
+      primoView: {
+        type: String,
+        observer: 'primoViewChanged'
       }
     },
 
@@ -64,6 +68,9 @@
           window.location.href = _item.url;
         }
       });
+    },
+    primoViewChanged: function () {
+      this.$.list.primoView = this.primoView;
     },
     /*
      * If 'fines' array change, 
@@ -93,6 +100,7 @@
 
       this._hidePayNow = (this.finesSum < this.fineMinimumPayableAmount);
       this._hideFooter = (this.finesSum == 0);
+
     },
     /*
      * sum all users fines and convert the total to integer
@@ -118,7 +126,7 @@
      * Open users overdue dashboard
      */
     _openUrl: function () {
-      window.open('http://search.library.uq.edu.au/primo_library/libweb/action/myAccountMenu.do?activity=fees', '_blank');
+      window.open('http://search.library.uq.edu.au/primo_library/libweb/action/myAccountMenu.do?activity=fees&vid='+this.primoView, '_blank');
     },
     /*
      * Open Info modal page

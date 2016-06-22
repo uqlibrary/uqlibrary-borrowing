@@ -22,6 +22,9 @@
       isEmpty: {
         type: Boolean,
         value: true
+      },
+      primoView: {
+        type: String
       }
     },
 
@@ -38,7 +41,7 @@
      */
     _itemSelected: function (e) {
       e.stopPropagation();
-      window.open(e.model.item.url, '_blank');
+      window.open(e.model.item.url + '&vid=' + this.primoView, '_blank');
     },
 
     /*
@@ -94,6 +97,7 @@
       } else {
         this.isEmpty = true;
       }
+
     }
   });
 }());
