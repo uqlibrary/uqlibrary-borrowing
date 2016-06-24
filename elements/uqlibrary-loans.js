@@ -32,6 +32,10 @@
        */
       patron: {
         type: String
+      },
+      primoView: {
+        type: String,
+        observer: 'primoViewChanged'
       }
     },
     /*
@@ -44,6 +48,9 @@
           window.location.href = _item.url;
         }
       });
+    },
+    primoViewChanged: function () {
+      this.$.list.primoView = this.primoView;
     },
     /*
      * If 'loans' array change, 
@@ -80,12 +87,13 @@
       }
       this._processedItems = loans;
       this._hideFooter = !(loans.length>0);
+
     },
     /*
      * Open users loans dashboard
      */
     _openUrl: function() {
-      window.open('https://library.uq.edu.au/patroninfo~S7/' + this.patron + '/items', '_blank');
+      window.open('http://search.library.uq.edu.au/primo_library/libweb/action/myAccountMenu.do?activity=loans&vid='+this.primoView, '_blank');
     }
   });
 }());

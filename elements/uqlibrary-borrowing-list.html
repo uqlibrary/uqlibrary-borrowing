@@ -18,7 +18,7 @@
     }
     .date {
       @apply(--layout-vertical);
-      width:60px;
+      width: 65px;
       padding: 12px;
     }
 
@@ -65,7 +65,7 @@
                 <div class="caption">{{item.daySuffixText}}</div>
               </div>
               <div class="description flex" on-tap="_itemSelected" id="item-{{item.id}}" tabindex$="{{index}}">
-                <div class="subhead"><a aria-label$="{{item.ariaLabel}}" href="{{item.url}}" target="_blank">{{item.title}}</a></div>
+                <div class="subhead"><a aria-label$="{{item.ariaLabel}}" on-tap="_itemSelected">{{item.title}}</a></div>
                 <div class="body1">{{item.subtitle}}</div>
                 <div class="caption">{{item.secondaryText}}</div>
               </div>

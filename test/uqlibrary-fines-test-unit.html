@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <title>uqlibrary-element</title>
+
+  <script src="../../webcomponentsjs/webcomponents.min.js"></script>
+  <script src="../../web-component-tester/browser.js"></script>
+  <script src="../../test-fixture/test-fixture-mocha.js"></script>
+  <script src="../../uq-wait/UQWait.js"></script>
+  <link rel="import" href="../../test-fixture/test-fixture.html">
+
+  <!-- Import the element to test -->
+  <link rel="import" href="../elements/uqlibrary-fines.html">
+
+</head>
+<body>
+
+<test-fixture id="element">
+  <template>
+    <uqlibrary-fines></uqlibrary-fines>
+  </template>
+</test-fixture>
+
+<script>
+  document.cookie="UQLMockData=enabled";
+  suite('<uqlibrary-fines> tests', function () {
+    var element;
+    var fines = [
+      {
+          "title": null,
+          "fineAmount": 5,
+          "fineType": "Card renewal",
+          "dateAssessed": "2016-06-14T06:16:18.757Z",
+          "dueDate": null,
+          "dateReturned": null,
+          "description": "Test fine description 1",
+          "url": "http://search.library.uq.edu.au/primo_library/libweb/action/myAccountFee.do?command=details&feeId=1126899040003131"
+        },
+        {
+                "title": "The apple / by Sir A. Daniel Hall and M.B. Crane.",
+                "fineAmount": 8,
+                "fineType": "Other",
+                "dateAssessed": "2016-06-14T06:16:42.726Z",
+                "dueDate": null,
+                "dateReturned": null,
+                "description": "Test fine description 2",
+                "url": "http://search.library.uq.edu.au/primo_library/libweb/action/myAccountFee.do?command=details&feeId=1126899050003131"
+        }
+    ];
+
+    setup(function (done) {
+      element = fixture('element');
+      element.fines = fines;
+
+      UQWait.presenceOf('ul.timeline', 1000, done);
+    });
+
+    test('It should display the uqlibrary-fines component', function (done) {
+      expect(element).to.not.be.null;
+      done();
+    });
+
+    test('it should display fine amount correctly', function (done) {
+        var els = element.querySelectorAll('ul .date');
+        expect(els[0].textContent.trim()).to.equals('$5.00');
+        expect(els[1].textContent.trim()).to.equals('$8.00');
+        done();
+   });
+
+    test('it should display titles and urls', function (done) {
+      var els = element.querySelectorAll('li a');
+      assert.notInclude(els[0].textContent,'null','shall not display title in null');
+      expect(els[1].textContent).to.equals('The apple / by Sir A. Daniel Hall and M.B. Crane.');
+
+      done();
+    });
+
+    test('it should display descriptions', function (done) {
+      var els = element.querySelectorAll('.description');
+      expect(els[0].textContent.trim()).to.match(/(Test fine description 1)+/);
+      expect(els[1].textContent.trim()).to.match(/(Test fine description 2)+/);
+
+      done();
+    });
+
+  });
+</script>
+
+</body>
+</html>

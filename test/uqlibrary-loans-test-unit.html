@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <title>uqlibrary-element</title>
+
+  <script src="../../webcomponentsjs/webcomponents.min.js"></script>
+  <script src="../../web-component-tester/browser.js"></script>
+  <script src="../../test-fixture/test-fixture-mocha.js"></script>
+  <script src="../../uq-wait/UQWait.js"></script>
+  <link rel="import" href="../../test-fixture/test-fixture.html">
+
+  <!-- Import the element to test -->
+  <link rel="import" href="../elements/uqlibrary-loans.html">
+
+</head>
+<body>
+
+<test-fixture id="element">
+  <template>
+    <uqlibrary-loans></uqlibrary-loans>
+  </template>
+</test-fixture>
+
+<script>
+  document.cookie="UQLMockData=enabled";
+  suite('<uqlibrary-loans> tests', function () {
+    var element;
+    var loans = [
+      {
+        "title": "Mastering Linux / Arman Danesh.",
+        "dueDate": "2016-09-05T23:59:00+10:00",
+        "url": "http://search.library.uq.edu.au/primo_library/libweb/action/myAccountLoan.do?command=details&loanID=1126548850003131",
+        "callNumber": "QA76.76.O63 D35 1999",
+        "barcodes": "34067022452543",
+        "itemStatus": "NORMAL"
+      },
+      {
+        "title": "Pro JavaScript design patterns / Ross Harmes and Dustin Diaz.",
+        "dueDate": "2016-09-05T23:59:00+10:00",
+        "url": "http://search.library.uq.edu.au/primo_library/libweb/action/myAccountLoan.do?command=details&loanID=1126549360003131",
+        "callNumber": "QA76.73.J39 H35 2008",
+        "barcodes": "34067031780173",
+        "itemStatus": "NORMAL"
+      }
+    ];
+
+    setup(function (done) {
+      element = fixture('element');
+      element.loans = loans;
+
+      UQWait.presenceOf('ul.timeline', 1000, done);
+    });
+
+    test('It should display the uqlibrary-loans component', function (done) {
+      expect(element).to.not.be.null;
+      done();
+    });
+
+    test('it should display date and render correctly', function (done) {
+        var el = element.querySelector('ul .date');
+        expect(el.textContent).to.match(/Mon+/);
+        done();
+   });
+
+    test('it should display titles and urls', function (done) {
+      var els = element.querySelectorAll('li a');
+      expect(els[0].textContent).to.equals('Mastering Linux / Arman Danesh.');
+      expect(els[1].textContent).to.equals('Pro JavaScript design patterns / Ross Harmes and Dustin Diaz.');
+
+      done();
+    });
+
+    test('it should display barcods and call numbers', function (done) {
+      var els = element.querySelectorAll('.description');
+      expect(els[0].textContent).to.match(/(Barcode: 34067022452543)+/);
+      expect(els[0].textContent).to.match(/(Call Number: QA76.76.O63 D35 1999)+/);
+
+      expect(els[1].textContent).to.match(/(Barcode: 34067031780173)+/);
+      expect(els[1].textContent).to.match(/(Call Number: QA76.73.J39 H35 2008)+/);
+
+      done();
+    });
+
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <title>uqlibrary-element</title>
+
+  <script src="../../webcomponentsjs/webcomponents.min.js"></script>
+  <script src="../../web-component-tester/browser.js"></script>
+  <script src="../../test-fixture/test-fixture-mocha.js"></script>
+  <script src="../../uq-wait/UQWait.js"></script>
+  <link rel="import" href="../../test-fixture/test-fixture.html">
+
+  <!-- Import the element to test -->
+  <link rel="import" href="../elements/uqlibrary-holds.html">
+
+</head>
+<body>
+
+<test-fixture id="element">
+  <template>
+    <uqlibrary-holds></uqlibrary-holds>
+  </template>
+</test-fixture>
+
+<script>
+  document.cookie="UQLMockData=enabled";
+  suite('<uqlibrary-holds> tests', function () {
+    var element;
+    var holds = [
+      {
+        "title": "Distributed urbanism : cities after Google earth / edited by Gretchen Wilkins.",
+        "datePlaced": "2016-06-14T10:00:00+10:00",
+        "url": "http://search.library.uq.edu.au/primo_library/libweb/action/myAccountRequest.do?command=details&requestId=1126891940003131",
+        "status": "IN_PROCESS",
+        "pickupLocation": "PACE Health Sciences Library"
+      },
+      {
+        "title": "The apple / by Sir A. Daniel Hall and M.B. Crane.",
+        "datePlaced": "2016-06-15T10:00:00+10:00",
+        "url": "http://search.library.uq.edu.au/primo_library/libweb/action/myAccountRequest.do?command=details&requestId=1126891770003131",
+        "status": "NOT_STARTED",
+        "pickupLocation": "Social Sciences & Humanities"
+      }
+    ];
+
+    setup(function (done) {
+      element = fixture('element');
+      element.holds = holds;
+
+      UQWait.presenceOf('ul.timeline', 1000, done);
+    });
+
+    test('It should display the uqlibrary-holds component', function (done) {
+      expect(element).to.not.be.null;
+      done();
+    });
+
+    test('it should display on hold status correctly', function (done) {
+        var els = element.querySelectorAll('ul .date');
+        expect(els[0].textContent).to.match(/Transit+/);
+        expect(els[1].textContent).to.match(/Hold+/);
+        done();
+   });
+
+    test('it should display titles and urls', function (done) {
+      var els = element.querySelectorAll('li a');
+      expect(els[0].textContent).to.equals('Distributed urbanism : cities after Google earth / edited by Gretchen Wilkins.');
+      expect(els[1].textContent).to.equals('The apple / by Sir A. Daniel Hall and M.B. Crane.');
+
+      done();
+    });
+
+    test('it should display date placed and pickup location', function (done) {
+      var els = element.querySelectorAll('.description');
+      assert.notInclude(els[0].textContent,'Date placed:', 'Date placed shall not be displayed');
+      expect(els[0].textContent).to.match(/(Pickup location: PACE Health Sciences Library)+/);
+
+      assert.include(els[1].textContent, 'Date placed:', 'Date placed shall be displayed');
+      assert.notInclude(els[1].textContent,'Pickup location:', 'Pickup location shall be not displayed');
+
+      done();
+    });
+
+  });
+</script>
+
+</body>
+</html>
