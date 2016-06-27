@@ -23,7 +23,7 @@
     "url": "https://github.com/uqlibrary/uqlibrary-borrowing/issues"
   },
   "devDependencies": {
-    "web-component-tester": "~4.2.2",
+    "web-component-tester": "4.2.2",
     "gulp": "~3.9.1",
     "browser-sync": "~2.12.5"
   },
