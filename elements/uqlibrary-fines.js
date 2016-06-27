@@ -110,7 +110,7 @@
       if (fines && fines.length > 0) {
         for (var i = 0; i < fines.length; i++) {
           if (fines[i].fineAmount) {
-            this.finesSum += parseInt(fines[i].fineAmount);
+            this.finesSum += parseFloat(fines[i].fineAmount);
           }
         }
       }
