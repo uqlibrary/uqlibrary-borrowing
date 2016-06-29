@@ -29,6 +29,14 @@
       </uqlibrary-borrowing-list>
 
       <div>
+        <template is="dom-if" if="[[!_hideViewMore]]">
+          <paper-icon-item>
+            <iron-icon item-icon icon="info-outline"></iron-icon>
+            <a href="#" on-tap="_openUrl">
+              View the complete list of holds
+            </a>
+          </paper-icon-item>
+        </template>
         <paper-icon-item>
           <iron-icon item-icon icon="info-outline"></iron-icon>
           <a href="https://web.library.uq.edu.au/borrowing-requesting/how-request/how-place-hold" target="_blank">

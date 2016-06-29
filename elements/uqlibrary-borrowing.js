@@ -107,18 +107,23 @@
     * If the data property has changed, recalculate the total in fees and inject the patrons id in each sub component
     */
     dataChanged: function () {
-      if (this.user) {
-        this._sumFines = this.$.fines.moneyFormat(this.$.fines.calculateFines(this.data.fines));
+      var self = this;
+      if (self.user) {
+        //this._sumFines = this.$.fines.moneyFormat(this.$.fines.calculateFines(this.data.fines));
+        self._sumFines = self.$.fines.moneyFormat(self.data.total_fines_sum);
 
-        var patron = this.data.recordNumber;
-        this.$.loans.patron = patron;
-        this.$.holds.patron = patron;
-        this.$.fines.patron = patron;
-        this.$.loans.primoView = this.primoView;
-        this.$.holds.primoView = this.primoView;
-        this.$.fines.primoView = this.primoView;
+        var patron = self.data.recordNumber;
+        self.$.loans.patron = patron;
+        self.$.holds.patron = patron;
+        self.$.fines.patron = patron;
+        self.$.loans.primoView = self.primoView;
+        self.$.holds.primoView = self.primoView;
+        self.$.fines.primoView = self.primoView;
+        self.$.fines.finesSum = self.data.total_fines_sum;
+        self.$.holds.recordCount = self.data.total_holds_count;
+        self.$.loans.recordCount = self.data.total_loans_count;
 
-        this.fire('uqlibrary-borrowing-data-loaded');
+        self.fire('uqlibrary-borrowing-data-loaded');
       }
     },
 

@@ -26,6 +26,14 @@
 
     <section class="flex " name="list">
       <uqlibrary-borrowing-list id="list" items="{{_processedItems}}" empty-message="No loans" primoView="{{primoView}}"></uqlibrary-borrowing-list>
+      <template is="dom-if" if="[[!_hideViewMore]]">
+        <paper-icon-item>
+          <iron-icon item-icon icon="info-outline"></iron-icon>
+          <a href="#" on-tap="_openUrl">
+            View the complete list of loans
+          </a>
+        </paper-icon-item>
+      </template>
       <paper-icon-item>
         <iron-icon item-icon icon="info-outline"></iron-icon>
         <a href="https://web.library.uq.edu.au/borrowing-requesting/borrowing-rules" target="_blank">

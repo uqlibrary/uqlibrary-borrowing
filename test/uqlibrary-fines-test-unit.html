@@ -26,18 +26,20 @@
   document.cookie="UQLMockData=enabled";
   suite('<uqlibrary-fines> tests', function () {
     var element;
-    var fines = [
-      {
-          "title": null,
-          "fineAmount": 5,
-          "fineType": "Card renewal",
-          "dateAssessed": "2016-06-14T06:16:18.757Z",
-          "dueDate": null,
-          "dateReturned": null,
-          "description": "Test fine description 1",
-          "url": "http://search.library.uq.edu.au/primo_library/libweb/action/myAccountFee.do?command=details&feeId=1126899040003131"
-        },
-        {
+    var fines =
+        [
+            {
+                "title": null,
+                "fineAmount": 5,
+                "fineType": "Card renewal",
+                "dateAssessed": "2016-06-14T06:16:18.757Z",
+                "dueDate": null,
+                "dateReturned": null,
+                "description": "Test fine description 1",
+                "url": "http://search.library.uq.edu.au/primo_library/libweb/action/myAccountFee.do?command=details&feeId=1126899040003131"
+
+            },
+            {
                 "title": "The apple / by Sir A. Daniel Hall and M.B. Crane.",
                 "fineAmount": 8,
                 "fineType": "Other",
@@ -46,8 +48,8 @@
                 "dateReturned": null,
                 "description": "Test fine description 2",
                 "url": "http://search.library.uq.edu.au/primo_library/libweb/action/myAccountFee.do?command=details&feeId=1126899050003131"
-        }
-    ];
+            }
+        ];
 
     setup(function (done) {
       element = fixture('element');

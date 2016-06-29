@@ -111,10 +111,10 @@ Element providing an overview for loans, holds and fines.
           <!-- Tabs -->
           <paper-tabs id="tabs" selected="{{_selectedTabIndex}}">
             <paper-tab name="loans" aria-label="Loans">
-              [[ data.checkedOut.length ]]<br />LOANS
+              [[ data.total_loans_count ]]<br />LOANS
             </paper-tab>
             <paper-tab name="holds" aria-label="Holds">
-              [[ data.holds.length ]]<br />HOLDS
+              [[ data.total_holds_count ]]<br />HOLDS
             </paper-tab>
             <paper-tab name="fines" aria-label="Overdue charges">
               [[ _sumFines ]]<br />OVERDUE CHARGES

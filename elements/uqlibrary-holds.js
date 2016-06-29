@@ -23,9 +23,20 @@
         type: Boolean,
         value: false
       },
+      /**
+       * Whether to hide the view more link
+       */
+      _hideViewMore: {
+        type: Boolean,
+        value: true
+      },
       primoView: {
         type: String,
         observer: 'primoViewChanged'
+      },
+      recordCount: {
+        type: Number,
+        observer: 'recordCountChanged'
       }
     },
 
@@ -47,6 +58,10 @@
     },
     primoViewChanged: function () {
       this.$.holdsTimeline.primoView = this.primoView;
+    },
+    recordCountChanged: function () {
+      var self = this;
+      self._hideViewMore = (self.recordCount <= self.holds.length);
     },
     /*
      * If 'holds' array change
@@ -104,7 +119,8 @@
         }
         return 0;
       });
-      this._hideFooter = !(this.holds.length>0);
+      this._hideFooter = (this.holds.length<1);
+      //this._hideViewMore = (this.total_holds_count <= this.holds.length);
     },
     /*
      * Open users holds dashboard

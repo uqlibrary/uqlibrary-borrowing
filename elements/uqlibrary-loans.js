@@ -28,6 +28,13 @@
         value: false
       },
       /**
+       * Whether to hide the view more link
+       */
+      _hideViewMore: {
+        type: Boolean,
+        value: true
+      },
+      /**
        * User ID
        */
       patron: {
@@ -36,6 +43,10 @@
       primoView: {
         type: String,
         observer: 'primoViewChanged'
+      },
+      recordCount: {
+        type: Number,
+        observer: 'recordCountChanged'
       }
     },
     /*
@@ -51,6 +62,10 @@
     },
     primoViewChanged: function () {
       this.$.list.primoView = this.primoView;
+    },
+    recordCountChanged: function () {
+      var self = this;
+      self._hideViewMore = (self.recordCount <= self._processedItems.length);
     },
     /*
      * If 'loans' array change, 
@@ -86,7 +101,7 @@
         loans.push(_loan);
       }
       this._processedItems = loans;
-      this._hideFooter = !(loans.length>0);
+      this._hideFooter = (loans.length<1);
 
     },
     /*

@@ -27,23 +27,24 @@
   suite('<uqlibrary-loans> tests', function () {
     var element;
     var loans = [
-      {
-        "title": "Mastering Linux / Arman Danesh.",
-        "dueDate": "2016-09-05T23:59:00+10:00",
-        "url": "http://search.library.uq.edu.au/primo_library/libweb/action/myAccountLoan.do?command=details&loanID=1126548850003131",
-        "callNumber": "QA76.76.O63 D35 1999",
-        "barcodes": "34067022452543",
-        "itemStatus": "NORMAL"
-      },
-      {
-        "title": "Pro JavaScript design patterns / Ross Harmes and Dustin Diaz.",
-        "dueDate": "2016-09-05T23:59:00+10:00",
-        "url": "http://search.library.uq.edu.au/primo_library/libweb/action/myAccountLoan.do?command=details&loanID=1126549360003131",
-        "callNumber": "QA76.73.J39 H35 2008",
-        "barcodes": "34067031780173",
-        "itemStatus": "NORMAL"
-      }
-    ];
+          {
+            "title": "Mastering Linux / Arman Danesh.",
+            "dueDate": "2016-09-05T23:59:00+10:00",
+            "url": "http://search.library.uq.edu.au/primo_library/libweb/action/myAccountLoan.do?command=details&loanID=1126548850003131",
+            "callNumber": "QA76.76.O63 D35 1999",
+            "barcodes": "34067022452543",
+            "itemStatus": "NORMAL"
+
+          },
+          {
+            "title": "Pro JavaScript design patterns / Ross Harmes and Dustin Diaz.",
+            "dueDate": "2016-09-05T23:59:00+10:00",
+            "url": "http://search.library.uq.edu.au/primo_library/libweb/action/myAccountLoan.do?command=details&loanID=1126549360003131",
+            "callNumber": "QA76.73.J39 H35 2008",
+            "barcodes": "34067031780173",
+            "itemStatus": "NORMAL"
+          }
+      ];
 
     setup(function (done) {
       element = fixture('element');
@@ -58,9 +59,9 @@
     });
 
     test('it should display date and render correctly', function (done) {
-        var el = element.querySelector('ul .date');
-        expect(el.textContent).to.match(/Mon+/);
-        done();
+      var el = element.querySelector('ul .date');
+      expect(el.textContent).to.match(/Mon+/);
+      done();
    });
 
     test('it should display titles and urls', function (done) {

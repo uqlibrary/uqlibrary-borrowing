@@ -97,6 +97,7 @@
       }
       this._processedItems = fines;
       this.finesSum = this.calculateFines(fines);
+      //this.finesSum = parseFloat(this.total_fines_sum);
 
       this._hidePayNow = (this.finesSum < this.fineMinimumPayableAmount);
       this._hideFooter = (this.finesSum == 0);
