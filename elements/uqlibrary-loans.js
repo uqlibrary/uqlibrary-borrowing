@@ -64,8 +64,7 @@
       this.$.list.primoView = this.primoView;
     },
     recordCountChanged: function () {
-      var self = this;
-      self._hideViewMore = (self.recordCount <= self._processedItems.length);
+      this._hideViewMore = (this.recordCount <= this._processedItems.length);
     },
     /*
      * If 'loans' array change, 

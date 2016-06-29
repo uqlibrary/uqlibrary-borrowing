@@ -60,8 +60,7 @@
       this.$.holdsTimeline.primoView = this.primoView;
     },
     recordCountChanged: function () {
-      var self = this;
-      self._hideViewMore = (self.recordCount <= self.holds.length);
+      this._hideViewMore = (this.recordCount <= this.holds.length);
     },
     /*
      * If 'holds' array change
