@@ -66,14 +66,25 @@
       var haveDivider = false;
       for (var i = 0; i < items.length; i++) {
         items[i].date = new Date(items[i].date);
-        if (!items[i].hasOwnProperty('day')) {
-          items[i].day = items[i].date.getDate();
-        }
-        if (!items[i].hasOwnProperty('dayPrefixText')) {
-          items[i].dayPrefixText = moment(items[i].date).format('ddd');
-        }
-        if (!items[i].hasOwnProperty('daySuffixText')) {
-          items[i].daySuffixText = moment(items[i].date).format('MMM');
+
+        var numMinutesLeft = moment(items[i].date).fromNow(true);
+        var textCheck = 'minutes';
+        if (-1 != numMinutesLeft.indexOf(textCheck)) { // different display for items due in an hour or less
+          items[i].dayPrefixText = 'Due in';
+          items[i].day = numMinutesLeft.replace(textCheck, '').trim();
+          items[i].daySuffixText = 'minutes';
+
+        } else
+        {
+          if (!items[i].hasOwnProperty('day')) {
+            items[i].day = items[i].date.getDate();
+          }
+          if (!items[i].hasOwnProperty('dayPrefixText')) {
+            items[i].dayPrefixText = moment(items[i].date).format('ddd');
+          }
+          if (!items[i].hasOwnProperty('daySuffixText')) {
+            items[i].daySuffixText = moment(items[i].date).format('MMM');
+          }
         }
         if (!items[i].hasOwnProperty('thetime')) {
           items[i].thetime = moment(items[i].date).format('HH:mm');
