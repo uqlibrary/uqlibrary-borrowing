@@ -75,6 +75,9 @@
         if (!items[i].hasOwnProperty('daySuffixText')) {
           items[i].daySuffixText = moment(items[i].date).format('MMM');
         }
+        if (!items[i].hasOwnProperty('thetime')) {
+          items[i].thetime = moment(items[i].date).format('HH:mm');
+        }
         items[i].class += ' item-item';
 
         if (!this.showEachDate && i > 0 && items[i].date.getDay() === items[i - 1].date.getDay() && items[i].date.getDate() === items[i - 1].date.getDate()) {
