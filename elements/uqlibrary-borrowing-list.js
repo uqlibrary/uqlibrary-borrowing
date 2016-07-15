@@ -64,15 +64,22 @@
         });
       }
       var haveDivider = false;
+      var isBorrowingList = true;
       for (var i = 0; i < items.length; i++) {
         items[i].date = new Date(items[i].date);
 
         var numMinutesLeft = moment(items[i].date).fromNow(true);
         var textCheck = 'minutes';
         if (-1 != numMinutesLeft.indexOf(textCheck)) { // different display for items due in an hour or less
-          items[i].dayPrefixText = 'Due in';
-          items[i].day = numMinutesLeft.replace(textCheck, '').trim();
-          items[i].daySuffixText = 'minutes';
+          if (!items[i].hasOwnProperty('dayPrefixText')) {
+            items[i].dayPrefixText = 'Due in';
+          }
+          if (!items[i].hasOwnProperty('day')) {
+            items[i].day = numMinutesLeft.replace(textCheck, '').trim();
+          }
+          if (!items[i].hasOwnProperty('daySuffixText')) {
+            items[i].daySuffixText = textCheck;
+          }
 
         } else
         {
@@ -95,6 +102,7 @@
           items[i].day = '';
           items[i].dayPrefixText = '';
           items[i].daySuffixText = '';
+          items[i].thetime = '';
         }
         //insert divider between past and upcoming
         if (i > 0 && !haveDivider && new Date().getTime() < items[i].date.getTime() && new Date().getTime() >= items[i - 1].date.getTime()) {

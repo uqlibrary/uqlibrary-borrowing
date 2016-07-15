@@ -12,6 +12,7 @@
       @apply(--layout-horizontal);
       @apply(--layout-center-justified);
     }
+    .header,
     .line {
       @apply(--laytou-flex);
       @apply(--layout-horizontal);
@@ -45,6 +46,10 @@
     .title {
       color:#7B0C9D;
     }
+    .detailsLabel {
+      @apply(--layout-vertical);
+      padding: 12px 12px 12px 16px;
+    }
   </style>
 
   <!-- Template -->
@@ -54,15 +59,23 @@
     </div>
 
     <ul class="timeline three-line-icon-list">
+      <template is="dom-if" if="{{item.isBorrowingList}}">
+        <li>
+          <div class="header">
+            <div class="date">DUE DATE</div>
+            <div class="detailsLabel">DETAILS</div>
+          </div>
+        </li>
+      </template>
       <li class="gap"></li>
       <template is="dom-repeat" items="{{processedItems}}">
         <template is="dom-if" if="{{!item.isDivider}}">
           <li class="{{item.class}}">
             <div class="line">
               <div class="date">
-                <div class="caption">{{item.prefixText}}</div>
-                <div class="title">{{item.amountTime}}</div>
-                <div class="caption">{{item.suffixText}}</div>
+                <div class="caption">{{item.dayPrefixText}}</div>
+                <div class="title">{{item.day}}</div>
+                <div class="caption">{{item.daySuffixText}}</div>
                 <div class="caption">{{item.thetime}}</div>
               </div>
               <div class="description flex" on-tap="_itemSelected" id="item-{{item.id}}" tabindex$="{{index}}">
