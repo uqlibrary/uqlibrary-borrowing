@@ -64,7 +64,6 @@
         });
       }
       var haveDivider = false;
-      var isBorrowingList = true;
       for (var i = 0; i < items.length; i++) {
         items[i].date = new Date(items[i].date);
 
@@ -93,17 +92,20 @@
             items[i].daySuffixText = moment(items[i].date).format('MMM');
           }
         }
-        if (!items[i].hasOwnProperty('thetime')) {
+
+        if (!this.isNotBorrowingList  && !items[i].hasOwnProperty('thetime')) {
+          items[i].dueBylabel = 'Due by';
           items[i].thetime = moment(items[i].date).format('HH:mm');
         }
         items[i].class += ' item-item';
-
+/*
         if (!this.showEachDate && i > 0 && items[i].date.getDay() === items[i - 1].date.getDay() && items[i].date.getDate() === items[i - 1].date.getDate()) {
           items[i].day = '';
           items[i].dayPrefixText = '';
           items[i].daySuffixText = '';
           items[i].thetime = '';
         }
+*/
         //insert divider between past and upcoming
         if (i > 0 && !haveDivider && new Date().getTime() < items[i].date.getTime() && new Date().getTime() >= items[i - 1].date.getTime()) {
           items[i - 1].class += ' last';

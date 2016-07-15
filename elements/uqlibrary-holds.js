@@ -45,6 +45,7 @@
      */
     ready: function () {
       this.set('$.holdsTimeline.showEachDate', true);
+      this.set('$.holdsTimeline.isNotBorrowingList', true);
 
       // we don't care about placed date, so disable sorting by date
       this.set('$.holdsTimeline.sortByDate', false);

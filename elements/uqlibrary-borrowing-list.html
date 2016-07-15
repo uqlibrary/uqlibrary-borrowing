@@ -59,20 +59,12 @@
     </div>
 
     <ul class="timeline three-line-icon-list">
-      <template is="dom-if" if="{{item.isBorrowingList}}">
-        <li>
-          <div class="header">
-            <div class="date">DUE DATE</div>
-            <div class="detailsLabel">DETAILS</div>
-          </div>
-        </li>
-      </template>
-      <li class="gap"></li>
       <template is="dom-repeat" items="{{processedItems}}">
         <template is="dom-if" if="{{!item.isDivider}}">
           <li class="{{item.class}}">
             <div class="line">
               <div class="date">
+                <div class="caption">{{item.dueBylabel}}</div>
                 <div class="caption">{{item.dayPrefixText}}</div>
                 <div class="title">{{item.day}}</div>
                 <div class="caption">{{item.daySuffixText}}</div>
