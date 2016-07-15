@@ -99,6 +99,7 @@
         if (items[i].class == '' && !items[i].hasOwnProperty('thetime')) {
           items[i].thetime = moment(items[i].date).format('HH:mm');
         }
+
         items[i].class += ' item-item';
 /*
 // currently showing a due date on every loan, so deactivate this code
@@ -124,14 +125,9 @@
       } else {
         this.isEmpty = true;
       }
-      if (this.listType == 'fines') {
-        this.dateColumnHeader = 'AMOUNT';
 
-      } else if (this.listType == 'holds') {
-        this.dateColumnHeader = 'LOCATION';
-
-      } else {
-        this.dateColumnHeader = 'DUE DATE';
+      if (!this.colHeader) {
+        this.colHeader = 'DUE DATE';
       }
 
     }
