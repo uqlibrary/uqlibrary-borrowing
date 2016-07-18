@@ -41,8 +41,7 @@
         type: String
       },
       primoView: {
-        type: String,
-        observer: 'primoViewChanged'
+        type: String
       },
       recordCount: {
         type: Number,
@@ -60,9 +59,7 @@
         }
       });
     },
-    primoViewChanged: function () {
-      this.$.list.primoView = this.primoView;
-    },
+
     recordCountChanged: function () {
       this._hideViewMore = (this.recordCount <= this._processedItems.length);
     },

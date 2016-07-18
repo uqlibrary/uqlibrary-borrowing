@@ -31,8 +31,7 @@
         value: true
       },
       primoView: {
-        type: String,
-        observer: 'primoViewChanged'
+        type: String
       },
       recordCount: {
         type: Number,
@@ -56,9 +55,7 @@
         }
       });
     },
-    primoViewChanged: function () {
-      this.$.holdsTimeline.primoView = this.primoView;
-    },
+
     recordCountChanged: function () {
       this._hideViewMore = (this.recordCount <= this.holds.length);
     },

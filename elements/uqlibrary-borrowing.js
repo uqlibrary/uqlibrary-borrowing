@@ -115,9 +115,7 @@
         this.$.loans.patron = patron;
         this.$.holds.patron = patron;
         this.$.fines.patron = patron;
-        this.$.loans.primoView = this.primoView;
-        this.$.holds.primoView = this.primoView;
-        this.$.fines.primoView = this.primoView;
+
         this.$.fines.finesSum = this.data.total_fines_sum;
         this.$.holds.recordCount = this.data.total_holds_count;
         this.$.loans.recordCount = this.data.total_loans_count;

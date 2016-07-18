@@ -52,8 +52,7 @@
         value: true
       },
       primoView: {
-        type: String,
-        observer: 'primoViewChanged'
+        type: String
       }
     },
 
@@ -69,9 +68,7 @@
         }
       });
     },
-    primoViewChanged: function () {
-      this.$.list.primoView = this.primoView;
-    },
+
     /*
      * If 'fines' array change, 
      * recalculate the total in fees, reformat rows and reset _hidePayNow property
