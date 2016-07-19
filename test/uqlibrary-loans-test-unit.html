@@ -26,6 +26,16 @@
   document.cookie="UQLMockData=enabled";
   suite('<uqlibrary-loans> tests', function () {
     var element;
+
+    var timein10minutes = new Date();
+    timein10minutes.setMinutes(timein10minutes.getMinutes() + 10);
+
+    var timePlusOneWeek= new Date();
+    timePlusOneWeek.setDate(timePlusOneWeek.getDate() + 7);
+
+    var timePlusOneMonth= new Date();
+    timePlusOneMonth.setMonth(timePlusOneMonth.getMonth() + 1);
+
     var loans = [
           {
             "title": "Mastering Linux / Arman Danesh.",
@@ -43,8 +53,30 @@
             "callNumber": "QA76.73.J39 H35 2008",
             "barcodes": "34067031780173",
             "itemStatus": "NORMAL"
+          },
+          {
+        "title": "Around the world in 80 days / Jules Verne.",
+        "dueDate": "2016-09-05T23:59:00+10:00",
+        "url": "http://search.library.uq.edu.au/primo_library/libweb/action/myAccountLoan.do?command=details&loanID=1126549360003131",
+        "callNumber": "QA76.73.J39 H35 2008",
+        "barcodes": "34067031780173",
+        "itemStatus": "NORMAL"
+          },
+         {
+        "title": "The Happy Apple / Fred Smith.",
+        "dueDate": "2016-09-05T23:59:00+10:00",
+        "url": "http://search.library.uq.edu.au/primo_library/libweb/action/myAccountLoan.do?command=details&loanID=1126549360003131",
+        "callNumber": "QA76.73.J39 H35 2008",
+        "barcodes": "34067031780173",
+        "itemStatus": "NORMAL"
           }
       ];
+    // reset the dates to test the different display formats for < 1 hour and > 1 hour
+    loans[0].dueDate = timein10minutes;
+    loans[1].dueDate = timePlusOneWeek;
+    loans[2].dueDate = timePlusOneWeek;
+    loans[3].dueDate = timePlusOneMonth;
+
 
     setup(function (done) {
       element = fixture('element');
@@ -58,12 +90,6 @@
       done();
     });
 
-    test('it should display date and render correctly', function (done) {
-      var el = element.querySelector('ul .line .date');
-      expect(el.textContent).to.match(/Mon+/);
-      done();
-   });
-
     test('it should display titles and urls', function (done) {
       var els = element.querySelectorAll('li a');
       expect(els[0].textContent).to.equals('Mastering Linux / Arman Danesh.');
@@ -72,7 +98,7 @@
       done();
     });
 
-    test('it should display barcods and call numbers', function (done) {
+    test('it should display barcodes and call numbers', function (done) {
       var els = element.querySelectorAll('.description');
       expect(els[0].textContent).to.match(/(Barcode: 34067022452543)+/);
       expect(els[0].textContent).to.match(/(Call Number: QA76.76.O63 D35 1999)+/);
@@ -80,6 +106,21 @@
       expect(els[1].textContent).to.match(/(Barcode: 34067031780173)+/);
       expect(els[1].textContent).to.match(/(Call Number: QA76.73.J39 H35 2008)+/);
 
+      done();
+    });
+
+    test('it should show due date for loans due after one hour', function (done) {
+        var els = element.querySelectorAll('ul li .line .date .caption'); //
+        var elem = els[2];
+      console.log(elem.textContent);
+        expect(elem.textContent.trim()).to.not.equal('Due in');
+        done();
+    });
+
+    test('It should show minutes until due date for loans due within one hour', function (done) {
+      var els = element.querySelectorAll('ul li .line .date .caption'); //
+      var elem = els[0];
+      expect(elem.textContent.trim()).to.equal('Due in');
       done();
     });
 
