@@ -45,7 +45,6 @@
      */
     ready: function () {
       this.set('$.holdsTimeline.showEachDate', true);
-      this.set('$.holdsTimeline.listType', 'holds');
 
       // we don't care about placed date, so disable sorting by date
       this.set('$.holdsTimeline.sortByDate', false);
@@ -87,7 +86,6 @@
             _hold.ariaLabel += _hold.subtitle;
           }
         } else if (_hold.status == 'IN_PROCESS') {
-console.log('in');
           _hold.dayPrefixText = 'Transit';
           _hold.day = '';
           _hold.daySuffixText = 'for pickup';
@@ -104,7 +102,6 @@ console.log('in');
           _hold.subtitle = 'Date placed: ' + _hold.dateText;
           _hold.ariaLabel += 'On hold. ' + _hold.subtitle;
         }
-console.log(_hold);
       }
       // Sort by status
       this.holds.sort(function (a, b) {

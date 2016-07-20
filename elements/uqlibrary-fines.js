@@ -62,7 +62,6 @@
      */
     ready: function () {
       this.set('$.finesList.showEachDate', true);
-      this.set('$.finesList.listType', 'fines');
       this.addEventListener('uqlibrary-borrowing-list-item-selected', function (e) {
         var _item = e.detail;
         if (_item.hasOwnProperty('url')) {

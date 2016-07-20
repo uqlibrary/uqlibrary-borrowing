@@ -25,9 +25,6 @@
       },
       primoView: {
         type: String
-      },
-      listType: {
-        type: String
       }
     },
 
@@ -51,58 +48,69 @@
      * If the 'data' property has changed, recalculate the total in fees and inject the patrons id in each sub component
      */
     itemsChanged: function (_, changeValue) {
-      var items;
+      var items = this.items;
       var processed = [];
-      var haveDivider = false;
-
       if (this.sortByDate) {
-        this.items.sort(function (a, b) {
-          var aDate = moment(a.date);
-          var bDate = moment(b.date);
-          if (aDate.isAfter(bDate)) {
+        items.sort(function (a, b) {
+          var aDate = new Date(a.date).getTime();
+          var bDate = new Date(b.date).getTime();
+          if (aDate > bDate) {
             return 1;
-          } else {
+          }
+          if (aDate < bDate) {
             return -1;
           }
+          return 0;
         });
       }
+      var haveDivider = false;
+      for (var i = 0; i < items.length; i++) {
+        items[i].date = new Date(items[i].date);
 
-      for (var i = 0; i < this.items.length; i++) {
-        var item = JSON.parse(JSON.stringify(this.items[i]));
-        if ('holds' !== this.listType) {
-          item.date = new Date(item.date);
-
-console.log(item.date);
-          var numMinutesLeft = moment(item.date).fromNow(true);
-          var textCheck = 'minutes';
-          if (-1 != numMinutesLeft.indexOf(textCheck)) { // different display for items due in an hour or less
-            item.dayPrefixText = 'Due in';
-            item.day = numMinutesLeft.replace(textCheck, '').trim();
-            item.daySuffixText = textCheck;
-
-          } else {
-            item.day = item.date.getDate();
-            item.dayPrefixText = moment(item.date).format('ddd');
-            item.daySuffixText = moment(item.date).format('MMM');
+        var numMinutesLeft = moment(items[i].date).fromNow(true);
+        var textCheck = 'minutes';
+        if (-1 != numMinutesLeft.indexOf(textCheck)) { // different display for items due in an hour or less
+          if (!items[i].hasOwnProperty('dayPrefixText')) {
+            items[i].dayPrefixText = 'Due in';
+          }
+          if (!items[i].hasOwnProperty('day')) {
+            items[i].day = numMinutesLeft.replace(textCheck, '').trim();
+          }
+          if (!items[i].hasOwnProperty('daySuffixText')) {
+            items[i].daySuffixText = textCheck;
           }
 
-          if (item.class == '') {
-            item.thetime = moment(item.date).format('HH:mm');
+        } else
+        {
+          if (!items[i].hasOwnProperty('day')) {
+            items[i].day = items[i].date.getDate();
           }
-
-          item.class += ' item-item';
-
-          //insert divider between past and upcoming
-          if (i > 0 && !haveDivider
-            && new Date().getTime() < item.date.getTime()
-            && new Date().getTime() >= processed[i - 1].date.getTime()) {
-            processed[i - 1].class += ' last';
-            haveDivider = true;
-            processed.push({isDivider: true});
+          if (!items[i].hasOwnProperty('dayPrefixText')) {
+            items[i].dayPrefixText = moment(items[i].date).format('ddd');
           }
-
+          if (!items[i].hasOwnProperty('daySuffixText')) {
+            items[i].daySuffixText = moment(items[i].date).format('MMM');
+          }
         }
-          processed.push(item);
+
+        if (items[i].class == '' && !items[i].hasOwnProperty('thetime')) {
+          items[i].thetime = moment(items[i].date).format('HH:mm');
+        }
+
+        items[i].class += ' item-item';
+
+        if (!this.showEachDate && i > 0 && items[i].date.getDay() === items[i - 1].date.getDay() && items[i].date.getDate() === items[i - 1].date.getDate()) {
+          items[i].day = '';
+          items[i].dayPrefixText = '';
+          items[i].daySuffixText = '';
+        }
+        //insert divider between past and upcoming
+        if (i > 0 && !haveDivider && new Date().getTime() < items[i].date.getTime() && new Date().getTime() >= items[i - 1].date.getTime()) {
+          items[i - 1].class += ' last';
+          haveDivider = true;
+          processed.push({ isDivider: true });
+        }
+        processed.push(items[i]);
       }
       if (processed.length > 0) {
         processed[0].class += ' first';
