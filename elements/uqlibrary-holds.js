@@ -87,6 +87,7 @@
             _hold.ariaLabel += _hold.subtitle;
           }
         } else if (_hold.status == 'IN_PROCESS') {
+console.log('in');
           _hold.dayPrefixText = 'Transit';
           _hold.day = '';
           _hold.daySuffixText = 'for pickup';
@@ -103,6 +104,7 @@
           _hold.subtitle = 'Date placed: ' + _hold.dateText;
           _hold.ariaLabel += 'On hold. ' + _hold.subtitle;
         }
+console.log(_hold);
       }
       // Sort by status
       this.holds.sort(function (a, b) {

@@ -69,37 +69,40 @@
 
       for (var i = 0; i < this.items.length; i++) {
         var item = JSON.parse(JSON.stringify(this.items[i]));
-        item.date = new Date(item.date);
+        if ('holds' !== this.listType) {
+          item.date = new Date(item.date);
 
-        var numMinutesLeft = moment(item.date).fromNow(true);
-        var textCheck = 'minutes';
-        if (-1 != numMinutesLeft.indexOf(textCheck)) { // different display for items due in an hour or less
+console.log(item.date);
+          var numMinutesLeft = moment(item.date).fromNow(true);
+          var textCheck = 'minutes';
+          if (-1 != numMinutesLeft.indexOf(textCheck)) { // different display for items due in an hour or less
             item.dayPrefixText = 'Due in';
             item.day = numMinutesLeft.replace(textCheck, '').trim();
             item.daySuffixText = textCheck;
 
-        } else
-        {
+          } else {
             item.day = item.date.getDate();
             item.dayPrefixText = moment(item.date).format('ddd');
             item.daySuffixText = moment(item.date).format('MMM');
-        }
+          }
 
-        if (item.class == '') {
-          item.thetime = moment(item.date).format('HH:mm');
-        }
+          if (item.class == '') {
+            item.thetime = moment(item.date).format('HH:mm');
+          }
 
-        item.class += ' item-item';
+          item.class += ' item-item';
 
-        //insert divider between past and upcoming
-        if (i > 0 && !haveDivider 
-          && new Date().getTime() < item.date.getTime() 
-          && new Date().getTime() >= processed[i - 1].date.getTime()) {
-          processed[i - 1].class += ' last';
-          haveDivider = true;
-          processed.push({ isDivider: true });
+          //insert divider between past and upcoming
+          if (i > 0 && !haveDivider
+            && new Date().getTime() < item.date.getTime()
+            && new Date().getTime() >= processed[i - 1].date.getTime()) {
+            processed[i - 1].class += ' last';
+            haveDivider = true;
+            processed.push({isDivider: true});
+          }
+
         }
-        processed.push(item);
+          processed.push(item);
       }
       if (processed.length > 0) {
         processed[0].class += ' first';
