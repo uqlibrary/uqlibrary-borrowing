@@ -15,7 +15,7 @@
     "moment": "^2.12.0",
     "paper-elements": "PolymerElements/paper-elements#^1.0.7",
     "uqlibrary-api": "uqlibrary/uqlibrary-api#v1.2.1",
-    "uqlibrary-ga": "uqlibrary/uqlibrary-ga#^1.0.3",
+    "uqlibrary-ga": "uqlibrary/uqlibrary-ga#v1.0.3",
     "uqlibrary-styles": "uqlibrary/uqlibrary-styles#v1.0.5"
   },
   "devDependencies": {
@@ -23,7 +23,7 @@
     "web-component-tester": "4.2.2"
   },
   "resolutions": {
-    "uqlibrary-styles": "^v1.0.5",
-    "uqlibrary-api": "^v1.2.1"
+    "uqlibrary-styles": "v1.0.5",
+    "uqlibrary-api": "v1.2.1"
   }
 }
