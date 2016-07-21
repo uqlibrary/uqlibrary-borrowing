@@ -36,6 +36,10 @@
       recordCount: {
         type: Number,
         observer: 'recordCountChanged'
+      },
+      url: {
+        type: String,
+        value: 'http://search.library.uq.edu.au/primo_library/libweb/action/myAccountMenu.do?activity=requests'
       }
     },
 
@@ -122,7 +126,7 @@
      * Open users holds dashboard
      */
     _openUrl: function() {
-      window.open('http://search.library.uq.edu.au/primo_library/libweb/action/myAccountMenu.do?activity=requests&vid='+this.primoView, '_blank');
+      window.open(this.url + '&vid=' + this.primoView, '_blank');
     }
   });
 }());

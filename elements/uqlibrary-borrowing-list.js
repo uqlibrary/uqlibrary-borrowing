@@ -25,6 +25,9 @@
       },
       primoView: {
         type: String
+      },
+      url: {
+        type: String
       }
     },
 
@@ -41,7 +44,7 @@
      */
     _itemSelected: function (e) {
       e.stopPropagation();
-      window.open(e.model.item.url + '&vid=' + this.primoView, '_blank');
+      window.open(this.url + '&vid=' + this.primoView, '_blank');
     },
 
     /*

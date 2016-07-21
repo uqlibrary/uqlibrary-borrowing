@@ -46,6 +46,10 @@
       recordCount: {
         type: Number,
         observer: 'recordCountChanged'
+      },
+      url: {
+        type: String,
+        value: 'http://search.library.uq.edu.au/primo_library/libweb/action/myAccountMenu.do?activity=loans'
       }
     },
     /*
@@ -104,7 +108,7 @@
      * Open users loans dashboard
      */
     _openUrl: function() {
-      window.open('http://search.library.uq.edu.au/primo_library/libweb/action/myAccountMenu.do?activity=loans&vid='+this.primoView, '_blank');
+      window.open(this.url + '&vid=' + this.primoView, '_blank');
     }
   });
 }());

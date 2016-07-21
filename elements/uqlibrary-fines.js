@@ -53,6 +53,10 @@
       },
       primoView: {
         type: String
+      },
+      url: {
+        type: String,
+        value: 'http://search.library.uq.edu.au/primo_library/libweb/action/myAccountMenu.do?activity=fees'
       }
     },
 

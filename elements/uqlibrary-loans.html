@@ -25,7 +25,7 @@
     </style>
 
     <section class="flex " name="list">
-      <uqlibrary-borrowing-list id="list" items="{{_processedItems}}" empty-message="No loans" primo-view="{{primoView}}"></uqlibrary-borrowing-list>
+      <uqlibrary-borrowing-list id="list" items="{{_processedItems}}" empty-message="No loans" primo-view="{{primoView}}" url="{{url}}"></uqlibrary-borrowing-list>
       <template is="dom-if" if="[[!_hideViewMore]]">
         <paper-icon-item>
           <iron-icon item-icon icon="info-outline"></iron-icon>
