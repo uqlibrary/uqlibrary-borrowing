@@ -99,11 +99,6 @@
 
         items[i].class += ' item-item';
 
-        if (!this.showEachDate && i > 0 && items[i].date.getDay() === items[i - 1].date.getDay() && items[i].date.getDate() === items[i - 1].date.getDate()) {
-          items[i].day = '';
-          items[i].dayPrefixText = '';
-          items[i].daySuffixText = '';
-        }
         //insert divider between past and upcoming
         if (i > 0 && !haveDivider && new Date().getTime() < items[i].date.getTime() && new Date().getTime() >= items[i - 1].date.getTime()) {
           items[i - 1].class += ' last';
