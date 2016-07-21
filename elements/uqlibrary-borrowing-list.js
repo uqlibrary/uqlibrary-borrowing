@@ -44,6 +44,9 @@
       window.open(e.model.item.url + '&vid=' + this.primoView, '_blank');
     },
 
+    _itemClass: function (item){
+      return item.classType;
+    },
     /*
      * If the 'data' property has changed, recalculate the total in fees and inject the patrons id in each sub component
      */
@@ -66,10 +69,12 @@
       var haveDivider = false;
       for (var i = 0; i < items.length; i++) {
         items[i].date = new Date(items[i].date);
+        items[i].classType = '';
 
         var numMinutesLeft = moment(items[i].date).fromNow(true);
         var textCheck = 'minutes';
         if (-1 != numMinutesLeft.indexOf(textCheck)) { // different display for items due in an hour or less
+          items[i].classType = ' dueWithinOneHour';
           if (!items[i].hasOwnProperty('dayPrefixText')) {
             items[i].dayPrefixText = 'Due in';
           }

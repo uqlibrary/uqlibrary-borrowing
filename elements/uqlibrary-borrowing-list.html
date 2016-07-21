@@ -50,6 +50,10 @@
       @apply(--layout-vertical);
       padding: 12px 12px 12px 16px;
     }
+    .dueWithinOneHour .title,
+    .dueWithinOneHour .caption {
+      color: red;
+    }
   </style>
 
   <!-- Template -->
@@ -70,7 +74,7 @@
         <template is="dom-if" if="{{!item.isDivider}}">
           <li class="detail {{item.class}}">
             <div class="line">
-              <div class="date">
+              <div class$="date {{_itemClass(item)}}">
                 <div class="caption">{{item.dayPrefixText}}</div>
                 <div class="title">{{item.day}}</div>
                 <div class="caption">{{item.daySuffixText}}</div>
