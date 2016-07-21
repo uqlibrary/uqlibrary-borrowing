@@ -7,6 +7,7 @@
   <script src="../../webcomponentsjs/webcomponents.min.js"></script>
   <script src="../../web-component-tester/browser.js"></script>
   <script src="../../test-fixture/test-fixture-mocha.js"></script>
+  <script src="../../uq-wait/UQWait.js"></script>
   <link rel="import" href="../../test-fixture/test-fixture.html">
 
   <!-- Import the element to test -->
@@ -41,7 +42,7 @@
       done();
     });
 
-    test('it should active the Loans tab', function (done) {
+    test('it should activate the Loans tab', function (done) {
       element.addEventListener('uqlibrary-borrowing-data-loaded', function(){
         var els = element.querySelectorAll('paper-tab');
         els[0].click();
@@ -51,7 +52,7 @@
       });
     });
 
-    test('it should active the Holds tab', function (done) {
+    test('it should activate the Holds tab', function (done) {
       var els = element.querySelectorAll('paper-tab');
       els[1].click();
       var el = element.querySelector('paper-tab.iron-selected');
@@ -59,7 +60,7 @@
       done();
     });
 
-    test('it should active the Overdue Charges tab', function (done) {
+    test('it should activate the Overdue Charges tab', function (done) {
       var els = element.querySelectorAll('paper-tab');
       els[2].click();
       var el = element.querySelector('paper-tab.iron-selected');
@@ -85,6 +86,20 @@
         done();
       });
     });
+
+
+    test('it should show a Manage Loans link', function (done) {
+      element.addEventListener('uqlibrary-borrowing-data-loaded', function(){
+        var els = element.querySelectorAll('paper-tab');
+        els[0].click();
+        var el = element.querySelector('#topBar paper-button');
+        expect(el.textContent).to.match(/Manage loans/);
+
+        done();
+      });
+    });
+
+
 
   });
 </script>

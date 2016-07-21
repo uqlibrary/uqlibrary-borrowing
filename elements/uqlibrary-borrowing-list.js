@@ -47,6 +47,9 @@
       window.open(this.url + '&vid=' + this.primoView, '_blank');
     },
 
+    _itemClass: function (item){
+      return item.classType;
+    },
     /*
      * If the 'data' property has changed, recalculate the total in fees and inject the patrons id in each sub component
      */
@@ -69,22 +72,41 @@
       var haveDivider = false;
       for (var i = 0; i < items.length; i++) {
         items[i].date = new Date(items[i].date);
-        if (!items[i].hasOwnProperty('day')) {
-          items[i].day = items[i].date.getDate();
+        items[i].classType = '';
+
+        var numMinutesLeft = moment(items[i].date).fromNow(true);
+        var textCheck = 'minutes';
+        if (-1 != numMinutesLeft.indexOf(textCheck)) { // different display for items due in an hour or less
+          items[i].classType = ' dueWithinOneHour';
+          if (!items[i].hasOwnProperty('dayPrefixText')) {
+            items[i].dayPrefixText = 'Due in';
+          }
+          if (!items[i].hasOwnProperty('day')) {
+            items[i].day = numMinutesLeft.replace(textCheck, '').trim();
+          }
+          if (!items[i].hasOwnProperty('daySuffixText')) {
+            items[i].daySuffixText = textCheck;
+          }
+
+        } else
+        {
+          if (!items[i].hasOwnProperty('day')) {
+            items[i].day = items[i].date.getDate();
+          }
+          if (!items[i].hasOwnProperty('dayPrefixText')) {
+            items[i].dayPrefixText = moment(items[i].date).format('ddd');
+          }
+          if (!items[i].hasOwnProperty('daySuffixText')) {
+            items[i].daySuffixText = moment(items[i].date).format('MMM');
+          }
         }
-        if (!items[i].hasOwnProperty('dayPrefixText')) {
-          items[i].dayPrefixText = moment(items[i].date).format('ddd');
+
+        if (items[i].class == '' && !items[i].hasOwnProperty('thetime')) {
+          items[i].thetime = moment(items[i].date).format('HH:mm');
         }
-        if (!items[i].hasOwnProperty('daySuffixText')) {
-          items[i].daySuffixText = moment(items[i].date).format('MMM');
-        }
+
         items[i].class += ' item-item';
 
-        if (!this.showEachDate && i > 0 && items[i].date.getDay() === items[i - 1].date.getDay() && items[i].date.getDate() === items[i - 1].date.getDate()) {
-          items[i].day = '';
-          items[i].dayPrefixText = '';
-          items[i].daySuffixText = '';
-        }
         //insert divider between past and upcoming
         if (i > 0 && !haveDivider && new Date().getTime() < items[i].date.getTime() && new Date().getTime() >= items[i - 1].date.getTime()) {
           items[i - 1].class += ' last';
@@ -99,6 +121,10 @@
         this.isEmpty = false;
       } else {
         this.isEmpty = true;
+      }
+
+      if (!this.colHeader) {
+        this.colHeader = 'DUE DATE';
       }
 
     }
