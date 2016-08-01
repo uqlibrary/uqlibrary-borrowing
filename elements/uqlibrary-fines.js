@@ -129,7 +129,7 @@
      * Open users overdue dashboard
      */
     _openUrl: function () {
-      window.open('https://web.library.uq.edu.au/borrowing-requesting/overdue-items/pay-fine', '_blank');
+      window.location.href = 'https://web.library.uq.edu.au/borrowing-requesting/overdue-items/pay-fine';
     },
     /*
      * Open Info modal page

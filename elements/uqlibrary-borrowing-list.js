@@ -44,7 +44,7 @@
      */
     _itemSelected: function (e) {
       e.stopPropagation();
-      window.open(this.url + '&vid=' + this.primoView, '_blank');
+      window.location.href = this.url + '&vid=' + this.primoView;
     },
 
     _itemClass: function (item){
