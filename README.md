@@ -1,5 +1,8 @@
 # uqlibrary-borrowing
 
+[![Dependency Status](https://david-dm.org/uqlibrary/uqlibrary-borrowing.svg)](https://david-dm.org/uqlibrary/uqlibrary-borrowing)
+[![Dev Dependency Status](https://david-dm.org/uqlibrary/uqlibrary-borrowing/dev-status.svg)](https://david-dm.org/uqlibrary/uqlibrary-borrowing?type=dev)
+
 uqlibrary-borrowing displays academic borrowing to the end user
 
 Example of full documentation can be found at [GitHub Pages](http://uqlibrary.github.io/uqlibrary-borrowing).
