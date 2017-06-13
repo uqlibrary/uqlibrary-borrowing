@@ -35,14 +35,14 @@
     </style>
 
     <section class="flex">
-      <uqlibrary-borrowing-list id="list" items="{{_processedItems}}" show-each-date="true" empty-message="No overdue charges" primo-view="{{primoView}}" url="{{url}}" col-header="AMOUNT">
+      <uqlibrary-borrowing-list id="list" items="{{_processedItems}}" show-each-date="true" empty-message="No overdue fines" primo-view="{{primoView}}" url="{{url}}" col-header="AMOUNT">
       </uqlibrary-borrowing-list>
 
       <div>
         <paper-icon-item>
           <iron-icon item-icon icon="info-outline"></iron-icon>
           <a href="https://web.library.uq.edu.au/borrowing-requesting/overdue-items">
-            About overdue charges
+            About overdue fines
           </a>
         </paper-icon-item>
       </div>
@@ -60,7 +60,7 @@
                       on-tap="_toggleInfo"
                       title="Info"
                       hidden$="{{!_hidePayNow}}"
-                      aria-label="More information about overdue charges">
+                      aria-label="More information about overdue fines">
           INFO
         </paper-button>
         <!-- Pay Now -->
@@ -68,7 +68,7 @@
                       on-tap="_openUrl"
                       title="How to pay"
                       hidden$="{{_hidePayNow}}"
-                      aria-label="Pay overdue charges now">
+                      aria-label="Pay overdue fines now">
           HOW TO PAY
         </paper-button>
       </paper-toolbar>
@@ -77,8 +77,8 @@
     <paper-dialog id="finesInfoDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
       <h2>Payment info</h2>
       <div>
-        You don't need to pay your overdue charges unless you reach <span>{{moneyFormat(fineMinimumPayableAmount)}}</span>.
-        You currently have <span>{{moneyFormat(finesSum)}}</span>, so you don't need to pay your overdue charges.
+        You don't need to pay your overdue fines unless you reach <span>{{moneyFormat(fineMinimumPayableAmount)}}</span>.
+        You currently have <span>{{moneyFormat(finesSum)}}</span>, so you don't need to pay your overdue fines.
       </div>
       <div class="buttons">
         <paper-button class="button-colored-theme" dialog-dismiss>Okay, I got it</paper-button>

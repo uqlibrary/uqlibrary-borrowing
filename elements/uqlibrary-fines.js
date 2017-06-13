@@ -56,7 +56,7 @@
       },
       url: {
         type: String,
-        value: 'http://search.library.uq.edu.au/primo_library/libweb/action/myAccountMenu.do?activity=fees'
+        value: 'https://search.library.uq.edu.au/primo-explore/account?section=fines&lang=en_US'
       }
     },
 

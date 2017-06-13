@@ -60,7 +60,7 @@
       done();
     });
 
-    test('it should activate the Overdue Charges tab', function (done) {
+    test('it should activate the Overdue Fines tab', function (done) {
       var els = element.querySelectorAll('paper-tab');
       els[2].click();
       var el = element.querySelector('paper-tab.iron-selected');
@@ -81,7 +81,7 @@
         expect(_title.textContent).to.match(/2/);
 
         _title = tabs[2];
-        expect(_title.textContent.trim()).to.equal('$2632.80OVERDUE CHARGES');
+        expect(_title.textContent.trim()).to.equal('$2632.80OVERDUE FINES');
 
         done();
       });
