@@ -49,7 +49,7 @@
       },
       url: {
         type: String,
-        value: 'https://search.library.uq.edu.au/primo-explore/account?section=loans&lang=en_US'
+        value: 'https://search.library.uq.edu.au/primo-explore/login?vid=61UQ&targetURL=https%3A%2F%2Fsearch.library.uq.edu.au%2Fprimo-explore%2Faccount%3Fvid%3D61UQ%26section%3Dloans%26lang%3Den_US'
       }
     },
     /*
