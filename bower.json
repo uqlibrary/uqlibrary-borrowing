@@ -14,7 +14,7 @@
     "iron-elements": "PolymerElements/iron-elements#^1.0.8",
     "moment": "^2.12.0",
     "paper-elements": "PolymerElements/paper-elements#^1.0.7",
-    "uqlibrary-api": "uqlibrary/uqlibrary-api#v1.2.8",
+    "uqlibrary-api": "uqlibrary/uqlibrary-api#v1.4.7",
     "uqlibrary-ga": "uqlibrary/uqlibrary-ga#^1.0.3",
     "uqlibrary-styles": "uqlibrary/uqlibrary-styles#v1.0.5"
   },
@@ -22,9 +22,5 @@
     "test-fixture": "PolymerElements/test-fixture#^1.1.0",
     "web-component-tester": "4.2.2",
     "uq-wait": "uqlibrary/uq-wait#v1.0.0"
-  },
-  "resolutions": {
-    "uqlibrary-styles": "^v1.0.5",
-    "uqlibrary-api": "^v1.2.8"
   }
 }
