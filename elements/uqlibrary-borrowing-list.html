@@ -1,63 +1,63 @@
 <link rel="import" href="elements.html">
 
 <dom-module id="uqlibrary-borrowing-list">
-  <!-- All element styles -->
-  <style is="custom-style" include="iron-flex iron-flex-alignment common-styles">
-    ul {
-      list-style-type: none;
-      padding:0;
-    }
-    .noItem {
-      padding: 10px;
-      @apply(--layout-horizontal);
-      @apply(--layout-center-justified);
-    }
-    div.header,
-    .line {
-      @apply(--laytou-flex);
-      @apply(--layout-horizontal);
-    }
-    .date {
-      @apply(--layout-vertical);
-      width: 65px;
-      padding: 12px;
-    }
-
-    .attentionIcon {
-      position: absolute;
-      bottom: 4px;
-      right: 4px;
-      padding-left: 16px;
-      height: 32px;
-      overflow: hidden;
-      width: 100%;
-    }
-
-    paper-icon {
-      width: 24px;
-      height: 24px;
-    }
-
-    .description {
-      background-color:#eee;
-      padding:16px;
-      cursor:pointer;
-    }
-    .title {
-      color:#7B0C9D;
-    }
-    .detailsLabel {
-      @apply(--layout-vertical);
-      padding: 12px 12px 12px 16px;
-    }
-    .dueWithinOneHour .title,
-    .dueWithinOneHour .caption {
-      color: red;
-    }
-  </style>
-
   <!-- Template -->
   <template>
+    <!-- All element styles -->
+    <style is="custom-style" include="iron-flex iron-flex-alignment common-styles">
+      ul {
+        list-style-type: none;
+        padding:0;
+      }
+      .noItem {
+        padding: 10px;
+        @apply(--layout-horizontal);
+        @apply(--layout-center-justified);
+      }
+      div.header,
+      .line {
+        @apply(--laytou-flex);
+        @apply(--layout-horizontal);
+      }
+      .date {
+        @apply(--layout-vertical);
+        width: 65px;
+        padding: 12px;
+      }
+
+      .attentionIcon {
+        position: absolute;
+        bottom: 4px;
+        right: 4px;
+        padding-left: 16px;
+        height: 32px;
+        overflow: hidden;
+        width: 100%;
+      }
+
+      paper-icon {
+        width: 24px;
+        height: 24px;
+      }
+
+      .description {
+        background-color:#eee;
+        padding:16px;
+        cursor:pointer;
+      }
+      .title {
+        color:#7B0C9D;
+      }
+      .detailsLabel {
+        @apply(--layout-vertical);
+        padding: 12px 12px 12px 16px;
+      }
+      .dueWithinOneHour .title,
+      .dueWithinOneHour .caption {
+        color: red;
+      }
+    </style>
+
     <div class="noItem subhead" hidden$="{{!isEmpty}}">
       {{ emptyMessage }}
     </div>
