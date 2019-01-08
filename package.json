@@ -1,6 +1,7 @@
 {
   "name": "uqlibrary-borrowing",
-  "version": "1.0.0",
+  "license": "MIT",
+  "version": "1.2.8",
   "description": "uqlibrary-borrowing",
   "main": "index.html",
   "directories": {
@@ -23,12 +24,11 @@
     "url": "https://github.com/uqlibrary/uqlibrary-borrowing/issues"
   },
   "devDependencies": {
-    "web-component-tester": "*",
-    "gulp": "^3.9.1",
-    "browser-sync": "^2.26.3"
-  },
-  "dependencies": {
-    "bower": "^1.8.4"
+    "bower": "^1.8.4",
+    "browser-sync": "^2.26.3",
+    "chai": "^4.2.0",
+    "gulp": "^4.0.0",
+    "web-component-tester": "*"
   },
   "engines": {
     "npm": "^6.5.0",

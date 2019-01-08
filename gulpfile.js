@@ -14,8 +14,8 @@ var gulp = require("gulp");
 var browsersync = require("browser-sync");
 
 // Watch files for changes & reload
-gulp.task("serve", [], function() {
-  console.log("serving...");
+gulp.task("serve", function(done) {
+  console.log("Serving...");
   browsersync({
     open: "external",
     startPath: "/uqlibrary-borrowing/demo/live.html",
@@ -37,19 +37,10 @@ gulp.task("serve", [], function() {
       "elements/*.js"
     ]
   });
+  done();
 });
 
 // Build production files, the default task
-gulp.task("default", ["serve"], function(cb) {
-});
-
-// Load tasks for web-component-tester
-// Adds tasks for `gulp test:local` and `gulp test:remote`
-require("web-component-tester").gulp.init(gulp);
-
-// Load custom tasks from the `tasks` directory
-try {
-  require("require-dir")("tasks");
-} catch (err) {
-  // Do nothing
-}
+gulp.task("default", gulp.series("serve", function(done) {
+  done();
+}));
