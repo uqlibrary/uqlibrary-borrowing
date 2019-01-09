@@ -2,8 +2,8 @@
 
 # Creates and updates the "gh-pages" branch of the current repository
 #
-# Usage: ./generate-sh-pages.sh <branch>
-# Example: ./generate-sh-pages.sh master
+# Usage: ./generate-gh-pages.sh <branch>
+# Example: ./generate-gh-pages.sh master
 
 # Get repo from DIR name
 cd `dirname "${BASH_SOURCE[0]}"`;
@@ -31,7 +31,7 @@ git rm -rf test
 
 # Bower install
 bower cache clean $REPO # ensure we're getting the latest from the desired branch.
-bower install
+bower install --production
 
 # Move one level up to include bower dependencies
 mv .git ../
