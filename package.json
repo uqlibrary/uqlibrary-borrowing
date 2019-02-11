@@ -8,7 +8,9 @@
     "test": "test"
   },
   "scripts": {
-    "test": "wct"
+    "test": "polymer test",
+    "start": "polymer serve",
+    "live": "gulp serve"
   },
   "repository": {
     "type": "git",
