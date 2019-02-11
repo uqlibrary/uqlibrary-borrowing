@@ -1,6 +1,6 @@
 {
   "name": "uqlibrary-borrowing",
-  "version": "1.2.9",
+  "version": "1.2.10",
   "keywords": [
     "seed",
     "polymer",
@@ -9,7 +9,7 @@
   "private": true,
   "main": "elements/uqlibrary-borrowing.html",
   "dependencies": {
-    "polymer": "Polymer/polymer#^1.9.3",
+    "polymer": "Polymer/polymer#^1.11.3",
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
     "iron-elements": "PolymerElements/iron-elements#^1.0.8",
     "moment": "^2.12.0",
