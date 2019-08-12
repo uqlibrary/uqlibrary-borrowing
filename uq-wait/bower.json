@@ -1,0 +1,17 @@
+{
+  "name": "uq-wait",
+  "homepage": "https://github.com/uqlibrary/uq-wait",
+  "description": "",
+  "main": "UQWait.js",
+  "authors": [
+    "Jan-Willem Wisgerhof <j.wisgerhof@library.uq.edu.au>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

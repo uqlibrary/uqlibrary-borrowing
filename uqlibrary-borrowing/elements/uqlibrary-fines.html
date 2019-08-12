@@ -1,0 +1,92 @@
+<link rel="import" href="elements.html">
+<link rel="import" href="uqlibrary-borrowing-list.html">
+
+<dom-module id="uqlibrary-fines">
+  <template>
+    <style is="custom-style" include="iron-flex iron-flex-alignment common-styles">
+      :host {
+        @apply --layout-vertical;
+        @apply --uql-app-host;
+      }
+
+      section {
+        padding: 10px;
+        overflow: auto;
+      }
+
+      paper-icon-item {
+        color: var(--accent-color);
+        line-height: 48px;
+      }
+
+      paper-icon-item a {
+        text-decoration: none;
+      }
+
+      paper-button[disabled] {
+        background-color: var(--secondary-color-light);
+        color: var(--secondary-color);
+      }
+
+      uqlibrary-borrowing-list /deep/ .title {
+        font-size: 1.2em;
+      }
+
+    </style>
+
+    <section class="flex">
+      <uqlibrary-borrowing-list id="list" items="{{_processedItems}}" show-each-date="true" empty-message="No overdue fines" primo-view="{{primoView}}" url="{{url}}" col-header="AMOUNT">
+      </uqlibrary-borrowing-list>
+
+      <div>
+        <paper-icon-item>
+          <iron-icon item-icon icon="info-outline"></iron-icon>
+          <a href="https://web.library.uq.edu.au/borrowing-requesting/overdue-items">
+            About overdue fines
+          </a>
+        </paper-icon-item>
+      </div>
+
+    </section>
+
+    <template is="dom-if" if="{{!_hideFooter}}">
+      <paper-toolbar class="uqlibrary-app-footer">
+        <!-- Total -->
+        <span class="subhead"><strong>Total:</strong> [[moneyFormat(finesSum)]]</span>
+
+        <span class="flex"></span>
+        <!-- Info -->
+        <paper-button class="button-secondary"
+                      on-tap="_toggleInfo"
+                      title="Info"
+                      hidden$="{{!_hidePayNow}}"
+                      aria-label="More information about overdue fines">
+          INFO
+        </paper-button>
+        <!-- Pay Now -->
+        <paper-button class="button-colored-accent"
+                      on-tap="_openUrl"
+                      title="How to pay"
+                      hidden$="{{_hidePayNow}}"
+                      aria-label="Pay overdue fines now">
+          HOW TO PAY
+        </paper-button>
+      </paper-toolbar>
+    </template>
+
+    <paper-dialog id="finesInfoDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+      <h2>Payment info</h2>
+      <div>
+        You don't need to pay your overdue fines unless you reach <span>{{moneyFormat(fineMinimumPayableAmount)}}</span>.
+        You currently have <span>{{moneyFormat(finesSum)}}</span>, so you don't need to pay your overdue fines.
+      </div>
+      <div class="buttons">
+        <paper-button class="button-colored-theme" dialog-dismiss>Okay, I got it</paper-button>
+      </div>
+    </paper-dialog>
+  </template>
+
+  <!-- Location of the script -->
+  <script src="uqlibrary-fines.js"></script>
+
+</dom-module>

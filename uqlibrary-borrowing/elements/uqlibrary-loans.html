@@ -1,0 +1,60 @@
+<link rel="import" href="elements.html">
+<link rel="import" href="uqlibrary-borrowing-list.html">
+
+<dom-module id="uqlibrary-loans">
+  <template>
+    <style is="custom-style" include="iron-flex iron-flex-alignment common-styles">
+      :host {
+        @apply --layout-vertical;
+        @apply --uql-app-host;
+      }
+
+      paper-icon-item {
+        color: var(--accent-color);
+        line-height: 48px;
+      }
+
+      paper-icon-item a {
+        text-decoration: none;
+      }
+
+      section {
+        padding: 10px;
+        overflow: auto;
+      }
+    </style>
+
+    <section class="flex " name="list">
+      <uqlibrary-borrowing-list id="list" items="{{_processedItems}}" empty-message="No loans" primo-view="{{primoView}}" url="{{url}}"></uqlibrary-borrowing-list>
+      <template is="dom-if" if="[[!_hideViewMore]]">
+        <paper-icon-item>
+          <iron-icon item-icon icon="info-outline"></iron-icon>
+          <a href="#" on-tap="_openUrl">
+            View the complete list of loans
+          </a>
+        </paper-icon-item>
+      </template>
+      <paper-icon-item>
+        <iron-icon item-icon icon="info-outline"></iron-icon>
+        <a href="https://web.library.uq.edu.au/borrowing-requesting/borrowing-rules">
+          Your borrowing rights and limits
+        </a>
+      </paper-icon-item>
+    </section>
+
+    <template is="dom-if" if="[[!_hideFooter]]">
+      <paper-toolbar class="uqlibrary-app-footer right">
+        <paper-button class="button-colored-accent"
+                      on-tap="_openUrl"
+                      title="Manage loans"
+                      aria-label="Manage loans">
+          Manage loans
+        </paper-button>
+      </paper-toolbar>
+    </template>
+  </template>
+
+  <!-- Location of the script -->
+  <script src="uqlibrary-loans.js"></script>
+
+</dom-module>

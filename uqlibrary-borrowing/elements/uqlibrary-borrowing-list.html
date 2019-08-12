@@ -1,0 +1,111 @@
+<link rel="import" href="elements.html">
+
+<dom-module id="uqlibrary-borrowing-list">
+  <!-- Template -->
+  <template>
+    <!-- All element styles -->
+    <style is="custom-style" include="iron-flex iron-flex-alignment common-styles">
+      ul {
+        list-style-type: none;
+        padding:0;
+      }
+      .noItem {
+        padding: 10px;
+        @apply --layout-horizontal;
+        @apply --layout-center-justified;
+      }
+      div.header,
+      .line {
+        @apply --laytou-flex;
+        @apply --layout-horizontal;
+      }
+      .date {
+        @apply --layout-vertical;
+        width: 65px;
+        padding: 12px;
+      }
+
+      .attentionIcon {
+        position: absolute;
+        bottom: 4px;
+        right: 4px;
+        padding-left: 16px;
+        height: 32px;
+        overflow: hidden;
+        width: 100%;
+      }
+
+      paper-icon {
+        width: 24px;
+        height: 24px;
+      }
+
+      .description {
+        background-color:#eee;
+        padding:16px;
+        cursor:pointer;
+      }
+      .title {
+        color:#7B0C9D;
+      }
+      .detailsLabel {
+        @apply --layout-vertical;
+        padding: 12px 12px 12px 16px;
+      }
+      .dueWithinOneHour .title,
+      .dueWithinOneHour .caption {
+        color: red;
+      }
+    </style>
+
+    <div class="noItem subhead" hidden$="{{!isEmpty}}">
+      {{ emptyMessage }}
+    </div>
+
+    <ul class="timeline three-line-icon-list">
+        <li>
+          <div class="header" hidden$="{{isEmpty}}">
+            <div class="date">{{colHeader}}</div>
+            <div class="detailsLabel">DETAILS</div>
+          </div>
+        </li>
+      <li class="gap"></li>
+      <template is="dom-repeat" items="{{processedItems}}">
+        <template is="dom-if" if="{{!item.isDivider}}">
+          <li class="detail {{item.class}}">
+            <div class="line">
+              <div class$="date {{_itemClass(item)}}">
+                <div class="caption">{{item.dayPrefixText}}</div>
+                <div class="title">{{item.day}}</div>
+                <div class="caption">{{item.daySuffixText}}</div>
+                <div class="caption">{{item.thetime}}</div>
+              </div>
+              <div class="description flex" on-tap="_itemSelected" id="item-{{item.id}}" tabindex$="{{index}}">
+                <div class="subhead"><a aria-label$="{{item.ariaLabel}}" on-tap="_itemSelected">{{item.title}}</a></div>
+                <div class="body1">{{item.subtitle}}</div>
+                <div class="caption">{{item.secondaryText}}</div>
+              </div>
+            </div>
+            <div class="layout vertical">
+              <template repeat="{{action in item.actions}}">
+                <paper-button class="actionButton" raised="" href="{{action.url}}">{{action.title}}</paper-button>
+              </template>
+            </div>
+            <template is="dom-if" if="{{!item.attentionIcon.icon}}">
+              <div class="attentionIcon {{item.attentionIcon.type}} layout horizontal end">
+                <div class="tooltip caption inverse" flex>{{item.attentionIcon.text}}</div>
+                <iron-icon class="caption inverse end-justified" icon="{{item.attentionIcon.icon}}"></iron-icon>
+              </div>
+            </template>
+          </li>
+        </template>
+        <template is="dom-if" if="{{item.isDivider}}">
+          <p class="timeline-divider">&nbsp;</p>
+        </template>
+      </template>
+    </ul>
+  </template>
+
+  <!-- Location of the script -->
+  <script src="uqlibrary-borrowing-list.js"></script>
+</dom-module>

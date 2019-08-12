@@ -1,0 +1,64 @@
+<link rel="import" href="elements.html">
+<link rel="import" href="uqlibrary-borrowing-list.html">
+
+<dom-module id="uqlibrary-holds">
+  <template>
+    <style is="custom-style" include="iron-flex iron-flex-alignment common-styles">
+      :host {
+        @apply --layout-vertical;
+        @apply --uql-app-host;
+      }
+
+      section {
+        padding: 10px;
+        overflow: auto;
+      }
+
+      paper-icon-item {
+        color: var(--accent-color);
+        line-height: 48px;
+      }
+
+      paper-icon-item a {
+        text-decoration: none;
+      }
+    </style>
+
+    <section class="flex">
+      <uqlibrary-borrowing-list id="holdsTimeline" items="{{holds}}" empty-message="No current holds" col-header="LOCATION" primo-view="{{primoView}}" url="{{url}}">
+      </uqlibrary-borrowing-list>
+
+      <div>
+        <template is="dom-if" if="[[!_hideViewMore]]">
+          <paper-icon-item>
+            <iron-icon item-icon icon="info-outline"></iron-icon>
+            <a href="#" on-tap="_openUrl">
+              View the complete list of holds
+            </a>
+          </paper-icon-item>
+        </template>
+        <paper-icon-item>
+          <iron-icon item-icon icon="info-outline"></iron-icon>
+          <a href="https://web.library.uq.edu.au/borrowing-requesting/how-request/how-place-hold">
+            About placing a hold
+          </a>
+        </paper-icon-item>
+      </div>
+    </section>
+
+    <template is="dom-if" if="[[!_hideFooter]]">
+      <paper-toolbar class="uqlibrary-app-footer right">
+        <paper-button class="button-colored-accent"
+                      on-tap="_openUrl"
+                      title="Manage Holds"
+                      aria-label="Manage Holds">
+          Manage Holds
+        </paper-button>
+      </paper-toolbar>
+    </template>
+  </template>
+
+  <!-- Location of the script -->
+  <script src="uqlibrary-holds.js"></script>
+
+</dom-module>
